@@ -1,10 +1,10 @@
 <!-- 物品卡片组件 -->
-<view class="item-card {{rarityClass}} {{size}}" bindtap="onTap">
+<view class="item-card {{rarityClass}} {{size}}" bindtap="onTap" role="button" aria-label="{{name}}">
   <!-- 物品图标 -->
   <view class="item-icon-wrap">
-    <image wx:if="{{icon}}" class="item-icon-img" src="{{icon}}" mode="aspectFit"/>
+    <image wx:if="{{icon}}" class="item-icon-img" src="{{icon}}" mode="aspectFit" lazy-load="{{true}}" aria-label="{{name}}图标"/>
     <text wx:else class="item-icon-emoji">{{emoji || '📦'}}</text>
-    <view wx:if="{{count > 1}}" class="item-count">{{count}}</view>
+    <view wx:if="{{count > 1}}" class="item-count" aria-label="数量{{count}}">{{count}}</view>
     <view wx:if="{{isNew}}" class="item-new-badge">NEW</view>
   </view>
 
