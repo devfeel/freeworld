@@ -1,0 +1,28 @@
+<!-- 物品卡片组件 -->
+<view class="item-card {{rarityClass}} {{size}}" bindtap="onTap">
+  <!-- 物品图标 -->
+  <view class="item-icon-wrap">
+    <image wx:if="{{icon}}" class="item-icon-img" src="{{icon}}" mode="aspectFit"/>
+    <text wx:else class="item-icon-emoji">{{emoji || '📦'}}</text>
+    <view wx:if="{{count > 1}}" class="item-count">{{count}}</view>
+    <view wx:if="{{isNew}}" class="item-new-badge">NEW</view>
+  </view>
+
+  <!-- 物品信息 -->
+  <view class="item-info" wx:if="{{showInfo}}">
+    <text class="item-name">{{name}}</text>
+    <text wx:if="{{description}}" class="item-desc">{{description}}</text>
+    <view class="item-meta" wx:if="{{level || attack || defense}}">
+      <text wx:if="{{level}}" class="meta-tag">Lv.{{level}}</text>
+      <text wx:if="{{attack}}" class="meta-tag atk">⚔️{{attack}}</text>
+      <text wx:if="{{defense}}" class="meta-tag def">🛡️{{defense}}</text>
+    </view>
+    <view class="item-price" wx:if="{{price}}">
+      <text class="price-value">{{price}}</text>
+      <text class="price-unit">💰</text>
+    </view>
+  </view>
+
+  <!-- 选中标记 -->
+  <view wx:if="{{selected}}" class="selected-mark">✓</view>
+</view>

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "玛法传说",
+  "navigationBarBackgroundColor": "#2d1f15",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#1a1410",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "progress-bar": "../../components/progress-bar/progress-bar"
+  }
+}

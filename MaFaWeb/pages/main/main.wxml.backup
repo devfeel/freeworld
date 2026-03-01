@@ -1,0 +1,179 @@
+<!-- 主界面 -->
+<view class="container">
+  <!-- 标题 -->
+  <view class="panel title-panel">
+    <text class="panel-title">⚔️ 玛法传说 ⚔️</text>
+  </view>
+
+  <!-- 角色信息 + 装备 -->
+  <view class="panel">
+    <!-- 角色名 等级 HP MP 一行 -->
+    <view class="hero-info-row">
+      <view class="hero-name-level">
+        <text class="hero-name">{{hero.name}}</text>
+        <text class="hero-level">Lv.{{hero.level}}</text>
+      </view>
+      <view class="hp-mp-info">
+        <text class="hp-text">❤️ {{hero.hp}}/{{maxHp}}</text>
+        <text class="mp-text">💧 {{hero.mp}}/{{maxMp}}</text>
+      </view>
+    </view>
+
+    <!-- 经验条 -->
+    <view class="exp-row">
+      <text class="exp-label">EXP</text>
+      <view class="progress-bar exp-bar mini">
+        <view class="progress-fill" style="width: {{expPercent}}%"></view>
+      </view>
+      <text class="exp-text">{{hero.exp}}/{{hero.maxExp}}</text>
+    </view>
+
+    <view class="hero-equipment-row">
+      <!-- 货币 + 属性 -->
+      <view class="hero-section">
+        <!-- 货币显示 -->
+        <view class="currency-row">
+          <view class="currency-item">
+            <text class="currency-icon">💰</text>
+            <text class="currency-value">{{hero.gold}}</text>
+          </view>
+          <view class="currency-item">
+            <text class="currency-icon">🪙</text>
+            <text class="currency-value">{{hero.yuanbao || 0}}</text>
+          </view>
+        </view>
+
+        <!-- 属性 -->
+        <view class="stats-compact">
+          <!-- 物理攻击 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">物理攻击:</text>
+            <text class="text-primary text-bold">{{totalStats.attack || hero.attack || 0}}</text>
+          </view>
+          <!-- 魔法攻击 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">魔法攻击:</text>
+            <text class="text-purple text-bold">{{totalStats.magicAttack || 0}}</text>
+          </view>
+          <!-- 防御力 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">防御力:</text>
+            <text class="text-primary text-bold">{{totalStats.defense || hero.defense || 0}}</text>
+          </view>
+          <!-- 速度 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">速度:</text>
+            <text class="text-warning text-bold">{{totalStats.speed || hero.speed || 0}}</text>
+          </view>
+          <!-- 暴击率 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">暴击率:</text>
+            <text class="text-warning text-bold">{{totalStats.crit || hero.crit || 0}}%</text>
+          </view>
+          <!-- 闪避率 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">闪避率:</text>
+            <text class="text-success text-bold">{{totalStats.dodge || hero.dodge || 0}}%</text>
+          </view>
+          <!-- 格挡值 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">格挡值:</text>
+            <text class="text-primary text-bold">{{totalStats.block || hero.block || 0}}</text>
+          </view>
+          <!-- 最大生命 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">最大生命:</text>
+            <text class="text-danger text-bold">{{(hero.maxHp || 100) + (totalStats.hpBonus || 0)}}</text>
+          </view>
+          <!-- 最大魔法 -->
+          <view class="stat-row">
+            <text class="text-small text-secondary">最大魔法:</text>
+            <text class="text-primary text-bold">{{(hero.maxMp || 100) + (totalStats.mpBonus || 0)}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 右侧：装备 - 紧凑纵向列表 -->
+      <view class="equipment-compact" bindtap="showEquipMenu">
+        <view class="equip-header">
+          <text>🛡️ 装备</text>
+          <text class="equip-more">管理 ></text>
+        </view>
+        <view class="equip-list-vertical">
+          <view class="equip-row new-slot-style">
+            <view class="slot-icon">⚔️</view>
+            <view class="slot-info">
+              <text class="slot-name">武器</text>
+              <text class="slot-equip-name {{hero.equipment.weapon ? getRarityClass(hero.equipment.weapon.rarity) : 'empty'}}">{{hero.equipment.weapon ? hero.equipment.weapon.name : '未装备'}}</text>
+            </view>
+            <view class="slot-arrow">›</view>
+          </view>
+          <view class="equip-row new-slot-style">
+            <view class="slot-icon">🦺</view>
+            <view class="slot-info">
+              <text class="slot-name">盔甲</text>
+              <text class="slot-equip-name {{hero.equipment.armor ? getRarityClass(hero.equipment.armor.rarity) : 'empty'}}">{{hero.equipment.armor ? hero.equipment.armor.name : '未装备'}}</text>
+            </view>
+            <view class="slot-arrow">›</view>
+          </view>
+          <view class="equip-row new-slot-style">
+            <view class="slot-icon">⛑️</view>
+            <view class="slot-info">
+              <text class="slot-name">头盔</text>
+              <text class="slot-equip-name {{hero.equipment.helmet ? getRarityClass(hero.equipment.helmet.rarity) : 'empty'}}">{{hero.equipment.helmet ? hero.equipment.helmet.name : '未装备'}}</text>
+            </view>
+            <view class="slot-arrow">›</view>
+          </view>
+          <view class="equip-row new-slot-style">
+            <view class="slot-icon">🛡️</view>
+            <view class="slot-info">
+              <text class="slot-name">盾牌</text>
+              <text class="slot-equip-name {{hero.equipment.shield ? getRarityClass(hero.equipment.shield.rarity) : 'empty'}}">{{hero.equipment.shield ? hero.equipment.shield.name : '未装备'}}</text>
+            </view>
+            <view class="slot-arrow">›</view>
+          </view>
+          <view class="equip-row new-slot-style">
+            <view class="slot-icon">📿</view>
+            <view class="slot-info">
+              <text class="slot-name">项链</text>
+              <text class="slot-equip-name {{hero.equipment.necklace ? getRarityClass(hero.equipment.necklace.rarity) : 'empty'}}">{{hero.equipment.necklace ? hero.equipment.necklace.name : '未装备'}}</text>
+            </view>
+            <view class="slot-arrow">›</view>
+          </view>
+          <view class="equip-row new-slot-style">
+            <view class="slot-icon">💍</view>
+            <view class="slot-info">
+              <text class="slot-name">戒指</text>
+              <text class="slot-equip-name {{hero.equipment.ring ? getRarityClass(hero.equipment.ring.rarity) : 'empty'}}">{{hero.equipment.ring ? hero.equipment.ring.name : '未装备'}}</text>
+            </view>
+            <view class="slot-arrow">›</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 角色实时状态 -->
+  <view class="panel status-panel">
+    <view class="status-row">
+      <view class="status-item">
+        <text class="status-label">📍 地图:</text>
+        <text class="status-value">{{currentMap || '未知地图'}}</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label">📐 坐标:</text>
+        <text class="status-value">({{hero.x || 0}}, {{hero.y || 0}})</text>
+      </view>
+    </view>
+    <view class="status-row">
+      <view class="status-item">
+        <text class="status-label">📶 状态:</text>
+        <text class="status-value {{playerStatus === 'exploring' ? 'exploring' : playerStatus === 'sweeping' ? 'sweeping' : playerStatus === 'healing' ? 'healing' : 'resting'}}">{{playerStatusText}}</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label">⏱️ 状态时间:</text>
+        <text class="status-value">{{statusTime || '0分0秒'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "商城",
+  "navigationBarBackgroundColor": "#2d1f15",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#1a1410",
+  "usingComponents": {
+    "item-card": "../../components/item-card/item-card"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(cd D:\\\\AICode\\\\MaFaGame\\\\MaFaWeb\\\\assets\\\\icons:*)",
+      "Bash(cd D:\\\\AICode\\\\MaFaGame\\\\MaFaWeb\\\\assets\\\\icons\\\\items:*)",
+      "Bash(cd:*)",
+      "Bash(sort:*)",
+      "mcp__filesystem__directory_tree",
+      "Bash(gh repo:*)",
+      "mcp__github__search_repositories",
+      "mcp__github__search_users",
+      "mcp__filesystem__list_allowed_directories",
+      "Bash(head:*)",
+      "mcp__github__get_file_contents",
+      "Bash(curl:*)",
+      "Bash(env:*)",
+      "Bash(node:*)",
+      "Bash(find D:\\\\AICode\\\\MaFaGame\\\\MaFaWeb:*)",
+      "Bash(find D:\\\\AICode\\\\MaFaGame\\\\MaFaWeb\\\\pages:*)",
+      "Bash(dir:*)",
+      "Bash(copy:*)",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__read_text_file",
+      "Bash(gh pr:*)",
+      "Bash(npm install:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)",
+      "mcp__filesystem__read_multiple_files"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "sqlite"
+  ]
+}

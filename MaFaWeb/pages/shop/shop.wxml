@@ -1,0 +1,96 @@
+<!-- 商城页面 -->
+<view class="container">
+  <view class="panel">
+    <view class="panel-title">🏪 药剂商城</view>
+
+    <!-- 金币显示 -->
+    <view class="gold-display">
+      <text class="text-small">当前金币: </text>
+      <text class="text-primary text-bold text-large">{{hero.gold}}</text>
+    </view>
+
+    <!-- 分类标签 -->
+    <view class="category-tabs">
+      <view
+        class="category-tab {{currentCategory === 'all' ? 'active' : ''}}"
+        bindtap="switchCategory"
+        data-category="all"
+      >
+        全部
+      </view>
+      <view
+        class="category-tab {{currentCategory === 'potion' ? 'active' : ''}}"
+        bindtap="switchCategory"
+        data-category="potion"
+      >
+        药水
+      </view>
+      <view
+        class="category-tab {{currentCategory === 'weapon' ? 'active' : ''}}"
+        bindtap="switchCategory"
+        data-category="weapon"
+      >
+        武器
+      </view>
+      <view
+        class="category-tab {{currentCategory === 'armor' ? 'active' : ''}}"
+        bindtap="switchCategory"
+        data-category="armor"
+      >
+        防具
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="shop-items">
+    <view
+      class="shop-item {{getRarityClass(item.rarity)}} animate-slide-in-right"
+      wx:for="{{shopItems}}"
+      wx:key="id"
+      style="animation-delay: {{index * 0.05}}s"
+      bindtap="showItemDetail"
+      data-item="{{item}}"
+    >
+      <!-- 药水图标 -->
+      <block wx:if="{{item.type === 'potion'}}">
+        <view class="item-icon {{item.subType}}-potion">
+          <view class="potion-liquid"></view>
+          <view class="bubbles">
+            <view class="bubble"></view>
+            <view class="bubble"></view>
+            <view class="bubble"></view>
+          </view>
+          <text class="potion-label">{{item.icon}}</text>
+        </view>
+      </block>
+
+      <!-- 装备图标 -->
+      <block wx:else>
+        <view class="item-icon equipment-icon">
+          <text class="equip-emoji">{{item.icon}}</text>
+        </view>
+      </block>
+
+      <!-- 物品信息 -->
+      <view class="item-info">
+        <view class="item-name-row">
+          <text class="item-name">{{item.name}}</text>
+          <text wx:if="{{item.isSet}}" class="set-badge">套装</text>
+        </view>
+        <text class="item-desc text-small text-secondary">{{item.description}}</text>
+        <!-- 装备显示等级和属性 -->
+        <view wx:if="{{item.level}}" class="item-level text-small">等级需求: {{item.level}}</view>
+        <view wx:if="{{item.attack}}" class="item-stat text-small text-primary">攻击: +{{item.attack}}</view>
+        <view wx:if="{{item.defense}}" class="item-stat text-small text-primary">防御: +{{item.defense}}</view>
+        <text class="item-rarity {{getRarityClass(item.rarity)}}">{{getRarityName(item.rarity)}}</text>
+      </view>
+
+      <!-- 价格和购买按钮 -->
+      <view class="item-purchase">
+        <text class="item-price text-primary">{{item.price}}</text>
+        <text class="text-small">金币</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,78 @@
+// Simple icon path mapping for 27 basic icon types
+// Quality/level color distinction handled by CSS classes
+
+var getSimpleIconPath = function(item) {
+  if (!item) return '/assets/icons/items/item.png'
+
+  var type = item.type
+  var subType = item.subType
+  var iconKey = item.iconKey
+
+  // Potions - use subType
+  if (type === 'potion') {
+    if (subType === 'hp') return '/assets/icons/items/potion_hp.png'
+    if (subType === 'mp') return '/assets/icons/items/potion_mp.png'
+    if (subType === 'dual') return '/assets/icons/items/potion_dual.png'
+    return '/assets/icons/items/potion.png'
+  }
+
+  // Weapons - all use weapon.png
+  if (type === 'weapon' || iconKey === 'weapon') {
+    // Check specific weapon types if needed
+    if (iconKey === 'weapon_axe') return '/assets/icons/items/weapon_axe.png'
+    if (iconKey === 'weapon_bow') return '/assets/icons/items/weapon_bow.png'
+    if (iconKey === 'weapon_staff') return '/assets/icons/items/weapon_staff.png'
+    if (iconKey === 'weapon_dagger') return '/assets/icons/items/weapon_dagger.png'
+    return '/assets/icons/items/weapon.png'
+  }
+
+  // Equipment - use slot-based icons
+  if (type === 'equipment') {
+    // Armor types
+    if (iconKey === 'helmet') return '/assets/icons/items/helmet.png'
+    if (iconKey === 'armor') return '/assets/icons/items/armor_chest.png'
+    if (iconKey === 'shield') return '/assets/icons/items/shield.png'
+
+    // Accessories
+    if (iconKey === 'necklace') return '/assets/icons/items/necklace.png'
+    if (iconKey === 'ring') return '/assets/icons/items/ring.png'
+    if (iconKey === 'belt') return '/assets/icons/items/belt.png'
+    if (iconKey === 'cloak') return '/assets/icons/items/cloak.png'
+    if (iconKey === 'bracer') return '/assets/icons/items/bracer.png'
+    if (iconKey === 'amulet') return '/assets/icons/items/amulet.png'
+    if (iconKey === 'gem') return '/assets/icons/items/gem.png'
+    if (iconKey === 'earring') return '/assets/icons/items/earring.png'
+    if (iconKey === 'mount') return '/assets/icons/items/mount.png'
+
+    return '/assets/icons/items/armor_chest.png'
+  }
+
+  // Default
+  return '/assets/icons/items/item.png'
+}
+
+// Get rarity class name for styling
+var getRarityClass = function(rarity) {
+  if (rarity === 'common') return 'tag-common'
+  if (rarity === 'uncommon') return 'tag-uncommon'
+  if (rarity === 'rare') return 'tag-rare'
+  if (rarity === 'epic') return 'tag-epic'
+  if (rarity === 'legendary') return 'tag-legendary'
+  return 'tag-common'
+}
+
+// Get rarity display name
+var getRarityName = function(rarity) {
+  if (rarity === 'common') return 'common'
+  if (rarity === 'uncommon') return 'uncommon'
+  if (rarity === 'rare') return 'rare'
+  if (rarity === 'epic') return 'epic'
+  if (rarity === 'legendary') return 'legendary'
+  return 'common'
+}
+
+module.exports = {
+  getSimpleIconPath: getSimpleIconPath,
+  getRarityClass: getRarityClass,
+  getRarityName: getRarityName
+}

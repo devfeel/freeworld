@@ -1,0 +1,321 @@
+/* pages/skills/skills.wxss */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1410 0%, #0d0a08 100%);
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 顶部信息栏 */
+.header-info {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(45, 35, 25, 0.95) 0%, rgba(30, 22, 15, 0.95) 100%);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 12px;
+  color: #888;
+}
+
+.info-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d4af37;
+}
+
+/* 已装备技能 */
+.equipped-section {
+  background: linear-gradient(135deg, rgba(45, 35, 25, 0.95) 0%, rgba(30, 22, 15, 0.95) 100%);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #d4af37;
+  margin-bottom: 12px;
+}
+
+.equipped-skills {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.equipped-slot {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.equipped-slot.filled {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(30, 20, 15, 0.7) 100%);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.equipped-slot.empty {
+  border-style: dashed;
+}
+
+.equipped-slot .skill-icon {
+  font-size: 28px;
+  margin-bottom: 2px;
+}
+
+.equipped-slot .skill-level {
+  font-size: 10px;
+  color: #d4af37;
+}
+
+.equipped-slot .empty-text {
+  font-size: 24px;
+  color: #666;
+}
+
+/* 分类标签 */
+.category-tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.tab {
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #888;
+  border-radius: 16px;
+  transition: all 0.2s;
+}
+
+.tab.active {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(212, 175, 55, 0.1) 100%);
+  color: #d4af37;
+  font-weight: bold;
+}
+
+/* 技能列表 */
+.skills-list {
+  flex: 1;
+  height: calc(100vh - 300px);
+}
+
+.skill-category {
+  margin-bottom: 16px;
+}
+
+.category-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #d4af37;
+  padding: 8px 12px;
+  background: rgba(212, 175, 55, 0.1);
+  border-left: 3px solid #d4af37;
+  margin-bottom: 8px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+
+.skill-item.learned {
+  background: linear-gradient(135deg, rgba(45, 35, 25, 0.6) 0%, rgba(30, 22, 15, 0.7) 100%);
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+.skill-item.locked {
+  opacity: 0.6;
+}
+
+.skill-icon-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.skill-icon {
+  font-size: 28px;
+}
+
+.skill-type-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  padding: 1px 6px;
+  font-size: 9px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.skill-type-badge.active {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.skill-type-badge.passive {
+  background: #3498db;
+  color: #fff;
+}
+
+.skill-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.skill-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.skill-level-tag {
+  padding: 2px 8px;
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  font-size: 11px;
+  color: #d4af37;
+}
+
+.skill-lock {
+  font-size: 11px;
+  color: #888;
+}
+
+.skill-desc {
+  font-size: 12px;
+  color: #aaa;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.skill-costs {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.cost-item {
+  font-size: 11px;
+  color: #3498db;
+}
+
+/* 技能操作按钮 */
+.skill-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: 8px;
+}
+
+.btn-learn, .btn-upgrade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+  border-radius: 8px;
+  min-width: 56px;
+}
+
+.btn-upgrade.max {
+  background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+}
+
+.btn-text {
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.btn-cost {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-equip {
+  padding: 4px 10px;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 6px;
+  font-size: 11px;
+  color: #d4af37;
+  text-align: center;
+}
+
+.btn-equip.equipped {
+  background: rgba(231, 76, 60, 0.2);
+  border-color: rgba(231, 76, 60, 0.4);
+  color: #e74c3c;
+}
+
+.btn-max {
+  padding: 6px 12px;
+  background: rgba(149, 165, 166, 0.3);
+  border-radius: 8px;
+  font-size: 11px;
+  color: #888;
+  text-align: center;
+}
+
+.btn-locked {
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.locked-text {
+  font-size: 10px;
+  color: #666;
+}
+
+.bottom-padding {
+  height: 40px;
+}

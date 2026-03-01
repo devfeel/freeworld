@@ -1,0 +1,136 @@
+<!--pages/skills/skills.wxml-->
+<view class="container">
+  <!-- 顶部信息栏 -->
+  <view class="header-info">
+    <view class="info-item">
+      <text class="info-label">💰 金币</text>
+      <text class="info-value">{{hero.gold || 0}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">📊 等级</text>
+      <text class="info-value">Lv.{{hero.level || 1}}</text>
+    </view>
+  </view>
+
+  <!-- 已装备技能 -->
+  <view class="equipped-section" wx:if="{{equippedSkills.length > 0}}">
+    <view class="section-title">⚡ 已装备技能</view>
+    <view class="equipped-skills">
+      <view class="equipped-slot {{item ? 'filled' : 'empty'}}"
+            wx:for="{{equippedSkills}}"
+            wx:for-index="index"
+            wx:key="index"
+            bindtap="onEquippedSlotTap"
+            data-index="{{index}}">
+        <block wx:if="{{item}}">
+          <text class="skill-icon">{{item.icon}}</text>
+          <text class="skill-level">Lv.{{item.level}}</text>
+        </block>
+        <text wx:else class="empty-text">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分类标签 -->
+  <view class="category-tabs">
+    <view class="tab {{currentCategory === 'all' ? 'active' : ''}}"
+          bindtap="switchCategory"
+          data-category="all">全部</view>
+    <view class="tab {{currentCategory === 'warrior' ? 'active' : ''}}"
+          bindtap="switchCategory"
+          data-category="warrior">战士</view>
+    <view class="tab {{currentCategory === 'mage' ? 'active' : ''}}"
+          bindtap="switchCategory"
+          data-category="mage">法师</view>
+    <view class="tab {{currentCategory === 'ranger' ? 'active' : ''}}"
+          bindtap="switchCategory"
+          data-category="ranger">游侠</view>
+    <view class="tab {{currentCategory === 'common' ? 'active' : ''}}"
+          bindtap="switchCategory"
+          data-category="common">通用</view>
+  </view>
+
+  <!-- 技能列表 -->
+  <scroll-view class="skills-list" scroll-y="true">
+    <view class="skill-category" wx:for="{{categorizedSkills}}" wx:key="category">
+      <view class="category-title">{{item.categoryName}}</view>
+
+      <view class="skill-item {{skill.learned ? 'learned' : ''}} {{!skill.canLearn ? 'locked' : ''}}"
+            wx:for="{{item.skills}}"
+            wx:for-item="skill"
+            wx:key="id"
+            bindtap="onSkillTap"
+            data-skill="{{skill}}">
+
+        <!-- 技能图标 -->
+        <view class="skill-icon-wrap">
+          <text class="skill-icon">{{skill.icon}}</text>
+          <view class="skill-type-badge {{skill.type}}">
+            {{skill.type === 'active' ? '主动' : '被动'}}
+          </view>
+        </view>
+
+        <!-- 技能信息 -->
+        <view class="skill-info">
+          <view class="skill-header">
+            <text class="skill-name">{{skill.name}}</text>
+            <view class="skill-level-tag" wx:if="{{skill.learned}}">
+              Lv.{{skill.level}}/{{skill.maxLevel}}
+            </view>
+            <view class="skill-lock" wx:elif="{{!skill.canLearn}}">
+              🔒 Lv.{{skill.unlockLevel}}
+            </view>
+          </view>
+
+          <text class="skill-desc">{{skill.description}}</text>
+
+          <!-- 技能消耗 -->
+          <view class="skill-costs" wx:if="{{skill.learned}}">
+            <text class="cost-item" wx:if="{{skill.mpCost > 0}}">💧{{skill.mpCost}}MP</text>
+            <text class="cost-item" wx:if="{{skill.cooldown > 0}}">⏱️{{skill.cooldown}}回合</text>
+          </view>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="skill-actions">
+          <!-- 已学会 -->
+          <block wx:if="{{skill.learned}}">
+            <view class="btn-upgrade {{skill.level >= skill.maxLevel ? 'max' : ''}}"
+                  wx:if="{{skill.level < skill.maxLevel}}"
+                  catchtap="onUpgradeTap"
+                  data-skill="{{skill}}">
+              <text class="btn-text">升级</text>
+              <text class="btn-cost">{{skill.upgradeCost}}💰</text>
+            </view>
+            <view class="btn-max" wx:else>已满级</view>
+
+            <!-- 装备/卸下按钮（仅主动技能） -->
+            <view class="btn-equip {{skill.equipped ? 'equipped' : ''}}"
+                  wx:if="{{skill.type === 'active'}}"
+                  catchtap="onEquipTap"
+                  data-skill="{{skill}}">
+              {{skill.equipped ? '卸下' : '装备'}}
+            </view>
+          </block>
+
+          <!-- 未学会且可学习 -->
+          <view class="btn-learn"
+                wx:elif="{{skill.canLearn}}"
+                catchtap="onLearnTap"
+                data-skill="{{skill}}">
+            <text class="btn-text">学习</text>
+            <text class="btn-cost">{{skill.unlockCost}}💰</text>
+          </view>
+
+          <!-- 未解锁 -->
+          <view class="btn-locked" wx:else>
+            <text class="locked-text">Lv.{{skill.unlockLevel}}解锁</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-padding"></view>
+  </scroll-view>
+</view>

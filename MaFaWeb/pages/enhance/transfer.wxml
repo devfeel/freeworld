@@ -1,0 +1,106 @@
+<!-- pages/enhance/transfer.wxml -->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="title">🔄 强化转移</text>
+    <view class="currency">
+      <text class="yuanbao">💎 {{yuanbao}}</text>
+    </view>
+  </view>
+
+  <!-- 说明 -->
+  <view class="tips">
+    <text>将强化等级从旧装备转移到新装备</text>
+    <text class="sub-tips">（同类型装备才能转移，高等级转移可能有损耗）</text>
+  </view>
+
+  <!-- 源装备 -->
+  <view class="item-section" wx:if="{{sourceItem}}">
+    <text class="section-label">从</text>
+    <view class="item-card source">
+      <view class="item-icon" style="border-color: {{(sourceItem.enhance && sourceItem.enhance.color) || '#888'}}">
+        <text class="item-emoji">{{sourceItem.subType === 'dao' ? '🔪' : sourceItem.subType === 'jian' ? '🗡️' : sourceItem.subType === 'axe' ? '🪓' : sourceItem.subType === 'staff' ? '🪄' : sourceItem.subType === 'bow' ? '🏹' : '⚔️'}}</text>
+        <view class="enhance-badge" style="background: {{(sourceItem.enhance && sourceItem.enhance.color) || '#888'}}">
+          +{{(sourceItem.enhance && sourceItem.enhance.level) || 0}}
+        </view>
+      </view>
+      <view class="item-info">
+        <text class="item-name">{{sourceItem.name}}</text>
+        <text class="item-level">Lv.{{sourceItem.level}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 箭头 -->
+  <view class="arrow-down" wx:if="{{sourceItem}}">
+    <text>↓</text>
+    <text class="transfer-text">转移强化等级</text>
+  </view>
+
+  <!-- 目标装备 -->
+  <view class="item-section">
+    <text class="section-label">到</text>
+    <view class="item-card target {{!targetItem ? 'empty' : ''}}" bindtap="selectTarget">
+      <block wx:if="{{targetItem}}">
+        <view class="item-icon">
+          <text class="item-emoji">{{targetItem.subType === 'dao' ? '🔪' : targetItem.subType === 'jian' ? '🗡️' : targetItem.subType === 'axe' ? '🪓' : targetItem.subType === 'staff' ? '🪄' : targetItem.subType === 'bow' ? '🏹' : '⚔️'}}</text>
+        </view>
+        <view class="item-info">
+          <text class="item-name">{{targetItem.name}}</text>
+          <text class="item-level">Lv.{{targetItem.level}}</text>
+        </view>
+      </block>
+      <block wx:else>
+        <text class="select-hint">点击选择目标装备</text>
+      </block>
+    </view>
+  </view>
+
+  <!-- 预览信息 -->
+  <view class="preview-section" wx:if="{{canTransfer}}">
+    <view class="preview-row">
+      <text>转移后等级</text>
+      <text class="highlight">+{{targetLevel}}</text>
+    </view>
+    <view class="preview-row" wx:if="{{levelLost > 0}}">
+      <text>等级损耗</text>
+      <text class="warning">-{{levelLost}} (高等级转移损耗)</text>
+    </view>
+    <view class="preview-row">
+      <text>消耗</text>
+      <text class="cost">💎 {{scrollPrice}} 元宝</text>
+    </view>
+  </view>
+
+  <!-- 错误提示 -->
+  <view class="error-section" wx:if="{{!canTransfer && reason}}">
+    <text class="error-text">⚠️ {{reason}}</text>
+  </view>
+
+  <!-- 卷轴状态 -->
+  <view class="scroll-status" wx:if="{{!hasScroll}}">
+    <text>未拥有强化转移卷轴</text>
+    <text class="buy-link" bindtap="goToShop">去商城购买 →</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-section">
+    <button class="btn-transfer {{!canTransfer || isTransferring || !hasScroll ? 'disabled' : ''}}"
+            bindtap="doTransfer"
+            disabled="{{!canTransfer || isTransferring || !hasScroll}}">
+      <text wx:if="{{!isTransferring}}">确认转移</text>
+      <text wx:else>转移中...</text>
+    </button>
+  </view>
+
+  <!-- 结果弹窗 -->
+  <view class="result-modal" wx:if="{{showResult}}">
+    <view class="result-content {{resultSuccess ? 'success' : 'fail'}}">
+      <text class="result-icon">{{resultSuccess ? '🎉' : '❌'}}</text>
+      <text class="result-title">{{resultSuccess ? '转移成功！' : '转移失败'}}</text>
+      <text class="result-message">{{resultMessage}}</text>
+      <button class="btn-confirm" bindtap="closeResult">确定</button>
+    </view>
+  </view>
+</view>

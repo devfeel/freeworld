@@ -1,0 +1,152 @@
+<!-- 角色界面 -->
+<view class="container">
+  <view class="panel">
+    <view class="panel-title">👤 角色详情</view>
+  </view>
+
+  <!-- 角色基本信息 -->
+  <view class="panel">
+    <view class="hero-header">
+      <text class="hero-name-large">{{hero.name}}</text>
+      <text class="hero-level-large">Lv.{{hero.level}}</text>
+    </view>
+
+    <!-- 生命条 -->
+    <view class="progress-bar hp-bar">
+      <view class="progress-fill" style="width: {{hpPercent}}%"></view>
+    </view>
+    <view class="text-small text-center">
+      HP: {{hero.hp}} / {{hero.maxHp}}
+    </view>
+
+    <!-- 经验条 -->
+    <view class="progress-bar exp-bar">
+      <view class="progress-fill" style="width: {{expPercent}}%"></view>
+    </view>
+    <view class="text-small text-center">
+      EXP: {{hero.exp}} / {{hero.maxExp}}
+    </view>
+  </view>
+
+  <!-- 属性面板 -->
+  <view class="panel">
+    <view class="panel-title">📊 角色属性</view>
+    <view class="stats-grid">
+      <view class="stat-row">
+        <text class="stat-label">基础攻击</text>
+        <text class="stat-value">{{hero.attack}}</text>
+      </view>
+      <view class="stat-row">
+        <text class="stat-label">基础防御</text>
+        <text class="stat-value">{{hero.defense}}</text>
+      </view>
+      <view class="stat-row">
+        <text class="stat-label">速度</text>
+        <text class="stat-value">{{hero.speed}}</text>
+      </view>
+      <view class="stat-row divider"></view>
+      <view class="stat-row">
+        <text class="stat-label text-primary">总攻击力</text>
+        <text class="stat-value text-primary">{{totalStats.attack}}</text>
+      </view>
+      <view class="stat-row">
+        <text class="stat-label text-primary">总防御力</text>
+        <text class="stat-value text-primary">{{totalStats.defense}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 技能面板 -->
+  <view class="panel">
+    <view class="panel-title">⚔️ 技能列表</view>
+    <view class="skills-list">
+      <view class="skill-item" wx:for="{{hero.skills}}" wx:key="id">
+        <view class="skill-info">
+          <text class="skill-name">{{item.name}}</text>
+          <text class="skill-level">Lv.{{item.level}}</text>
+        </view>
+        <view class="skill-details">
+          <text class="skill-desc text-small">
+            {{item.type === 'attack' ? '攻击技能' : '其他'}} |
+            伤害倍率: {{item.damage * 100}}% |
+            MP消耗: {{item.mpCost}}
+            <text wx:if="{{item.maxCooldown > 0}}"> | 冷却: {{item.maxCooldown}}回合</text>
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 装备面板 -->
+  <view class="panel">
+    <view class="panel-title">🛡️ 装备</view>
+    <view class="equipment-grid">
+      <view class="equipment-slot-large" bindtap="showEquipMenu" data-slot="helmet">
+        <text class="slot-name">头盔</text>
+        <text class="slot-item {{hero.equipment.helmet ? getRarityClass(hero.equipment.helmet.rarity) : ''}}">
+          {{hero.equipment.helmet ? hero.equipment.helmet.name : '空'}}
+        </text>
+        <text wx:if="{{hero.equipment.helmet}}" class="slot-stats text-small">
+          防御+{{hero.equipment.helmet.defense}}
+        </text>
+      </view>
+      <view class="equipment-slot-large" bindtap="showEquipMenu" data-slot="armor">
+        <text class="slot-name">盔甲</text>
+        <text class="slot-item {{hero.equipment.armor ? getRarityClass(hero.equipment.armor.rarity) : ''}}">
+          {{hero.equipment.armor ? hero.equipment.armor.name : '空'}}
+        </text>
+        <text wx:if="{{hero.equipment.armor}}" class="slot-stats text-small">
+          防御+{{hero.equipment.armor.defense}}
+        </text>
+      </view>
+      <view class="equipment-slot-large" bindtap="showEquipMenu" data-slot="shield">
+        <text class="slot-name">盾牌</text>
+        <text class="slot-item {{hero.equipment.shield ? getRarityClass(hero.equipment.shield.rarity) : ''}}">
+          {{hero.equipment.shield ? hero.equipment.shield.name : '空'}}
+        </text>
+        <text wx:if="{{hero.equipment.shield}}" class="slot-stats text-small">
+          防御+{{hero.equipment.shield.defense}}
+        </text>
+      </view>
+      <view class="equipment-slot-large" bindtap="showEquipMenu" data-slot="weapon">
+        <text class="slot-name">武器</text>
+        <text class="slot-item {{hero.equipment.weapon ? getRarityClass(hero.equipment.weapon.rarity) : ''}}">
+          {{hero.equipment.weapon ? hero.equipment.weapon.name : '空'}}
+        </text>
+        <text wx:if="{{hero.equipment.weapon}}" class="slot-stats text-small">
+          攻击+{{hero.equipment.weapon.attack}}
+        </text>
+      </view>
+      <view class="equipment-slot-large" bindtap="showEquipMenu" data-slot="necklace">
+        <text class="slot-name">项链</text>
+        <text class="slot-item {{hero.equipment.necklace ? getRarityClass(hero.equipment.necklace.rarity) : ''}}">
+          {{hero.equipment.necklace ? hero.equipment.necklace.name : '空'}}
+        </text>
+        <text wx:if="{{hero.equipment.necklace}}" class="slot-stats text-small">
+          {{hero.equipment.necklace.attack ? '攻击+' + hero.equipment.necklace.attack : ''}}
+          {{hero.equipment.necklace.defense ? '防御+' + hero.equipment.necklace.defense : ''}}
+        </text>
+      </view>
+      <view class="equipment-slot-large" bindtap="showEquipMenu" data-slot="ring1">
+        <text class="slot-name">戒指1</text>
+        <text class="slot-item {{hero.equipment.ring1 ? getRarityClass(hero.equipment.ring1.rarity) : ''}}">
+          {{hero.equipment.ring1 ? hero.equipment.ring1.name : '空'}}
+        </text>
+        <text wx:if="{{hero.equipment.ring1}}" class="slot-stats text-small">
+          {{hero.equipment.ring1.attack ? '攻击+' + hero.equipment.ring1.attack : ''}}
+          {{hero.equipment.ring1.defense ? '防御+' + hero.equipment.ring1.defense : ''}}
+        </text>
+      </view>
+      <view class="equipment-slot-large" bindtap="showEquipMenu" data-slot="ring2">
+        <text class="slot-name">戒指2</text>
+        <text class="slot-item {{hero.equipment.ring2 ? getRarityClass(hero.equipment.ring2.rarity) : ''}}">
+          {{hero.equipment.ring2 ? hero.equipment.ring2.name : '空'}}
+        </text>
+        <text wx:if="{{hero.equipment.ring2}}" class="slot-stats text-small">
+          {{hero.equipment.ring2.attack ? '攻击+' + hero.equipment.ring2.attack : ''}}
+          {{hero.equipment.ring2.defense ? '防御+' + hero.equipment.ring2.defense : ''}}
+        </text>
+      </view>
+    </view>
+  </view>
+</view>

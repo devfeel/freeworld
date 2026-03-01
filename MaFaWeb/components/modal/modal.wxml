@@ -1,0 +1,30 @@
+<!-- 通用模态框组件 -->
+<view class="modal-overlay {{visible ? 'show' : ''}}" bindtap="onOverlayTap" wx:if="{{visible}}">
+  <view class="modal-container {{animation}}" catchtap="onContainerTap">
+    <!-- 标题栏 -->
+    <view class="modal-header" wx:if="{{title}}">
+      <text class="modal-title">{{title}}</text>
+      <view class="modal-close" bindtap="onClose" wx:if="{{showClose}}">
+        <text>×</text>
+      </view>
+    </view>
+
+    <!-- 内容区 -->
+    <view class="modal-body">
+      <slot></slot>
+    </view>
+
+    <!-- 按钮区 -->
+    <view class="modal-footer" wx:if="{{showFooter}}">
+      <button
+        class="btn btn-secondary"
+        bindtap="onCancel"
+        wx:if="{{showCancel}}"
+      >{{cancelText}}</button>
+      <button
+        class="btn btn-primary"
+        bindtap="onConfirm"
+      >{{confirmText}}</button>
+    </view>
+  </view>
+</view>

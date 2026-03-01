@@ -1,0 +1,198 @@
+<!-- 战斗界面 - 优化版 -->
+<view class="container safe-area-bottom" wx:if="{{!battleResult}}">
+  <!-- 敌人信息 -->
+  <view class="enemy-info-panel animate-fade-in" wx:if="{{battle && enemy}}">
+    <view class="enemy-header">
+      <text class="enemy-tag" wx:if="{{enemy.isBoss}}">BOSS</text>
+      <text class="enemy-name {{enemy.isBoss ? 'text-danger' : 'text-primary'}}">{{enemy.name}}</text>
+    </view>
+    <progress-bar
+      type="hp"
+      percent="{{enemyHpPercent}}"
+      text="{{battle.enemy.currentHp}}/{{enemy.hp}}"
+      className="enemy-hp-bar"
+    />
+  </view>
+
+  <!-- 战斗画面 -->
+  <canvas
+    type="2d"
+    id="battleCanvas"
+    class="battle-canvas animate-fade-in"
+    style="animation-delay: 0.1s"
+    bindready="onCanvasReady"
+  ></canvas>
+
+  <!-- 英雄信息 -->
+  <view class="hero-info-panel animate-fade-in" wx:if="{{battle}}" style="animation-delay: 0.2s">
+    <view class="hero-header">
+      <text class="hero-name text-primary">{{hero.name}}</text>
+      <view class="hero-level">Lv.{{hero.level || 1}}</view>
+    </view>
+    <view class="hero-bars">
+      <view class="bar-row">
+        <text class="bar-icon text-danger">❤️</text>
+        <progress-bar
+          type="hp"
+          percent="{{heroHpPercent}}"
+          text="{{battle.hero.hp}}/{{battle.hero.maxHp}}"
+          customStyle="flex: 1;"
+        />
+      </view>
+      <view class="bar-row">
+        <text class="bar-icon text-info">💧</text>
+        <progress-bar
+          type="mp"
+          percent="{{heroMpPercent}}"
+          text="{{battle.hero.mp}}/{{battle.hero.maxMp}}"
+          customStyle="flex: 1;"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 战斗日志 -->
+  <view class="panel battle-logs animate-slide-up" wx:if="{{battle && battle.logs.length > 0}}" style="animation-delay: 0.3s">
+    <view class="panel-title">📜 战斗日志</view>
+    <scroll-view scroll-y class="logs-container" scroll-top="{{logsScrollTop}}">
+      <view class="log-item {{item.type}}" wx:for="{{battle.logs}}" wx:key="time">
+        <text class="log-time">{{item.time}}</text>
+        <text class="log-message">{{item.message}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 操作面板 -->
+  <view class="panel control-panel animate-slide-up" wx:if="{{battle}}" style="animation-delay: 0.4s">
+    <!-- 回合信息 -->
+    <view class="turn-info">
+      <view class="turn-badge {{battle.turn === 'hero' ? 'hero-turn' : 'enemy-turn'}}">
+        <text class="turn-text">{{battle.turn === 'hero' ? '⚔️ 你的回合' : '👹 敌方回合'}}</text>
+      </view>
+
+      <!-- 自动战斗开关 -->
+      <view class="auto-battle-toggle">
+        <text class="toggle-label">自动</text>
+        <switch
+          class="battle-switch"
+          checked="{{isAutoBattle}}"
+          bindchange="toggleAutoBattle"
+          disabled="{{battle.turn !== 'hero'}}"
+          color="#d4a84c"
+        />
+      </view>
+    </view>
+
+    <!-- 技能按钮 -->
+    <view class="skills-row" wx:if="{{battle.turn === 'hero' && !isAutoBattle}}">
+      <view class="skill-slot {{item ? 'filled' : 'empty'}} {{item && item.cooldown > 0 ? 'cooldown' : ''}} {{item && battle.hero.mp < item.mpCost ? 'no-mp' : ''}}"
+            wx:for="{{equippedSkills}}"
+            wx:key="index"
+            bindtap="useSkill"
+            data-index="{{index}}"
+            data-skillid="{{item ? item.id : ''}}">
+        <block wx:if="{{item}}">
+          <text class="skill-icon">{{item.icon}}</text>
+          <text class="skill-name-small">{{item.name}}</text>
+          <view class="skill-cost" wx:if="{{item.mpCost > 0}}">
+            <text class="cost-text">{{item.mpCost}}</text>
+          </view>
+          <view class="cooldown-overlay" wx:if="{{item.cooldown > 0}}">
+            <text class="cooldown-text">{{item.cooldown}}</text>
+          </view>
+          <view class="no-mp-overlay" wx:if="{{battle.hero.mp < item.mpCost}}">
+            <text class="no-mp-text">MP不足</text>
+          </view>
+        </block>
+        <text wx:else class="empty-text">+</text>
+      </view>
+    </view>
+
+    <!-- 其他操作 -->
+    <view class="other-actions" wx:if="{{battle.turn === 'hero' && !isAutoBattle}}">
+      <button class="btn btn-secondary" bindtap="showPotionMenu" disabled="{{potions.length === 0}}">
+        <text>🧪 药水</text>
+      </button>
+      <button class="btn btn-primary" bindtap="heroAttack">
+        <text>⚔️ 普通攻击</text>
+      </button>
+      <button class="btn" bindtap="escape">
+        <text>🏃 逃跑</text>
+      </button>
+    </view>
+
+    <!-- 自动战斗提示 -->
+    <view class="auto-battle-info animate-pulse" wx:if="{{isAutoBattle}}">
+      <text class="auto-battle-text">🤖 自动战斗中...</text>
+    </view>
+  </view>
+</view>
+
+<!-- 战斗结果浮层 -->
+<view class="battle-result-overlay" wx:if="{{battleResult}}">
+  <view class="battle-result-modal {{battleResult.victory ? 'victory' : 'defeat'}}">
+    <view class="result-icon">{{battleResult.victory ? '🏆' : '💀'}}</view>
+    <view class="panel-title {{battleResult.victory ? 'text-success' : 'text-danger'}}">
+      {{battleResult.victory ? '战斗胜利！' : '战斗失败'}}
+    </view>
+
+    <view class="rewards" wx:if="{{battleResult.victory}}">
+      <view class="reward-item">
+        <text class="reward-icon">📈</text>
+        <text class="reward-label">经验</text>
+        <text class="reward-value text-primary">+{{battleResult.exp}}</text>
+      </view>
+      <view class="reward-item">
+        <text class="reward-icon">💰</text>
+        <text class="reward-label">金币</text>
+        <text class="reward-value text-warning">+{{battleResult.gold}}</text>
+      </view>
+      <view class="reward-item" wx:if="{{battleResult.yuanbao > 0}}">
+        <text class="reward-icon">🪙</text>
+        <text class="reward-label">元宝</text>
+        <text class="reward-value text-secondary">+{{battleResult.yuanbao}}</text>
+      </view>
+      <view class="reward-item" wx:if="{{battleResult.items.length > 0}}">
+        <text class="reward-icon">🎁</text>
+        <text class="reward-label">物品</text>
+        <text class="reward-value text-success">{{battleResult.items.length}} 件</text>
+      </view>
+    </view>
+
+    <view class="result-actions">
+      <button wx:if="{{!isLastMonster}}" class="btn btn-primary hover-scale" bindtap="nextBattle">
+        <text>👹 下一战</text>
+      </button>
+      <button class="btn hover-scale" bindtap="returnToDungeon">
+        <text>{{battleResult.victory ? '🏠 返回地下城' : '🔙 返回'}}</text>
+      </button>
+    </view>
+  </view>
+</view>
+
+<!-- 药水选择弹窗 -->
+<view class="modal-overlay" wx:if="{{showPotionModal}}" bindtap="closePotionModal">
+  <view class="modal-content potion-modal" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">🧪 选择药水</text>
+      <view class="modal-close" bindtap="closePotionModal">✕</view>
+    </view>
+    <view class="modal-body">
+      <view class="potion-list">
+        <view class="potion-item" wx:for="{{potions}}" wx:key="index" bindtap="usePotion" data-index="{{index}}">
+          <view class="potion-icon">{{item.icon}}</view>
+          <view class="potion-info">
+            <text class="potion-name">{{item.name}}</text>
+            <text class="potion-desc">{{item.description}}</text>
+          </view>
+          <view class="potion-count">
+            <text>x{{item.quantity}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty-potions" wx:if="{{potions.length === 0}}">
+        <text class="text-muted">没有可用的药水</text>
+      </view>
+    </view>
+  </view>
+</view>

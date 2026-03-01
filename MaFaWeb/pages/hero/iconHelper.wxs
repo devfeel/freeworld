@@ -1,0 +1,51 @@
+// Icon path helper function
+function getItemIconPath(item) {
+  if (!item) return '/assets/icons/items/item.png'
+
+  // Weapons
+  if (item.type === 'weapon') {
+    if (item.iconKey === 'weapon_sword') return '/assets/icons/items/weapon_sword.png'
+    if (item.iconKey === 'weapon_axe') return '/assets/icons/items/weapon_axe.png'
+    if (item.iconKey === 'weapon_bow') return '/assets/icons/items/weapon_bow.png'
+    if (item.iconKey === 'weapon_staff') return '/assets/icons/items/weapon_staff.png'
+    if (item.iconKey === 'weapon_dagger') return '/assets/icons/items/weapon_dagger.png'
+  }
+
+  // Armor
+  if (item.type === 'armor') {
+    if (item.iconKey === 'helmet') return '/assets/icons/items/helmet.png'
+    if (item.iconKey === 'armor_chest') return '/assets/icons/items/armor_chest.png'
+    if (item.iconKey === 'armor_legs') return '/assets/icons/items/armor_legs.png'
+    if (item.iconKey === 'armor_boots') return '/assets/icons/items/armor_boots.png'
+    if (item.iconKey === 'armor_gloves') return '/assets/icons/items/armor_gloves.png'
+  }
+
+  // Shield
+  if (item.iconKey === 'shield') return '/assets/icons/items/shield.png'
+
+  // Accessories
+  if (item.type === 'accessory') {
+    if (item.iconKey === 'necklace') return '/assets/icons/items/necklace.png'
+    if (item.iconKey === 'ring_left' || item.iconKey === 'ring_right') return '/assets/icons/items/ring.png'
+    if (item.iconKey === 'belt') return '/assets/icons/items/belt.png'
+    if (item.iconKey === 'cloak') return '/assets/icons/items/cloak.png'
+    if (item.iconKey === 'bracer') return '/assets/icons/items/bracer.png'
+    if (item.iconKey === 'earring') return '/assets/icons/items/earring.png'
+    if (item.iconKey === 'amulet') return '/assets/icons/items/amulet.png'
+    if (item.iconKey === 'gem') return '/assets/icons/items/gem.png'
+  }
+
+  // Potions
+  if (item.type === 'potion') {
+    if (item.subType === 'hp') return '/assets/icons/items/potion_hp.png'
+    if (item.subType === 'mp') return '/assets/icons/items/potion_mp.png'
+    if (item.subType === 'dual') return '/assets/icons/items/potion_dual.png'
+  }
+
+  // Default
+  return '/assets/icons/items/item.png'
+}
+
+module.exports = {
+  getItemIconPath: getItemIconPath
+}

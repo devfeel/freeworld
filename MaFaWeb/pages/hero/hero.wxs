@@ -1,0 +1,86 @@
+// Item Icon Mapping - Replace with actual image paths
+// NOTE: This is a simplified version due to WXS limitations.
+// In production environments, consider moving these mappings to JS files
+// and passing them as properties to WXML components when possible.
+var itemIconMap = {
+  // Weapon Icons
+  'weapon_sword': '/assets/icons/items/weapon_sword.png',
+  'weapon_axe': '/assets/icons/items/weapon_axe.png',
+  'weapon_bow': '/assets/icons/items/weapon_bow.png',
+  'weapon_staff': '/assets/icons/items/weapon_staff.png',
+  'weapon_dagger': '/assets/icons/items/weapon_dagger.png',
+
+  // Equipment Icons
+  'helmet': '/assets/icons/items/helmet.png',
+  'armor_chest': '/assets/icons/items/armor_chest.png',
+  'armor_legs': '/assets/icons/items/armor_legs.png',
+  'armor_boots': '/assets/icons/items/armor_boots.png',
+  'armor_gloves': '/assets/icons/items/armor_gloves.png',
+  'shield': '/assets/icons/items/shield.png',
+  'necklace': '/assets/icons/items/necklace.png',
+  'ring': '/assets/icons/items/ring.png',
+  'belt': '/assets/icons/items/belt.png',
+  'cloak': '/assets/icons/items/cloak.png',
+  'bracer': '/assets/icons/items/bracer.png',
+  'earring': '/assets/icons/items/earring.png',
+  'amulet': '/assets/icons/items/amulet.png',
+  'gem': '/assets/icons/items/gem.png',
+
+  // Potion Icons
+  'potion_hp': '/assets/icons/items/potion_hp.png',
+  'potion_mp': '/assets/icons/items/potion_mp.png',
+  'potion_dual': '/assets/icons/items/potion_dual.png'
+}
+
+var getItemTypeIcon = function(item) {
+  if (!item) return '/assets/icons/task.png'
+
+  // Use iconKey field first
+  if (item.iconKey && itemIconMap[item.iconKey]) {
+    return itemIconMap[item.iconKey]
+  }
+
+  // Fallback to emoji
+  if (item.type === 'potion') {
+    if (item.subType === 'hp') return '🧪'
+    if (item.subType === 'mp') return '💧'
+    if (item.subType === 'dual') return '⭐'
+    return '🧪'
+  }
+
+  if (item.type === 'weapon') return '⚔️'
+  if (item.type === 'armor') return '🛡️'
+  if (item.type === 'accessory') {
+    if (item.subType === 'helmet') return '🪖'
+    if (item.subType === 'necklace') return '📿'
+    if (item.subType === 'shield') return '🛡️'
+    if (item.subType === 'ring') return '💍'
+    return '💎'
+  }
+
+  return '/assets/icons/task.png'
+}
+
+var getRarityClass = function(rarity) {
+  if (rarity === 'common') return 'tag-common'
+  if (rarity === 'uncommon') return 'tag-uncommon'
+  if (rarity === 'rare') return 'tag-rare'
+  if (rarity === 'epic') return 'tag-epic'
+  if (rarity === 'legendary') return 'tag-legendary'
+  return 'tag-common'
+}
+
+var getRarityName = function(rarity) {
+  if (rarity === 'common') return 'common'
+  if (rarity === 'uncommon') return 'uncommon'
+  if (rarity === 'rare') return 'rare'
+  if (rarity === 'epic') return 'epic'
+  if (rarity === 'legendary') return 'legendary'
+  return 'common'
+}
+
+module.exports = {
+  getItemTypeIcon: getItemTypeIcon,
+  getRarityClass: getRarityClass,
+  getRarityName: getRarityName
+}

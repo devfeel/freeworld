@@ -1,0 +1,158 @@
+<!-- pages/enhance/enhance.wxml -->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="title">⚔️ 装备强化</text>
+    <view class="currency">
+      <text class="gold">💰 {{hero.gold || 0}}</text>
+      <text class="yuanbao">💎 {{yuanbao}}</text>
+    </view>
+  </view>
+
+  <!-- 装备信息卡片 -->
+  <view class="item-card" wx:if="{{item}}">
+    <view class="item-icon {{item.enhance.level > 0 ? 'enhanced' : ''}}"
+          style="border-color: {{item.enhance.color || '#888'}}">
+      <image wx:if="{{item.icon}}" src="{{item.icon}}" mode="aspectFit"/>
+      <text wx:else class="item-emoji">{{item.subType === 'dao' ? '🔪' : item.subType === 'jian' ? '🗡️' : item.subType === 'axe' ? '🪓' : item.subType === 'staff' ? '🪄' : item.subType === 'bow' ? '🏹' : '⚔️'}}</text>
+      <view wx:if="{{item.enhance.level > 0}}" class="enhance-badge" style="background: {{item.enhance.color}}">
+        +{{item.enhance.level}}
+      </view>
+    </view>
+
+    <view class="item-info">
+      <text class="item-name" style="color: {{item.enhance.color || '#fff'}}">
+        {{item.enhance.level > 0 ? '+' + item.enhance.level + ' ' : ''}}{{item.name}}
+      </text>
+      <text class="item-type">{{item.type === 'weapon' ? '武器' : '装备'}} Lv.{{item.level}}</text>
+    </view>
+
+    <!-- 基础属性 -->
+    <view class="base-stats">
+      <view class="stat-row" wx:if="{{item.attack}}">
+        <text>攻击: {{item.attack}}</text>
+        <text wx:if="{{item.enhance.bonusStats.attack}}" class="bonus-stat">+{{item.enhance.bonusStats.attack}}</text>
+      </view>
+      <view class="stat-row" wx:if="{{item.defense}}">
+        <text>防御: {{item.defense}}</text>
+        <text wx:if="{{item.enhance.bonusStats.defense}}" class="bonus-stat">+{{item.enhance.bonusStats.defense}}</text>
+      </view>
+      <view class="stat-row" wx:if="{{item.hpBonus}}">
+        <text>生命: {{item.hpBonus}}</text>
+        <text wx:if="{{item.enhance.bonusStats.hpBonus}}" class="bonus-stat">+{{item.enhance.bonusStats.hpBonus}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 强化信息 -->
+  <view class="enhance-info" wx:if="{{canEnhance}}">
+    <view class="info-row">
+      <text class="label">当前等级</text>
+      <text class="value current">+{{currentLevel}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">目标等级</text>
+      <text class="value target">+{{targetLevel}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">成功率</text>
+      <text class="value rate {{successRate >= 80 ? 'high' : successRate >= 50 ? 'medium' : 'low'}}">
+        {{successRate}}%
+      </text>
+    </view>
+    <view class="info-row">
+      <text class="label">强化费用</text>
+      <text class="value cost {{hero.gold < cost ? 'insufficient' : ''}}">
+        💰 {{cost}}
+      </text>
+    </view>
+
+    <!-- 失败警告 -->
+    <view class="warning" wx:if="{{failureWarning}}">
+      ⚠️ {{failureWarning}}
+    </view>
+  </view>
+
+  <!-- 属性预览 -->
+  <view class="preview-section" wx:if="{{statPreview.length > 0}}">
+    <text class="section-title">📊 属性预览</text>
+    <view class="preview-list">
+      <view class="preview-item" wx:for="{{statPreview}}" wx:key="key">
+        <text class="stat-name">{{item.name}}</text>
+        <view class="stat-values">
+          <text class="current">{{item.currentBonus}}</text>
+          <text class="arrow">→</text>
+          <text class="target">{{item.targetBonus}}</text>
+          <text class="diff {{item.diff > 0 ? 'positive' : ''}}">+{{item.diff}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 材料选择 -->
+  <view class="material-section" wx:if="{{materials.length > 0}}">
+    <text class="section-title">🧪 强化材料（可选）</text>
+    <view class="material-list">
+      <view class="material-item {{item.selected ? 'selected' : ''}}"
+            wx:for="{{materials}}"
+            wx:key="id"
+            bindtap="selectMaterial"
+            data-id="{{item.id}}">
+        <text class="material-icon">💎</text>
+        <text class="material-name">{{item.name}}</text>
+        <text class="material-bonus">+{{item.bonus}}%成功率</text>
+        <text class="material-count">x{{item.count}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 保护卷轴 -->
+  <view class="protect-section" wx:if="{{canProtect}}">
+    <view class="protect-option" bindtap="toggleProtect">
+      <checkbox checked="{{useProtect}}" disabled="{{!hasProtectScroll}}"/>
+      <text class="protect-text">使用保护卷轴（强化失败不降级）</text>
+      <text class="protect-count {{!hasProtectScroll ? 'insufficient' : ''}}">
+        {{hasProtectScroll ? '已拥有' : '未拥有'}}
+      </text>
+    </view>
+    <view wx:if="{{!hasProtectScroll}}" class="buy-hint" bindtap="goToShop">
+      💎 100 元宝购买 →
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-section">
+    <button class="btn-enhance {{!canEnhance || isEnhancing ? 'disabled' : ''}}"
+            bindtap="doEnhance"
+            disabled="{{!canEnhance || isEnhancing}}">
+      <text wx:if="{{!isEnhancing}}">开始强化</text>
+      <text wx:else>强化中...</text>
+    </button>
+
+    <button class="btn-transfer" bindtap="goToTransfer">
+      🔄 强化转移
+    </button>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tips" wx:if="{{!canEnhance}}">
+    <text>{{failureWarning}}</text>
+  </view>
+
+  <!-- 强化动画 -->
+  <view class="enhance-animation" wx:if="{{isEnhancing}}">
+    <view class="glow-effect"></view>
+    <text class="enhance-text">✨ 强化中 ✨</text>
+  </view>
+
+  <!-- 结果弹窗 -->
+  <view class="result-modal" wx:if="{{showResult}}">
+    <view class="result-content {{resultSuccess ? 'success' : 'fail'}}">
+      <text class="result-icon">{{resultSuccess ? '🎉' : '💔'}}</text>
+      <text class="result-title">{{resultSuccess ? '强化成功！' : '强化失败'}}</text>
+      <text class="result-message">{{resultMessage}}</text>
+      <button class="btn-confirm" bindtap="closeResult">确定</button>
+    </view>
+  </view>
+</view>

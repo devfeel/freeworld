@@ -1,0 +1,42 @@
+{
+  "project": {
+    "name": "玛法传说",
+    "type": "WeChat Mini Program RPG Game",
+    "language": "JavaScript",
+    "framework": "微信小程序原生开发"
+  },
+  "stack": {
+    "frontend": "WXML + WXSS + JavaScript",
+    "storage": "微信小程序本地存储",
+    "rendering": "Canvas API for pixel graphics"
+  },
+  "directories": {
+    "pages/": "游戏页面（战斗、角色、商店等）",
+    "utils/": "核心系统（战斗、绘制、工具）",
+    "data/": "游戏数据配置（怪物、装备、任务）",
+    "services/": "业务逻辑服务",
+    "assets/": "图片和图标资源"
+  },
+  "key_files": {
+    "app.js": "全局状态管理和核心方法",
+    "utils/battle-system.js": "回合制战斗系统",
+    "utils/canvas-draw.js": "像素风格绘制",
+    "data/items.js": "装备和物品数据",
+    "data/monsters.js": "怪物数据",
+    "data/tasks.js": "任务数据"
+  },
+  "commands": {
+    "dev": "使用微信开发者工具",
+    "lint": "无（微信小程序无npm脚本）"
+  },
+  "existing_systems": [
+    "回合制战斗系统",
+    "装备系统（含稀有度分级）",
+    "地下城探索",
+    "角色成长（等级/经验）",
+    "任务系统（剧情/日常/成就）",
+    "武器熟练度",
+    "背包和商店",
+    "存档系统"
+  ]
+}

@@ -1,0 +1,88 @@
+<!-- 地下城选择界面 -->
+<view class="container">
+  <!-- 标题 -->
+  <view class="panel">
+    <text class="panel-title">🗺️ 选择地下城</text>
+  </view>
+
+  <!-- 地下城列表 -->
+  <view class="dungeon-list">
+    <view
+      class="dungeon-item {{hero.level >= item.level ? 'unlocked' : 'locked'}}"
+      style="{{hero.level >= item.level ? 'border-color:' + item.theme.borderColor + ';background: linear-gradient(135deg, ' + item.theme.accentColor + '22 0%, rgba(0,0,0,0.3) 100%);' : ''}}"
+      wx:for="{{dungeons}}"
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="dungeon-icon" style="background: linear-gradient(135deg, {{item.theme.accentColor}}44 0%, {{item.theme.bgColor}} 100%);">
+        <text class="icon">{{item.theme.icon}}</text>
+      </view>
+      <view class="dungeon-info">
+        <view class="dungeon-title-row">
+          <text class="dungeon-name" style="color: {{hero.level >= item.level ? item.theme.accentColor : 'var(--secondary-color)'}};">{{item.name}}</text>
+        </view>
+        <text class="dungeon-desc text-small">{{item.theme.atmosphere}}</text>
+        <view class="dungeon-meta">
+          <text class="tag" style="border-color: {{item.theme.borderColor}};">等级: {{item.level}}</text>
+          <text class="tag" style="border-color: {{item.theme.borderColor}};">层数: {{item.floor}}</text>
+        </view>
+      </view>
+      <view class="dungeon-status">
+        <text wx:if="{{!item.prevCompleted && item.id > 1}}" class="status-locked">需前置BOSS</text>
+        <text wx:elif="{{hero.level >= item.level}}" class="status-available">可进入</text>
+        <text wx:else class="status-locked">Lv.{{item.level}}</text>
+      </view>
+    </view>
+</view>
+</view>
+
+<!-- 当前地下城模态框 -->
+<view class="dungeon-modal-overlay" wx:if="{{currentDungeon}}">
+  <view class="dungeon-modal">
+    <text class="panel-title">当前地下城: {{currentDungeon.name}}</text>
+    <view class="dungeon-progress">
+      <text class="text-small">当前层数: {{currentFloor}} / {{currentDungeon.floor}}</text>
+    </view>
+    <view class="actions">
+      <!-- 未到达底层时显示探索按钮 -->
+      <button class="btn btn-primary" bindtap="explore" wx:if="{{currentFloor < currentDungeon.floor}}">🔍 探索</button>
+      <!-- 到达底层时显示重置挑战和挑战Boss按钮 -->
+      <button class="btn btn-primary" bindtap="resetDungeon" wx:if="{{currentFloor >= currentDungeon.floor}}">🔄 重置挑战</button>
+      <button class="btn btn-danger" bindtap="bossBattle" wx:if="{{currentFloor >= currentDungeon.floor}}">👹 挑战Boss</button>
+      <button class="btn btn-secondary" bindtap="closeDungeonModal">🏃 返回</button>
+    </view>
+  </view>
+</view>
+
+<!-- 探索结果浮层 -->
+<view class="explore-overlay" wx:if="{{exploreResult}}">
+  <view class="explore-modal">
+    <text class="panel-title {{exploreResult.foundMonster ? 'text-success' : 'text-secondary'}}">
+      {{exploreResult.foundMonster ? '⚔️ 发现怪物！' : '🔍 探索完毕'}}
+    </text>
+
+    <view wx:if="{{exploreResult.foundMonster}}">
+      <view class="monster-info">
+        <text class="monster-name">{{exploreResult.monster.name}}</text>
+        <view class="monster-stats">
+          <text class="text-small">等级: {{exploreResult.monster.level}}</text>
+          <text class="text-small">生命: {{exploreResult.monster.hp}}</text>
+          <text class="text-small">攻击: {{exploreResult.monster.attack}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{!exploreResult.foundMonster && exploreResult.event}}">
+      <view class="explore-event">
+        <text class="text-secondary">{{exploreResult.event}}</text>
+      </view>
+    </view>
+
+    <view class="result-actions">
+      <button wx:if="{{exploreResult.foundMonster}}" class="btn btn-danger" bindtap="goToBattle">⚔️ 开战</button>
+      <button wx:if="{{!exploreResult.foundMonster}}" class="btn btn-primary" bindtap="continueExplore">🚶 继续探索</button>
+      <button class="btn" bindtap="closeExplore">🏃 返回</button>
+    </view>
+  </view>
+</view>

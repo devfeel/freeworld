@@ -1,0 +1,244 @@
+<view class="container safe-area-bottom">
+  <!-- 顶部标题栏 -->
+  <view class="top-header animate-fade-in">
+    <text class="header-title">⚔️ 玛法传说 ⚔️</text>
+    <view class="header-nav">
+      <view class="nav-item {{currentTab === 'home' ? 'active' : ''}}" bindtap="switchTab" data-tab="home">
+        <text class="nav-icon">🏠</text>
+      </view>
+      <view class="nav-item {{currentTab === 'news' ? 'active' : ''}}" bindtap="switchTab" data-tab="news">
+        <text class="nav-icon">📢</text>
+        <view class="nav-dot" wx:if="{{hasNewNotice}}"></view>
+      </view>
+      <view class="nav-item {{currentTab === 'arena' ? 'active' : ''}}" bindtap="switchTab" data-tab="arena">
+        <text class="nav-icon">🏆</text>
+      </view>
+      <view class="nav-item {{currentTab === 'rank' ? 'active' : ''}}" bindtap="switchTab" data-tab="rank">
+        <text class="nav-icon">🏅</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 首页内容 -->
+  <view class="tab-content {{currentTab === 'home' ? 'active' : ''}}">
+    <!-- 角色卡片 - 使用新设计系统 -->
+    <view class="hero-card panel animate-slide-up">
+      <view class="hero-card-header">
+        <view class="hero-avatar-container">
+          <view class="hero-avatar">
+            <text class="hero-avatar-emoji">{{classEmoji}}</text>
+          </view>
+          <view class="hero-level-badge">
+            <text class="hero-level-text">Lv.{{hero.level || 1}}</text>
+          </view>
+        </view>
+        <view class="hero-basic-info">
+          <text class="hero-name">{{hero.name || '勇士'}}</text>
+          <view class="hero-title-badge" wx:if="{{hero.title}}">
+            <text class="hero-title-text">{{hero.title}}</text>
+          </view>
+          <view class="hero-power">
+            <text class="power-label">战力</text>
+            <text class="power-value">{{totalStats.attack * 2 + totalStats.defense * 1.5 + totalStats.hp / 10 | 0}}</text>
+          </view>
+        </view>
+        <!-- 签到按钮 -->
+        <view class="sign-btn-header {{signed ? 'signed' : ''}}" bindtap="signIn">
+          <text class="sign-btn-icon">{{signed ? '✓' : '📅'}}</text>
+          <text class="sign-btn-text">{{signed ? '已签到' : '签到'}}</text>
+        </view>
+      </view>
+
+      <!-- 使用 progress-bar 组件 -->
+      <view class="hero-bars">
+        <view class="bar-row">
+          <text class="bar-icon text-danger">❤️</text>
+          <progress-bar
+            type="hp"
+            percent="{{hpPercent}}"
+            text="{{hero.hp || 0}}/{{maxHp}}"
+            customStyle="flex: 1;"
+          />
+        </view>
+        <view class="bar-row">
+          <text class="bar-icon text-info">💧</text>
+          <progress-bar
+            type="mp"
+            percent="{{mpPercent}}"
+            text="{{hero.mp || 0}}/{{maxMp}}"
+            customStyle="flex: 1;"
+          />
+        </view>
+        <view class="bar-row">
+          <text class="bar-icon text-primary">⭐</text>
+          <progress-bar
+            type="exp"
+            percent="{{expPercent}}"
+            customStyle="flex: 1;"
+          />
+        </view>
+      </view>
+
+      <!-- 货币 -->
+      <view class="currency-section">
+        <view class="currency-item">
+          <text class="currency-icon text-warning">💰</text>
+          <text class="currency-value text-primary text-bold">{{hero.gold || 0}}</text>
+        </view>
+        <view class="currency-item">
+          <text class="currency-icon text-secondary">🪙</text>
+          <text class="currency-value text-secondary">{{hero.yuanbao || 0}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 快捷功能 - 使用新设计系统 -->
+    <view class="quick-actions">
+      <view class="action-card battle animate-slide-up" style="animation-delay: 0.1s" bindtap="goToBattle">
+        <text class="action-icon">⚔️</text>
+        <text class="action-name">进入战斗</text>
+        <text class="action-desc">挑战怪物</text>
+      </view>
+      <view class="action-card dungeon animate-slide-up" style="animation-delay: 0.15s" bindtap="goToDungeon">
+        <text class="action-icon">🏰</text>
+        <text class="action-name">地下城</text>
+        <text class="action-desc">探索副本</text>
+      </view>
+      <view class="action-card animate-slide-up" style="animation-delay: 0.2s" bindtap="goToPage" data-page="shop">
+        <text class="action-icon">🏪</text>
+        <text class="action-name">商店</text>
+        <text class="action-desc">购买装备</text>
+      </view>
+      <view class="action-card animate-slide-up" style="animation-delay: 0.25s" bindtap="goToPage" data-page="task">
+        <text class="action-icon">📜</text>
+        <text class="action-name">任务</text>
+        <text class="action-desc">领取奖励</text>
+      </view>
+    </view>
+
+    <!-- 次要功能 -->
+    <view class="sub-actions panel animate-slide-up" style="animation-delay: 0.3s">
+      <view class="sub-action-item" bindtap="goToPage" data-page="hero">
+        <text class="sub-action-icon">👤</text>
+        <text class="sub-action-name">角色</text>
+      </view>
+      <view class="sub-action-item" bindtap="goToPage" data-page="bag">
+        <text class="sub-action-icon">🎒</text>
+        <text class="sub-action-name">背包</text>
+      </view>
+      <view class="sub-action-item" bindtap="goToPage" data-page="arena">
+        <text class="sub-action-icon">🏆</text>
+        <text class="sub-action-name">竞技场</text>
+      </view>
+      <view class="sub-action-item" bindtap="goToPage" data-page="rank">
+        <text class="sub-action-icon">📊</text>
+        <text class="sub-action-name">排行</text>
+      </view>
+    </view>
+
+    <!-- 签到卡片 -->
+    <view class="sign-card {{signed ? 'signed' : ''}} animate-slide-up" style="animation-delay: 0.35s" bindtap="signIn">
+      <view class="sign-left">
+        <view class="sign-badge {{signed ? 'completed' : ''}}">
+          <text>{{signed ? '✓' : '📅'}}</text>
+        </view>
+        <view class="sign-info">
+          <text class="sign-title">{{signed ? '今日已签到' : '每日签到'}}</text>
+          <text class="sign-desc">{{signed ? '连续' + signDays + '天' : '领取' + signReward + '金币'}}</text>
+        </view>
+      </view>
+      <view class="sign-btn {{signed ? 'completed' : ''}}">
+        <text>{{signed ? '已完成' : '签到'}}</text>
+      </view>
+    </view>
+
+    <!-- 状态面板 -->
+    <view class="status-card panel animate-slide-up" style="animation-delay: 0.4s">
+      <view class="status-item">
+        <text class="status-label text-muted">📍 地图</text>
+        <text class="status-value text-primary">{{currentMap}}</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label text-muted">📶 状态</text>
+        <text class="status-value text-success">{{playerStatusText}}</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label text-muted">⏱️ 在线</text>
+        <text class="status-value text-warning">{{statusTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 公告内容 -->
+  <view class="tab-content {{currentTab === 'news' ? 'active' : ''}}">
+    <view class="panel animate-slide-up">
+      <view class="panel-title">
+        <text>📢 游戏公告</text>
+      </view>
+      <view class="news-list">
+        <view class="news-item animate-slide-in-right" wx:for="{{newsList}}" wx:key="id" style="animation-delay: {{index * 0.1}}s">
+          <text class="news-date text-muted">{{item.date}}</text>
+          <view class="news-content">
+            <text class="news-title">{{item.title}}</text>
+            <text class="news-desc text-secondary">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 竞技场内容 -->
+  <view class="tab-content {{currentTab === 'arena' ? 'active' : ''}}">
+    <view class="arena-card panel animate-slide-up">
+      <view class="arena-header">
+        <view class="arena-avatar">
+          <text>⚔️</text>
+        </view>
+        <view class="arena-info">
+          <text class="arena-name">{{hero.name || '勇士'}}</text>
+          <text class="arena-rank text-magic">当前排名: 第{{arenaRank}}名</text>
+        </view>
+      </view>
+      <view class="arena-stats">
+        <view class="arena-stat">
+          <text class="arena-stat-value text-success">{{arenaWins}}</text>
+          <text class="arena-stat-label text-muted">胜场</text>
+        </view>
+        <view class="arena-stat">
+          <text class="arena-stat-value text-danger">{{arenaLosses}}</text>
+          <text class="arena-stat-label text-muted">负场</text>
+        </view>
+        <view class="arena-stat">
+          <text class="arena-stat-value text-primary">{{arenaPoints}}</text>
+          <text class="arena-stat-label text-muted">积分</text>
+        </view>
+      </view>
+      <view class="arena-actions">
+        <view class="arena-btn btn-danger hover-scale" bindtap="startArenaMatch">
+          <text>⚔️</text>
+          <text>匹配对战</text>
+        </view>
+        <view class="arena-btn btn-magic hover-scale" bindtap="goToPage" data-page="rank">
+          <text>🏅</text>
+          <text>查看排行</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 排行榜内容 -->
+  <view class="tab-content {{currentTab === 'rank' ? 'active' : ''}}">
+    <view class="rank-card panel animate-slide-up">
+      <view class="panel-title">
+        <text>🏅 战力排行榜</text>
+      </view>
+      <view class="rank-list">
+        <view class="rank-item {{item.className}} animate-slide-in-right" wx:for="{{rankList}}" wx:key="rank" style="animation-delay: {{index * 0.1}}s">
+          <text class="rank-badge">{{item.rank <= 3 ? item.badge : item.rank}}</text>
+          <text class="rank-player">{{item.name}}</text>
+          <text class="rank-score text-primary">{{item.score}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

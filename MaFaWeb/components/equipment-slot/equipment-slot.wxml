@@ -1,0 +1,37 @@
+<!-- 装备槽位组件 -->
+<view
+  class="equipment-slot {{size}} {{equipment ? 'filled' : 'empty'}} {{isNew ? 'new-item' : ''}}"
+  bindtap="onTap"
+  bindlongpress="onLongPress"
+>
+  <!-- 装备图标 -->
+  <block wx:if="{{equipment}}">
+    <image
+      class="equipment-icon"
+      src="{{equipment.icon}}"
+      mode="aspectFit"
+      wx:if="{{equipment.icon}}"
+    />
+    <text class="equipment-emoji" wx:else>{{equipment.emoji || defaultEmoji}}</text>
+
+    <!-- 强化等级 -->
+    <view class="enhance-level" wx:if="{{equipment.enhanceLevel > 0}}">
+      <text>+{{equipment.enhanceLevel}}</text>
+    </view>
+
+    <!-- 稀有度光晕 -->
+    <view class="rarity-glow {{equipment.rarity}}"></view>
+
+    <!-- 套装标记 -->
+    <view class="set-badge" wx:if="{{equipment.isSet}}">套</view>
+  </block>
+
+  <!-- 空槽位提示 -->
+  <block wx:else>
+    <text class="slot-label">{{slotLabel}}</text>
+    <text class="slot-icon">{{defaultEmoji}}</text>
+  </block>
+
+  <!-- 槽位名称 -->
+  <text class="slot-name" wx:if="{{showName}}">{{slotName}}</text>
+</view>

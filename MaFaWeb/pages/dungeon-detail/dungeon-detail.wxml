@@ -1,0 +1,184 @@
+<!-- 地下城详情页 -->
+<view class="container">
+  <!-- 地图信息 -->
+  <view class="panel map-info">
+    <view class="map-header">
+      <text class="map-icon">{{dungeon.theme.icon}}</text>
+      <view class="map-title">
+        <text class="map-name">{{dungeon.name}}</text>
+        <text class="map-atmosphere">{{dungeon.theme.atmosphere}}</text>
+      </view>
+    </view>
+    <view class="map-desc">{{dungeon.description}}</view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="panel basic-info">
+    <view class="info-row">
+      <view class="info-item">
+        <text class="info-label">等级要求</text>
+        <text class="info-value {{hero.level >= dungeon.level ? 'ok' : 'no'}}">Lv.{{dungeon.level}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">总层数</text>
+        <text class="info-value">{{dungeon.floor}}层</text>
+      </view>
+    </view>
+    <view class="info-row">
+      <view class="info-item">
+        <text class="info-label">当前进度</text>
+        <text class="info-value {{isCompleted ? 'completed' : ''}}">{{isCompleted ? '已通关' : '第' + progress + '层'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">BOSS状态</text>
+        <text class="info-value {{isBossDefeated ? 'defeated' : 'pending'}}">{{isBossDefeated ? '已击败' : '未挑战'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 怪物列表 -->
+  <view class="panel monster-section">
+    <text class="section-title">🧟 怪物列表</text>
+    <view class="monster-list">
+      <view class="monster-item" wx:for="{{monsterList}}" wx:key="id">
+        <text class="monster-icon">💀</text>
+        <view class="monster-detail">
+          <text class="monster-name">{{item.name}}</text>
+          <text class="monster-level text-small">等级: {{item.level}}</text>
+        </view>
+        <view class="monster-stats">
+          <text class="text-small">HP: {{item.hp}}</text>
+          <text class="text-small">ATK: {{item.attack}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- BOSS信息 -->
+  <view class="panel boss-section {{isBossDefeated ? 'defeated' : ''}}">
+    <text class="section-title">👹 BOSS信息</text>
+    <view class="boss-card">
+      <view class="boss-header">
+        <text class="boss-icon">👹</text>
+        <view class="boss-title">
+          <text class="boss-name">{{boss.name}}</text>
+          <text class="boss-level text-small">等级: {{boss.level}}</text>
+        </view>
+      </view>
+      <view class="boss-stats">
+        <view class="boss-stat">
+          <text class="text-small">生命值</text>
+          <text class="stat-value">{{boss.hp}}</text>
+        </view>
+        <view class="boss-stat">
+          <text class="text-small">攻击力</text>
+          <text class="stat-value">{{boss.attack}}</text>
+        </view>
+        <view class="boss-stat">
+          <text class="text-small">防御力</text>
+          <text class="stat-value">{{boss.defense}}</text>
+        </view>
+      </view>
+      <view class="boss-reward">
+        <text class="text-small">首通奖励: </text>
+        <text class="reward-text">💰{{dungeon.reward.gold}}金币 + 🪙{{dungeon.reward.yuanbao || 0}}元宝 + 📈{{dungeon.reward.exp}}经验</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="action-bar">
+    <button class="btn" bindtap="goBack">🔙 返回</button>
+    <button
+      class="btn btn-primary"
+      bindtap="enterDungeon"
+      disabled="{{hero.level < dungeon.level}}"
+    >
+      {{isCompleted ? '再次挑战' : '进入探索'}}
+    </button>
+    <button
+      class="btn btn-danger"
+      bindtap="challengeBoss"
+      wx:if="{{progress >= dungeon.floor && !isBossDefeated}}"
+    >
+      ⚔️ 挑战BOSS
+    </button>
+  </view>
+</view>
+
+<!-- 探索模态框 -->
+<view class="explore-modal-overlay" wx:if="{{showExploreModal}}">
+  <view class="explore-modal">
+    <text class="panel-title">地下城探索</text>
+    <view class="explore-info">
+      <text class="text-small">当前层数: {{exploreFloor}} / {{dungeon.floor}}</text>
+    </view>
+    <view class="actions">
+      <!-- 未到达底层时显示探索按钮 -->
+      <button class="btn btn-primary" bindtap="explore" wx:if="{{exploreFloor < dungeon.floor}}">🔍 探索</button>
+      <!-- 到达底层时显示重置挑战和挑战Boss按钮 -->
+      <button class="btn btn-primary" bindtap="resetDungeon" wx:if="{{exploreFloor >= dungeon.floor}}">🔄 重置挑战</button>
+      <button class="btn btn-danger" bindtap="bossBattle" wx:if="{{exploreFloor >= dungeon.floor}}">👹 挑战Boss</button>
+      <button class="btn btn-secondary" bindtap="closeExploreModal">🏃 返回</button>
+    </view>
+  </view>
+</view>
+
+<!-- 探索结果浮层 -->
+<view class="explore-result-overlay" wx:if="{{exploreResult}}">
+  <view class="explore-result-modal">
+    <!-- 发现怪物 -->
+    <text class="panel-title {{exploreResult.foundMonster ? 'text-danger' : (exploreResult.foundChest ? 'text-warning' : 'text-secondary')}}">
+      {{exploreResult.foundMonster ? '⚔️ 发现怪物！' : (exploreResult.foundChest ? '🎁 发现宝箱！' : '🔍 探索完毕')}}
+    </text>
+
+    <!-- 怪物信息 -->
+    <view wx:if="{{exploreResult.foundMonster}}">
+      <view class="monster-info">
+        <text class="monster-name">{{exploreResult.monster.name}}</text>
+        <view class="monster-stats">
+          <text class="text-small">等级: {{exploreResult.monster.level}}</text>
+          <text class="text-small">生命: {{exploreResult.monster.hp}}</text>
+          <text class="text-small">攻击: {{exploreResult.monster.attack}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宝箱信息 -->
+    <view wx:if="{{exploreResult.foundChest && exploreResult.chestReward}}">
+      <view class="chest-info">
+        <text class="chest-icon">📦</text>
+        <view class="chest-rewards">
+          <text wx:if="{{exploreResult.chestReward.gold > 0}}">💰 金币: +{{exploreResult.chestReward.gold}}</text>
+          <text wx:if="{{exploreResult.chestReward.yuanbao > 0}}">🪙 元宝: +{{exploreResult.chestReward.yuanbao}}</text>
+          <text wx:if="{{exploreResult.chestReward.item}}">🎁 装备: {{exploreResult.chestReward.item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 普通事件 -->
+    <view wx:if="{{!exploreResult.foundMonster && !exploreResult.foundChest && exploreResult.event}}">
+      <view class="explore-event">
+        <text class="text-secondary">{{exploreResult.event}}</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="result-actions">
+      <!-- 怪物战斗按钮 -->
+      <button wx:if="{{exploreResult.foundMonster}}" class="btn btn-danger" bindtap="goToBattle">⚔️ 开战</button>
+
+      <!-- 宝箱操作按钮 -->
+      <block wx:if="{{exploreResult.foundChest}}">
+        <button class="btn btn-primary" bindtap="openChest">🎁 打开宝箱</button>
+        <button class="btn" bindtap="saveChestToBag">💼 存放到包裹</button>
+      </block>
+
+      <!-- 继续探索按钮 -->
+      <button wx:if="{{!exploreResult.foundMonster && !exploreResult.foundChest}}" class="btn btn-primary" bindtap="continueExplore">🚶 继续探索</button>
+
+      <!-- 返回按钮 -->
+      <button class="btn" bindtap="closeExploreResult">🏃 返回</button>
+    </view>
+  </view>
+</view>

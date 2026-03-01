@@ -1,0 +1,115 @@
+/* 模态框组件样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-container {
+  background: linear-gradient(135deg, var(--panel-bg) 0%, var(--panel-bg-dark) 100%);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius-lg);
+  width: 85%;
+  max-width: 360px;
+  max-height: 80vh;
+  box-shadow: var(--shadow-xl), var(--glow-primary);
+  overflow: hidden;
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+.modal-overlay.show .modal-container {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* 动画变体 */
+.modal-container.slide-up {
+  transform: translateY(100px);
+}
+
+.modal-container.fade {
+  transform: none;
+}
+
+/* 头部 */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.modal-title {
+  font-size: var(--text-lg);
+  font-weight: bold;
+  color: var(--primary-color);
+  flex: 1;
+  text-align: center;
+}
+
+.modal-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xl);
+  color: var(--text-color-secondary);
+  transition: all var(--transition-fast);
+}
+
+.modal-close:active {
+  background: var(--color-error);
+  color: white;
+}
+
+/* 内容区 */
+.modal-body {
+  padding: var(--space-md);
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+/* 底部按钮区 */
+.modal-footer {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-top: 1px solid var(--border-color-light);
+}
+
+.modal-footer .btn {
+  flex: 1;
+  margin: 0;
+}
+
+/* 滚动条样式 */
+.modal-body::-webkit-scrollbar {
+  width: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-sm);
+}

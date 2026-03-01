@@ -1,0 +1,554 @@
+// 道具/装备数据配置
+const ITEMS = {
+  // 生命药水
+  potion_small_hp: {
+    id: 'potion_small_hp',
+    name: '小型生命药水',
+    type: 'potion',
+    subType: 'hp',
+    rarity: 'common',
+    description: '恢复 50 点生命值',
+    value: 50,
+    price: 20
+  },
+  potion_medium_hp: {
+    id: 'potion_medium_hp',
+    name: '中型生命药水',
+    type: 'potion',
+    subType: 'hp',
+    rarity: 'common',
+    description: '恢复 100 点生命值',
+    value: 100,
+    price: 50
+  },
+  potion_large_hp: {
+    id: 'potion_large_hp',
+    name: '大型生命药水',
+    type: 'potion',
+    subType: 'hp',
+    rarity: 'uncommon',
+    description: '恢复 200 点生命值',
+    value: 200,
+    price: 100
+  },
+  potion_giant_hp: {
+    id: 'potion_giant_hp',
+    name: '巨型生命药水',
+    type: 'potion',
+    subType: 'hp',
+    rarity: 'rare',
+    description: '恢复 400 点生命值',
+    value: 400,
+    price: 250
+  },
+
+  // 魔法药水
+  potion_small_mp: {
+    id: 'potion_small_mp',
+    name: '小型魔法药水',
+    type: 'potion',
+    subType: 'mp',
+    rarity: 'common',
+    description: '恢复 30 点魔法值',
+    value: 30,
+    price: 25
+  },
+  potion_medium_mp: {
+    id: 'potion_medium_mp',
+    name: '中型魔法药水',
+    type: 'potion',
+    subType: 'mp',
+    rarity: 'common',
+    description: '恢复 60 点魔法值',
+    value: 60,
+    price: 60
+  },
+  potion_large_mp: {
+    id: 'potion_large_mp',
+    name: '大型魔法药水',
+    type: 'potion',
+    subType: 'mp',
+    rarity: 'uncommon',
+    description: '恢复 120 点魔法值',
+    value: 120,
+    price: 120
+  },
+
+  // 双效药水（生命+魔法）
+  potion_dual_small: {
+    id: 'potion_dual_small',
+    name: '小型双效药水',
+    type: 'potion',
+    subType: 'dual',
+    rarity: 'uncommon',
+    description: '恢复 50 点生命值和 30 点魔法值',
+    value: { hp: 50, mp: 30 },
+    price: 50
+  },
+  potion_dual_medium: {
+    id: 'potion_dual_medium',
+    name: '中型双效药水',
+    type: 'potion',
+    subType: 'dual',
+    rarity: 'rare',
+    description: '恢复 150 点生命值和 80 点魔法值',
+    value: { hp: 150, mp: 80 },
+    price: 150
+  },
+  potion_dual_large: {
+    id: 'potion_dual_large',
+    name: '大型双效药水',
+    type: 'potion',
+    subType: 'dual',
+    rarity: 'epic',
+    description: '恢复 300 点生命值和 150 点魔法值',
+    value: { hp: 300, mp: 150 },
+    price: 300
+  },
+
+  // 武器 - 初级
+  weapon_wooden_sword: {
+    id: 'weapon_wooden_sword',
+    name: '木剑',
+    type: 'weapon',
+    rarity: 'common',
+    description: '新手使用的木剑',
+    attack: 3,
+    price: 50
+  },
+  weapon_rusty_sword: {
+    id: 'weapon_rusty_sword',
+    name: '锈铁剑',
+    type: 'weapon',
+    rarity: 'common',
+    description: '一把锈迹斑斑的铁剑',
+    attack: 8,
+    price: 100
+  },
+
+  // 武器 - 中级
+  weapon_steel_sword: {
+    id: 'weapon_steel_sword',
+    name: '精钢剑',
+    type: 'weapon',
+    rarity: 'uncommon',
+    description: '用精钢打造的利剑',
+    attack: 15,
+    price: 300
+  },
+  weapon_silver_sword: {
+    id: 'weapon_silver_sword',
+    name: '银剑',
+    type: 'weapon',
+    rarity: 'rare',
+    description: '对亡灵有特殊效果的银剑',
+    attack: 25,
+    special: { type: 'undead_bonus', value: 1.5 },
+    price: 800
+  },
+
+  // 武器 - 高级
+  weapon_bone_king_sword: {
+    id: 'weapon_bone_king_sword',
+    name: '骸骨王剑',
+    type: 'weapon',
+    rarity: 'epic',
+    description: '骷髅王使用的武器',
+    attack: 40,
+    special: { type: 'bone_bonus', value: 1.3 },
+    price: 2000
+  },
+  weapon_plague_sword: {
+    id: 'weapon_plague_sword',
+    name: '瘟疫之剑',
+    type: 'weapon',
+    rarity: 'epic',
+    description: '散发着毒气的邪恶之剑',
+    attack: 50,
+    special: { type: 'poison', value: 10 },
+    price: 3000
+  },
+  weapon_dragon_slayer: {
+    id: 'weapon_dragon_slayer',
+    name: '屠龙者',
+    type: 'weapon',
+    rarity: 'legendary',
+    description: '传说中能够斩杀巨龙的英雄之剑',
+    attack: 100,
+    special: { type: 'all_bonus', value: 1.5 },
+    price: 10000
+  },
+
+  // 防具 - 初级
+  armor_leather: {
+    id: 'armor_leather',
+    name: '皮甲',
+    type: 'armor',
+    rarity: 'common',
+    description: '基础的皮制护甲',
+    defense: 3,
+    price: 50
+  },
+  armor_chainmail: {
+    id: 'armor_chainmail',
+    name: '锁子甲',
+    type: 'armor',
+    rarity: 'common',
+    description: '金属环编织的护甲',
+    defense: 8,
+    price: 150
+  },
+
+  // 防具 - 中级
+  armor_plate: {
+    id: 'armor_plate',
+    name: '板甲',
+    type: 'armor',
+    rarity: 'uncommon',
+    description: '厚重的金属板甲',
+    defense: 15,
+    price: 400
+  },
+  armor_silver: {
+    id: 'armor_silver',
+    name: '银甲',
+    type: 'armor',
+    rarity: 'rare',
+    description: '用白银打造的护甲',
+    defense: 25,
+    special: { type: 'undead_resist', value: 0.2 },
+    price: 1000
+  },
+
+  // 防具 - 高级
+  armor_bone_king_armor: {
+    id: 'armor_bone_king_armor',
+    name: '骸骨王甲',
+    type: 'armor',
+    rarity: 'epic',
+    description: '骷髅王的护甲',
+    defense: 40,
+    special: { type: 'hp_bonus', value: 100 },
+    price: 2500
+  },
+  armor_plague_armor: {
+    id: 'armor_plague_armor',
+    name: '瘟疫之甲',
+    type: 'armor',
+    rarity: 'epic',
+    description: '散发毒气的邪恶护甲',
+    defense: 50,
+    special: { type: 'poison_reflect', value: 15 },
+    price: 3500
+  },
+  armor_dragon_plate: {
+    id: 'armor_dragon_plate',
+    name: '龙鳞板甲',
+    type: 'armor',
+    rarity: 'legendary',
+    description: '用龙鳞打造的传说级护甲',
+    defense: 100,
+    special: { type: 'hp_bonus', value: 500 },
+    price: 12000
+  },
+
+  // 头盔 - 初级
+  helmet_leather_cap: {
+    id: 'helmet_leather_cap',
+    name: '皮革帽',
+    type: 'accessory',
+    rarity: 'common',
+    description: '基础的皮革帽子',
+    defense: 2,
+    price: 30
+  },
+  helmet_iron_helm: {
+    id: 'helmet_iron_helm',
+    name: '铁头盔',
+    type: 'accessory',
+    rarity: 'common',
+    description: '简单的铁制头盔',
+    defense: 5,
+    price: 80
+  },
+
+  // 头盔 - 中级
+  helmet_steel_helm: {
+    id: 'helmet_steel_helm',
+    name: '钢制头盔',
+    type: 'accessory',
+    rarity: 'uncommon',
+    description: '坚固的钢制头盔',
+    defense: 10,
+    price: 250
+  },
+  helmet_knight_helm: {
+    id: 'helmet_knight_helm',
+    name: '骑士头盔',
+    type: 'accessory',
+    rarity: 'rare',
+    description: '骑士使用的精良头盔',
+    defense: 18,
+    special: { type: 'hp_bonus', value: 50 },
+    price: 800
+  },
+
+  // 头盔 - 高级
+  helmet_dragon_helm: {
+    id: 'helmet_dragon_helm',
+    name: '龙鳞头盔',
+    type: 'accessory',
+    rarity: 'epic',
+    description: '用龙鳞打造的传说头盔',
+    defense: 35,
+    special: { type: 'hp_bonus', value: 200 },
+    price: 5000
+  },
+
+  // 盾牌 - 初级
+  shield_wooden_buckler: {
+    id: 'shield_wooden_buckler',
+    name: '木盾',
+    type: 'accessory',
+    rarity: 'common',
+    description: '新手使用的木盾',
+    defense: 3,
+    price: 40
+  },
+  shield_round_shield: {
+    id: 'shield_round_shield',
+    name: '圆盾',
+    type: 'accessory',
+    rarity: 'common',
+    description: '金属圆盾',
+    defense: 6,
+    price: 100
+  },
+
+  // 盾牌 - 中级
+  shield_heater_shield: {
+    id: 'shield_heater_shield',
+    name: '鸢形盾',
+    type: 'accessory',
+    rarity: 'uncommon',
+    description: '中型的鸢形盾',
+    defense: 12,
+    price: 300
+  },
+  shield_tower_shield: {
+    id: 'shield_tower_shield',
+    name: '塔盾',
+    type: 'accessory',
+    rarity: 'rare',
+    description: '大型塔盾，防御力强',
+    defense: 20,
+    price: 900
+  },
+
+  // 盾牌 - 高级
+  shield_aegis: {
+    id: 'shield_aegis',
+    name: '神之盾',
+    type: 'accessory',
+    rarity: 'legendary',
+    description: '传说级的神盾，可抵挡致命一击',
+    defense: 60,
+    special: { type: 'damage_reduction', value: 0.15 },
+    price: 15000
+  },
+
+  // 项链 - 初级
+  necklace_simple_pendant: {
+    id: 'necklace_simple_pendant',
+    name: '简单挂坠',
+    type: 'accessory',
+    rarity: 'common',
+    description: '普通的金属挂坠',
+    attack: 2,
+    defense: 2,
+    price: 60
+  },
+  necklace_silver_chain: {
+    id: 'necklace_silver_chain',
+    name: '银项链',
+    type: 'accessory',
+    rarity: 'uncommon',
+    description: '精致的银制项链',
+    attack: 5,
+    defense: 5,
+    special: { type: 'exp_bonus', value: 0.1 },
+    price: 400
+  },
+
+  // 项链 - 中级
+  necklace_gold_chain: {
+    id: 'necklace_gold_chain',
+    name: '金项链',
+    type: 'accessory',
+    rarity: 'rare',
+    description: '珍贵的金制项链',
+    attack: 10,
+    defense: 10,
+    special: { type: 'exp_bonus', value: 0.15 },
+    price: 1500
+  },
+  necklace_ruby: {
+    id: 'necklace_ruby',
+    name: '红宝石项链',
+    type: 'accessory',
+    rarity: 'epic',
+    description: '镶嵌红宝石的传说项链',
+    attack: 20,
+    defense: 15,
+    special: { type: 'hp_bonus', value: 300 },
+    price: 8000
+  },
+
+  // 戒指 - 初级
+  ring_copper: {
+    id: 'ring_copper',
+    name: '铜戒指',
+    type: 'accessory',
+    rarity: 'common',
+    description: '简单的铜戒指',
+    attack: 1,
+    defense: 1,
+    price: 20
+  },
+  ring_iron: {
+    id: 'ring_iron',
+    name: '铁戒指',
+    type: 'accessory',
+    rarity: 'common',
+    description: '普通的铁戒指',
+    attack: 3,
+    defense: 3,
+    price: 50
+  },
+
+  // 戒指 - 中级
+  ring_silver: {
+    id: 'ring_silver',
+    name: '银戒指',
+    type: 'accessory',
+    rarity: 'uncommon',
+    description: '精致的银戒指',
+    attack: 6,
+    defense: 6,
+    special: { type: 'gold_bonus', value: 0.1 },
+    price: 300
+  },
+  ring_gold: {
+    id: 'ring_gold',
+    name: '金戒指',
+    type: 'accessory',
+    rarity: 'rare',
+    description: '珍贵的金戒指',
+    attack: 12,
+    defense: 12,
+    special: { type: 'gold_bonus', value: 0.15 },
+    price: 1000
+  },
+
+  // 戒指 - 高级
+  ring_diamond: {
+    id: 'ring_diamond',
+    name: '钻石戒指',
+    type: 'accessory',
+    rarity: 'epic',
+    description: '镶嵌钻石的传说戒指',
+    attack: 25,
+    defense: 20,
+    special: { type: 'all_stats_bonus', value: 0.1 },
+    price: 6000
+  },
+
+  // 饰品
+  accessory_lucky_charm: {
+    id: 'accessory_lucky_charm',
+    name: '幸运护符',
+    type: 'accessory',
+    rarity: 'uncommon',
+    description: '增加掉落几率',
+    special: { type: 'drop_bonus', value: 0.2 },
+    price: 500
+  },
+  accessory_strength_ring: {
+    id: 'accessory_strength_ring',
+    name: '力量戒指',
+    type: 'accessory',
+    rarity: 'rare',
+    description: '增加攻击力',
+    attack: 15,
+    price: 1500
+  },
+  accessory_protection_amulet: {
+    id: 'accessory_protection_amulet',
+    name: '守护护符',
+    type: 'accessory',
+    rarity: 'rare',
+    description: '增加防御力',
+    defense: 15,
+    price: 1500
+  },
+  accessory_heart_of_fire: {
+    id: 'accessory_heart_of_fire',
+    name: '火焰之心',
+    type: 'accessory',
+    rarity: 'legendary',
+    description: '传说级的火焰饰品',
+    attack: 30,
+    defense: 30,
+    special: { type: 'fire_damage', value: 20 },
+    price: 8000
+  }
+}
+
+// 获取道具数据
+function getItem(id) {
+  return ITEMS[id]
+}
+
+// 获取稀有度标签类名
+function getRarityClass(rarity) {
+  const rarityMap = {
+    'common': 'tag-common',
+    'uncommon': 'tag-rare',
+    'rare': 'tag-rare',
+    'epic': 'tag-epic',
+    'legendary': 'tag-legendary'
+  }
+  return rarityMap[rarity] || 'tag-common'
+}
+
+// 获取稀有度中文名
+function getRarityName(rarity) {
+  const rarityMap = {
+    'common': '普通',
+    'uncommon': '优秀',
+    'rare': '稀有',
+    'epic': '史诗',
+    'legendary': '传说'
+  }
+  return rarityMap[rarity] || '普通'
+}
+
+// 获取商城可购买物品
+function getShopItems(category = 'all') {
+  return Object.values(ITEMS).filter(item =>
+    item.type === 'potion' && (
+      category === 'all' ||
+      (category === 'hp' && item.subType === 'hp') ||
+      (category === 'mp' && item.subType === 'mp') ||
+      (category === 'dual' && item.subType === 'dual')
+    )
+  )
+}
+
+module.exports = {
+  ITEMS,
+  getItem,
+  getRarityClass,
+  getRarityName,
+  getShopItems
+}

@@ -1,0 +1,8 @@
+<!-- 通用进度条组件 -->
+<view class="progress-wrapper {{type}}-bar {{className}}" style="{{customStyle}}">
+  <view
+    class="progress-fill"
+    style="width: {{percent}}%; {{fillStyle}}"
+  ></view>
+  <text class="progress-text" wx:if="{{showText}}">{{text || percent + '%'}}</text>
+</view>

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "角色",
+  "usingComponents": {
+    "progress-bar": "../../components/progress-bar/progress-bar",
+    "equipment-slot": "../../components/equipment-slot/equipment-slot",
+    "modal": "../../components/modal/modal"
+  }
+}

@@ -1,0 +1,477 @@
+<!-- 角色界面 - 优化版 -->
+<wxs module="simpleIcon" src="./simpleIcon.wxs"></wxs>
+<view class="container">
+  <!-- 角色信息面板 -->
+  <view class="hero-card">
+    <!-- 左侧：头像和战力 -->
+    <view class="hero-left">
+      <view class="hero-portrait-container">
+        <view class="hero-portrait {{heroClass}}">
+          <text class="portrait-emoji">{{classEmoji}}</text>
+        </view>
+        <view class="portrait-frame"></view>
+        <view class="portrait-glow"></view>
+        <view class="hero-level-badge portrait-level">
+          <text class="level-text">Lv.{{hero.level || 1}}</text>
+        </view>
+      </view>
+      <!-- 战力显示 -->
+      <view class="power-display">
+        <text class="power-label">⚔️ 战力</text>
+        <text class="power-value">{{totalPower}}</text>
+      </view>
+      <!-- 排名信息 -->
+      <view class="rank-display" wx:if="{{rankInfo.rank > 0}}">
+        <text class="rank-label">🏆 排名</text>
+        <text class="rank-value">{{rankInfo.rank}}</text>
+      </view>
+    </view>
+
+    <!-- 右侧：角色信息 -->
+    <view class="hero-details">
+      <view class="hero-name-row">
+        <text class="hero-name">{{hero.name || '勇士'}}</text>
+        <view class="hero-title-badge" wx:if="{{hero.title}}">
+          <text class="title-text">{{hero.title}}</text>
+        </view>
+        <view class="stats-btn" bindtap="showStatsModal">
+          <text class="stats-btn-icon">📊</text>
+        </view>
+      </view>
+
+      <!-- 使用 progress-bar 组件 -->
+      <view class="stat-bar-container">
+        <view class="stat-bar-header">
+          <text class="stat-bar-label text-danger">❤️ HP</text>
+          <text class="stat-bar-value text-small">{{hero.hp || 0}} / {{maxHp}}</text>
+        </view>
+        <progress-bar
+          type="hp"
+          percent="{{hpPercent}}"
+          showText="{{false}}"
+          customStyle="margin: 8rpx 0;"
+        />
+      </view>
+
+      <!-- 魔法条 -->
+      <view class="stat-bar-container">
+        <view class="stat-bar-header">
+          <text class="stat-bar-label text-info">💧 MP</text>
+          <text class="stat-bar-value text-small">{{hero.mp || 0}} / {{maxMp}}</text>
+        </view>
+        <progress-bar
+          type="mp"
+          percent="{{mpPercent}}"
+          showText="{{false}}"
+          customStyle="margin: 8rpx 0;"
+        />
+      </view>
+
+      <!-- 经验条 -->
+      <view class="stat-bar-container">
+        <view class="stat-bar-header">
+          <text class="stat-bar-label text-primary">⭐ EXP</text>
+          <text class="stat-bar-value text-small">{{hero.exp || 0}} / {{hero.maxExp || 100}}</text>
+        </view>
+        <progress-bar
+          type="exp"
+          percent="{{expPercent}}"
+          showText="{{false}}"
+          customStyle="margin: 8rpx 0;"
+        />
+      </view>
+
+      <!-- 快捷属性 -->
+      <view class="quick-stats-row">
+        <view class="quick-stat-item compact">
+          <text class="quick-stat-icon small">⚔️</text>
+          <text class="quick-stat-value">{{totalStats.attack || hero.attack || 0}}</text>
+          <text class="quick-stat-label">攻击</text>
+        </view>
+        <view class="quick-stat-item compact">
+          <text class="quick-stat-icon small">🛡️</text>
+          <text class="quick-stat-value">{{totalStats.defense || hero.defense || 0}}</text>
+          <text class="quick-stat-label">防御</text>
+        </view>
+        <view class="quick-stat-item compact">
+          <text class="quick-stat-icon small">⚡</text>
+          <text class="quick-stat-value">{{totalStats.speed || hero.speed || 0}}</text>
+          <text class="quick-stat-label">速度</text>
+        </view>
+        <view class="quick-stat-item compact">
+          <text class="quick-stat-icon small">🎯</text>
+          <text class="quick-stat-value">{{totalStats.crit || hero.crit || 0}}%</text>
+          <text class="quick-stat-label">暴击</text>
+        </view>
+      </view>
+
+      <!-- 技能入口 -->
+      <view class="skill-entry-row" bindtap="goToSkills">
+        <view class="skill-entry-left">
+          <text class="skill-entry-icon">🔮</text>
+          <text class="skill-entry-text">技能</text>
+        </view>
+        <view class="skill-entry-right">
+          <text class="skill-count">已学 {{learnedSkillCount}} 个</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 装备面板 - 使用 equipment-slot 组件 -->
+  <view class="equip-panel panel animate-slide-up">
+    <view class="panel-header">
+      <text class="panel-title">🛡️ 装备</text>
+      <view class="equip-actions">
+        <view class="btn btn-secondary btn-small" bindtap="unequipAll">
+          <text>卸下全部</text>
+        </view>
+        <view class="btn btn-primary btn-small" bindtap="equipBest">
+          <text>一键最佳</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 人形装备槽位 - 使用组件 -->
+    <view class="avatar-equip-layout">
+      <!-- 第一行：头盔 -->
+      <view class="equip-row top">
+        <equipment-slot
+          slotType="helmet"
+          equipment="{{hero.equipment.helmet}}"
+          size="medium"
+          bind:tap="showEquipMenu"
+          data-slot="helmet"
+        />
+      </view>
+
+      <!-- 第二行：武器 - 身体 - 盾牌 -->
+      <view class="equip-row middle">
+        <equipment-slot
+          slotType="weapon"
+          equipment="{{hero.equipment.weapon}}"
+          size="medium"
+          bind:tap="showEquipMenu"
+          data-slot="weapon"
+        />
+
+        <!-- 身体/胸甲 -->
+        <view class="body-slot">
+          <text class="body-emoji">🧍</text>
+        </view>
+
+        <equipment-slot
+          slotType="shield"
+          equipment="{{hero.equipment.shield}}"
+          size="medium"
+          bind:tap="showEquipMenu"
+          data-slot="shield"
+        />
+      </view>
+
+      <!-- 第三行：盔甲 -->
+      <view class="equip-row center">
+        <equipment-slot
+          slotType="armor"
+          equipment="{{hero.equipment.armor}}"
+          size="medium"
+          bind:tap="showEquipMenu"
+          data-slot="armor"
+        />
+      </view>
+
+      <!-- 第四行：腰带 -->
+      <view class="equip-row center">
+        <equipment-slot
+          slotType="belt"
+          equipment="{{hero.equipment.belt}}"
+          size="medium"
+          bind:tap="showEquipMenu"
+          data-slot="belt"
+        />
+      </view>
+
+      <!-- 第五行：饰品 -->
+      <view class="equip-row accessories">
+        <equipment-slot
+          slotType="necklace"
+          equipment="{{hero.equipment.necklace}}"
+          size="small"
+          bind:tap="showEquipMenu"
+          data-slot="necklace"
+        />
+
+        <equipment-slot
+          slotType="ring"
+          equipment="{{hero.equipment.ring}}"
+          size="small"
+          bind:tap="showEquipMenu"
+          data-slot="ring"
+        />
+
+        <equipment-slot
+          slotType="amulet"
+          equipment="{{hero.equipment.amulet}}"
+          size="small"
+          bind:tap="showEquipMenu"
+          data-slot="amulet"
+        />
+
+        <equipment-slot
+          slotType="bracer"
+          equipment="{{hero.equipment.bracer}}"
+          size="small"
+          bind:tap="showEquipMenu"
+          data-slot="bracer"
+        />
+      </view>
+    </view>
+  </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 包裹栏面板 -->
+  <view class="panel inventory-panel">
+    <view class="info-header" bindtap="toggleInventory">
+      <text class="info-title">📦 包裹栏 ({{inventoryItems.length}}/{{totalSlots}})</text>
+      <view class="toggle-icon">{{inventoryExpanded ? '▼' : '▶'}}</view>
+    </view>
+
+    <view class="inventory-grid" wx:if="{{inventoryExpanded}}">
+      <view class="grid-items">
+        <block wx:for="{{totalSlots}}" wx:key="*this">
+          <view
+            wx:if="{{inventoryItems[index]}}"
+            class="grid-item {{simpleIcon.getRarityClass(inventoryItems[index].rarity)}}"
+            bindtap="showItemDetail"
+            data-index="{{index}}"
+          >
+            <view class="item-icon-main" wx:if="{{inventoryItems[index].icon.type === 'image'}}">
+              <image class="item-type-icon" src="{{inventoryItems[index].icon.value}}" mode="aspectFit"></image>
+            </view>
+            <view class="item-icon-main equip-icon" wx:else>
+              <text class="equip-emoji">{{inventoryItems[index].icon.value}}</text>
+            </view>
+          </view>
+          <view wx:else class="grid-item empty-slot"></view>
+        </block>
+      </view>
+
+      <view class="empty-tips" wx:if="{{inventoryItems.length === 0}}">
+        <text class="text-small text-secondary">包裹栏是空的</text>
+        <text class="text-small text-secondary">去商城购买物品吧</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 武器熟练度面板 -->
+  <view class="panel">
+    <view class="panel-title">🎯 武器熟练度</view>
+    <view class="proficiency-list">
+      <view class="proficiency-item" wx:for="{{proficiencyData}}" wx:key="key">
+        <view class="proficiency-icon">
+          <text>{{item.icon}}</text>
+        </view>
+        <view class="proficiency-info">
+          <text class="proficiency-name">{{item.name}}</text>
+          <view class="proficiency-progress">
+            <view class="progress-bar-mini">
+              <view class="progress-fill-mini" style="width: {{item.progress}}%"></view>
+            </view>
+            <text class="proficiency-value">{{item.value}}</text>
+          </view>
+        </view>
+        <view class="proficiency-tier">
+          <text class="tier-name {{item.tier.bonus > 0 ? 'tier-active' : ''}}">{{item.tier.name}}</text>
+          <text class="tier-bonus" wx:if="{{item.tier.bonus > 0}}">+{{item.tier.bonus * 100}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 技能面板 -->
+  <view class="panel">
+    <view class="panel-title">⚔️ 技能列表</view>
+    <view class="skills-list">
+      <view class="skill-item" wx:for="{{hero.skills}}" wx:key="id">
+        <view class="skill-icon">{{item.icon || '⚡'}}</view>
+        <view class="skill-content">
+          <view class="skill-header">
+            <text class="skill-name">{{item.name}}</text>
+            <view class="skill-level-badge">
+              <text class="skill-level-text">Lv.{{item.level}}</text>
+            </view>
+          </view>
+          <view class="skill-stats">
+            <text class="skill-stat">伤害: {{item.damage * 100}}%</text>
+            <text class="skill-stat">消耗: {{item.mpCost}} MP</text>
+            <text wx:if="{{item.maxCooldown > 0}}" class="skill-stat">冷却: {{item.maxCooldown}}回合</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 物品详情弹窗（带对比） -->
+  <view class="modal-overlay" wx:if="{{selectedItem}}" bindtap="closeItemDetail">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title {{getRarityClass(selectedItem.rarity)}}">{{selectedItem.name}}</text>
+        <view class="modal-close" bindtap="closeItemDetail">✕</view>
+      </view>
+      <view class="modal-body">
+        <!-- 稀有度标签 -->
+        <view class="item-detail-rarity {{getRarityClass(selectedItem.rarity)}}">
+          {{getRarityName(selectedItem.rarity)}}
+        </view>
+
+        <!-- 描述 -->
+        <view class="item-detail-description">
+          <text>{{selectedItem.description}}</text>
+        </view>
+
+        <!-- 装备对比区域 -->
+        <view wx:if="{{equippedItemForCompare}}" class="item-compare-section">
+          <view class="compare-header">
+            <text>装备对比</text>
+          </view>
+          <view class="compare-row header">
+            <text class="compare-label">属性</text>
+            <text class="compare-current">当前</text>
+            <text class="compare-new">新装备</text>
+            <text class="compare-diff">变化</text>
+          </view>
+          <view class="compare-row" wx:for="{{compareStats}}" wx:key="key">
+            <text class="compare-label">{{item.label}}</text>
+            <text class="compare-current">{{item.current}}</text>
+            <text class="compare-new">{{item.new}}</text>
+            <text class="compare-diff {{item.diff > 0 ? 'positive' : item.diff < 0 ? 'negative' : ''}}">
+              {{item.diff > 0 ? '+' : ''}}{{item.diff}}
+            </text>
+          </view>
+        </view>
+
+        <!-- 属性 -->
+        <view wx:if="{{!equippedItemForCompare}}" class="item-detail-stats">
+          <view wx:if="{{selectedItem.attack}}" class="stat-item">
+            <text class="stat-label">攻击力</text>
+            <text class="stat-value text-primary text-bold">+{{selectedItem.attack}}</text>
+          </view>
+          <view wx:if="{{selectedItem.magicAttack}}" class="stat-item">
+            <text class="stat-label">魔法攻击</text>
+            <text class="stat-value text-purple text-bold">+{{selectedItem.magicAttack}}</text>
+          </view>
+          <view wx:if="{{selectedItem.defense}}" class="stat-item">
+            <text class="stat-label">防御力</text>
+            <text class="stat-value text-primary text-bold">+{{selectedItem.defense}}</text>
+          </view>
+          <view wx:if="{{selectedItem.hpBonus}}" class="stat-item">
+            <text class="stat-label">生命</text>
+            <text class="stat-value text-danger text-bold">+{{selectedItem.hpBonus}}</text>
+          </view>
+          <view wx:if="{{selectedItem.mpBonus}}" class="stat-item">
+            <text class="stat-label">魔法</text>
+            <text class="stat-value text-primary text-bold">+{{selectedItem.mpBonus}}</text>
+          </view>
+          <view wx:if="{{selectedItem.crit}}" class="stat-item">
+            <text class="stat-label">暴击</text>
+            <text class="stat-value text-warning text-bold">+{{selectedItem.crit}}</text>
+          </view>
+          <view wx:if="{{selectedItem.dodge}}" class="stat-item">
+            <text class="stat-label">闪避</text>
+            <text class="stat-value text-success text-bold">+{{selectedItem.dodge}}</text>
+          </view>
+          <view wx:if="{{selectedItem.speed}}" class="stat-item">
+            <text class="stat-label">速度</text>
+            <text class="stat-value {{selectedItem.speed > 0 ? 'text-success' : 'text-danger'}} text-bold">{{selectedItem.speed}}</text>
+          </view>
+          <view wx:if="{{selectedItem.block}}" class="stat-item">
+            <text class="stat-label">格挡</text>
+            <text class="stat-value text-primary text-bold">+{{selectedItem.block}}</text>
+          </view>
+          <view wx:if="{{selectedItem.subType === 'hp'}}" class="stat-item">
+            <text class="stat-label">恢复</text>
+            <text class="stat-value text-danger text-bold">+{{selectedItem.value}} HP</text>
+          </view>
+          <view wx:if="{{selectedItem.subType === 'mp'}}" class="stat-item">
+            <text class="stat-label">恢复</text>
+            <text class="stat-value text-primary text-bold">+{{selectedItem.value}} MP</text>
+          </view>
+          <view wx:if="{{selectedItem.subType === 'dual'}}" class="stat-item">
+            <text class="stat-label">恢复</text>
+            <text class="stat-value text-danger text-bold">+{{selectedItem.hpRestore}} HP / +{{selectedItem.mpRestore}} MP</text>
+          </view>
+        </view>
+
+        <!-- 售价 -->
+        <view class="item-detail-price">
+          <text class="price-label">售价:</text>
+          <text class="price-value">{{selectedItem.price || 0}}</text>
+          <text class="price-icon">💰</text>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button wx:if="{{selectedItem.type === 'potion'}}" class="btn btn-primary" bindtap="useSelectedItem">使用</button>
+        <button wx:if="{{selectedItem.type === 'weapon' || selectedItem.type === 'equipment'}}" class="btn btn-primary" bindtap="equipSelectedItem">装备</button>
+        <button class="btn btn-danger" bindtap="sellSelectedItem">出售</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 属性弹窗 -->
+  <view class="modal-overlay" wx:if="{{showStats}}" bindtap="hideStatsModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">📊 角色属性</text>
+        <view class="modal-close" bindtap="hideStatsModal">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="stats-grid">
+          <view class="stat-row">
+            <text class="text-small text-secondary">物理攻击:</text>
+            <text class="text-primary text-bold">{{totalStats.attack || hero.attack || 0}}</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">魔法攻击:</text>
+            <text class="text-purple text-bold">{{totalStats.magicAttack || 0}}</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">魔法防御:</text>
+            <text class="text-purple text-bold">{{totalStats.magicDefense || 0}}</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">防御力:</text>
+            <text class="text-primary text-bold">{{totalStats.defense || hero.defense || 0}}</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">速度:</text>
+            <text class="text-warning text-bold">{{totalStats.speed || hero.speed || 0}}</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">暴击率:</text>
+            <text class="text-warning text-bold">{{totalStats.crit || hero.crit || 0}}%</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">闪避率:</text>
+            <text class="text-success text-bold">{{totalStats.dodge || hero.dodge || 0}}%</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">格挡值:</text>
+            <text class="text-primary text-bold">{{totalStats.block || hero.block || 0}}</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">最大生命:</text>
+            <text class="text-danger text-bold">{{(hero.maxHp || 100) + (totalStats.hpBonus || 0)}}</text>
+          </view>
+          <view class="stat-row">
+            <text class="text-small text-secondary">最大魔法:</text>
+            <text class="text-primary text-bold">{{(hero.maxMp || 100) + (totalStats.mpBonus || 0)}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

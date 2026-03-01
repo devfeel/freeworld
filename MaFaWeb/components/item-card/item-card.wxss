@@ -1,0 +1,183 @@
+/* 物品卡片组件样式 */
+.item-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm);
+  background: linear-gradient(135deg, var(--panel-bg) 0%, var(--panel-bg-dark) 100%);
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.item-card:active {
+  transform: scale(0.98);
+}
+
+/* 尺寸变体 */
+.item-card.small {
+  padding: var(--space-xs);
+}
+
+.item-card.small .item-icon-wrap {
+  width: 40px;
+  height: 40px;
+}
+
+.item-card.large {
+  padding: var(--space-md);
+}
+
+.item-card.large .item-icon-wrap {
+  width: 64px;
+  height: 64px;
+}
+
+/* 图标容器 */
+.item-icon-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color-light);
+  flex-shrink: 0;
+}
+
+.item-icon-img {
+  width: 80%;
+  height: 80%;
+}
+
+.item-icon-emoji {
+  font-size: 24px;
+}
+
+/* 数量标记 */
+.item-count {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: var(--color-error);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 新物品标记 */
+.item-new-badge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  padding: 2px 4px;
+  background: linear-gradient(135deg, var(--color-error), var(--color-error-dark));
+  border-radius: var(--radius-sm);
+  font-size: 8px;
+  font-weight: bold;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+/* 物品信息 */
+.item-info {
+  flex: 1;
+  margin-left: var(--space-sm);
+  min-width: 0;
+}
+
+.item-name {
+  font-size: var(--text-base);
+  font-weight: bold;
+  color: var(--text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-desc {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-color-secondary);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-meta {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  color: var(--text-color-secondary);
+}
+
+.meta-tag.atk {
+  color: var(--color-error);
+}
+
+.meta-tag.def {
+  color: var(--color-info);
+}
+
+.item-price {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--space-xs);
+}
+
+.price-value {
+  font-size: var(--text-base);
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.price-unit {
+  font-size: var(--text-sm);
+}
+
+/* 选中标记 */
+.selected-mark {
+  position: absolute;
+  top: 50%;
+  right: var(--space-sm);
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: var(--color-success);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+/* 稀有度样式 */
+.item-card.tag-common { border-color: var(--color-rarity-common); }
+.item-card.tag-uncommon { border-color: var(--color-rarity-uncommon); box-shadow: 0 0 8px rgba(30, 255, 0, 0.2); }
+.item-card.tag-rare { border-color: var(--color-rarity-rare); box-shadow: 0 0 8px rgba(0, 112, 221, 0.2); }
+.item-card.tag-epic { border-color: var(--color-rarity-epic); box-shadow: 0 0 8px rgba(163, 53, 238, 0.2); }
+.item-card.tag-legendary { border-color: var(--color-rarity-legendary); box-shadow: 0 0 12px rgba(255, 128, 0, 0.3); }
+.item-card.tag-mythic { border-color: var(--color-rarity-mythic); box-shadow: 0 0 12px rgba(231, 76, 60, 0.3); }
+.item-card.tag-divine { border-color: var(--color-rarity-divine); box-shadow: 0 0 16px rgba(255, 215, 0, 0.4); }

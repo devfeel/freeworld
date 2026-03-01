@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/dungeon/dungeon",
+    "pages/dungeon-detail/dungeon-detail",
+    "pages/battle/battle",
+    "pages/hero/hero",
+    "pages/task/task",
+    "pages/shop/shop",
+    "pages/enhance/enhance",
+    "pages/enhance/transfer"
+  ],
+  "window": {
+    "navigationBarTitleText": "地下城传说",
+    "navigationBarBackgroundColor": "#2d1f15",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#1a1410"
+  },
+  "tabBar": {
+    "color": "#8b7355",
+    "selectedColor": "#ffd700",
+    "backgroundColor": "#2d1f15",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "主页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/dungeon/dungeon",
+        "text": "地下城",
+        "iconPath": "assets/icons/dungeon.png",
+        "selectedIconPath": "assets/icons/dungeon-active.png"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "商城",
+        "iconPath": "assets/icons/shop.png",
+        "selectedIconPath": "assets/icons/shop-active.png"
+      },
+      {
+        "pagePath": "pages/hero/hero",
+        "text": "角色",
+        "iconPath": "assets/icons/hero.png",
+        "selectedIconPath": "assets/icons/hero-active.png"
+      },
+      {
+        "pagePath": "pages/task/task",
+        "text": "任务",
+        "iconPath": "assets/icons/task.png",
+        "selectedIconPath": "assets/icons/task-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

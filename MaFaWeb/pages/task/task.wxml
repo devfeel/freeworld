@@ -1,0 +1,230 @@
+<view class="container">
+  <!-- 顶部Tab导航 -->
+  <view class="tab-nav">
+    <view class="tab-item {{currentTab === 'story' ? 'active' : ''}}" data-tab="story" bindtap="switchTab">
+      <text class="tab-icon">📜</text>
+      <text class="tab-name">剧情</text>
+      <text class="tab-count">{{storyCompleted}}/{{storyTasks.length}}</text>
+    </view>
+    <view class="tab-item {{currentTab === 'daily' ? 'active' : ''}}" data-tab="daily" bindtap="switchTab">
+      <text class="tab-icon">📅</text>
+      <text class="tab-name">每日</text>
+      <text class="tab-count">{{dailyCompleted}}/{{dailyTasks.length}}</text>
+    </view>
+    <view class="tab-item {{currentTab === 'achievement' ? 'active' : ''}}" data-tab="achievement" bindtap="switchTab">
+      <text class="tab-icon">🏆</text>
+      <text class="tab-name">成就</text>
+      <text class="tab-count">{{achievementCompleted}}/{{achievementTasks.length}}</text>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="refresh-action" wx:if="{{currentTab === 'daily'}}" bindtap="refreshDailyTasks">
+      <text class="refresh-icon">🔄</text>
+      <text class="refresh-text">刷新</text>
+    </view>
+  </view>
+
+  <!-- 任务列表 -->
+  <scroll-view class="task-scroll" scroll-y="true" enhanced="true" show-scrollbar="true">
+    <view class="task-list">
+      <!-- 剧情任务 -->
+      <block wx:if="{{currentTab === 'story'}}">
+        <view class="task-card {{item.status}} {{item.isNew ? 'new' : ''}}"
+              wx:for="{{storyTasks}}"
+              wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="showTaskDetail">
+          <!-- 左侧装饰条 -->
+          <view class="card-accent {{item.status}}"></view>
+
+          <!-- 任务图标 -->
+          <view class="task-icon-wrap">
+            <text class="task-icon">{{item.icon || '📜'}}</text>
+            <view class="priority-badge" wx:if="{{item.priority >= 30}}">!</view>
+          </view>
+
+          <!-- 任务内容 -->
+          <view class="task-content">
+            <view class="task-header">
+              <text class="task-name">{{item.name}}</text>
+              <view class="status-tag {{item.status}}">
+                <text>{{getStatusName(item.status)}}</text>
+              </view>
+            </view>
+
+            <text class="task-desc">{{item.description}}</text>
+
+            <!-- 进度条 -->
+            <view class="progress-wrap" wx:if="{{item.status === 'in_progress'}}">
+              <view class="progress-bar">
+                <view class="progress-fill" style="width: {{item.progress || 50}}%"></view>
+              </view>
+              <text class="progress-text">{{item.progress || 50}}%</text>
+            </view>
+
+            <!-- 奖励预览 -->
+            <view class="reward-preview">
+              <view class="reward-item">
+                <text class="reward-icon">⭐</text>
+                <text class="reward-value">{{item.rewards.exp}}</text>
+              </view>
+              <view class="reward-item">
+                <text class="reward-icon">💰</text>
+                <text class="reward-value">{{item.rewards.gold}}</text>
+              </view>
+              <view class="reward-item title" wx:if="{{item.rewards.title}}">
+                <text class="reward-icon">🏅</text>
+                <text class="reward-value">头衔</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 操作按钮 -->
+          <view class="task-action">
+            <block wx:if="{{item.status === 'not_started'}}">
+              <view class="action-btn primary {{isTaskAvailable(item.id) ? '' : 'disabled'}}"
+                    data-id="{{item.id}}"
+                    catchtap="{{isTaskAvailable(item.id) ? 'acceptTask' : ''}}">
+                <text>接取</text>
+              </view>
+            </block>
+            <block wx:elif="{{item.status === 'in_progress'}}">
+              <view class="action-btn submit" data-id="{{item.id}}" catchtap="submitTask">
+                <text>提交</text>
+              </view>
+            </block>
+            <block wx:else>
+              <view class="completed-mark">
+                <text class="check-icon">✓</text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+
+      <!-- 每日任务 -->
+      <block wx:if="{{currentTab === 'daily'}}">
+        <view class="task-card {{item.status}}"
+              wx:for="{{dailyTasks}}"
+              wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="showTaskDetail">
+          <view class="card-accent {{item.status}}"></view>
+          <view class="task-icon-wrap">
+            <text class="task-icon">{{item.icon || '📅'}}</text>
+          </view>
+          <view class="task-content">
+            <view class="task-header">
+              <text class="task-name">{{item.name}}</text>
+              <view class="status-tag {{item.status}}">
+                <text>{{getStatusName(item.status)}}</text>
+              </view>
+            </view>
+            <text class="task-desc">{{item.description}}</text>
+            <view class="reward-preview">
+              <view class="reward-item">
+                <text class="reward-icon">⭐</text>
+                <text class="reward-value">{{item.rewards.exp}}</text>
+              </view>
+              <view class="reward-item">
+                <text class="reward-icon">💰</text>
+                <text class="reward-value">{{item.rewards.gold}}</text>
+              </view>
+            </view>
+          </view>
+          <view class="task-action">
+            <block wx:if="{{item.status === 'not_started'}}">
+              <view class="action-btn primary" data-id="{{item.id}}" catchtap="acceptTask">
+                <text>接取</text>
+              </view>
+            </block>
+            <block wx:elif="{{item.status === 'in_progress'}}">
+              <view class="action-btn submit" data-id="{{item.id}}" catchtap="submitTask">
+                <text>提交</text>
+              </view>
+            </block>
+            <block wx:else>
+              <view class="completed-mark">
+                <text class="check-icon">✓</text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+
+      <!-- 成就任务 -->
+      <block wx:if="{{currentTab === 'achievement'}}">
+        <view class="task-card {{item.status}}"
+              wx:for="{{achievementTasks}}"
+              wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="showTaskDetail">
+          <view class="card-accent {{item.status}}"></view>
+          <view class="task-icon-wrap">
+            <text class="task-icon">{{item.icon || '🏆'}}</text>
+          </view>
+          <view class="task-content">
+            <view class="task-header">
+              <text class="task-name">{{item.name}}</text>
+              <view class="status-tag {{item.status}}">
+                <text>{{getStatusName(item.status)}}</text>
+              </view>
+            </view>
+            <text class="task-desc">{{item.description}}</text>
+            <view class="progress-wrap" wx:if="{{item.status === 'in_progress'}}">
+              <view class="progress-bar">
+                <view class="progress-fill" style="width: {{item.progress || 0}}%"></view>
+              </view>
+              <text class="progress-text">{{item.progress || 0}}%</text>
+            </view>
+            <view class="reward-preview">
+              <view class="reward-item">
+                <text class="reward-icon">⭐</text>
+                <text class="reward-value">{{item.rewards.exp}}</text>
+              </view>
+              <view class="reward-item">
+                <text class="reward-icon">💰</text>
+                <text class="reward-value">{{item.rewards.gold}}</text>
+              </view>
+              <view class="reward-item title" wx:if="{{item.rewards.title}}">
+                <text class="reward-icon">🏅</text>
+                <text class="reward-value">{{item.rewards.title}}</text>
+              </view>
+            </view>
+          </view>
+          <view class="task-action">
+            <block wx:if="{{item.status === 'not_started'}}">
+              <view class="action-btn {{isTaskAvailable(item.id) ? 'primary' : 'disabled'}}"
+                    data-id="{{item.id}}"
+                    catchtap="{{isTaskAvailable(item.id) ? 'acceptTask' : ''}}">
+                <text>{{isTaskAvailable(item.id) ? '接取' : '未开放'}}</text>
+              </view>
+            </block>
+            <block wx:elif="{{item.status === 'in_progress'}}">
+              <view class="action-btn submit" data-id="{{item.id}}" catchtap="submitTask">
+                <text>提交</text>
+              </view>
+            </block>
+            <block wx:else>
+              <view class="completed-mark">
+                <text class="check-icon">✓</text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{(currentTab === 'story' && storyTasks.length === 0) || (currentTab === 'daily' && dailyTasks.length === 0) || (currentTab === 'achievement' && achievementTasks.length === 0)}}">
+        <view class="empty-icon">📋</view>
+        <text class="empty-title">暂无任务</text>
+        <text class="empty-desc">当前筛选条件下没有任务</text>
+      </view>
+    </view>
+
+    <!-- 底部间距 -->
+    <view class="bottom-space"></view>
+  </scroll-view>
+</view>

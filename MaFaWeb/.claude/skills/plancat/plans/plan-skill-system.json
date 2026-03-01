@@ -1,0 +1,16 @@
+{
+  "id": "plan-skill-system",
+  "created": "2026-02-27T10:00:00",
+  "requirement": "实现完整的技能系统，包括主动技能、被动技能树、战斗中使用技能",
+  "status": "ready",
+  "current_step": 0,
+  "total_steps": 6,
+  "steps": [
+    { "id": 1, "status": "pending", "summary": "设计技能数据结构和配置文件" },
+    { "id": 2, "status": "pending", "summary": "创建技能管理器和英雄技能数据" },
+    { "id": 3, "status": "pending", "summary": "实现战斗中的技能使用逻辑" },
+    { "id": 4, "status": "pending", "summary": "创建技能页面（学习/升级/查看）" },
+    { "id": 5, "status": "pending", "summary": "在角色页面集成技能展示" },
+    { "id": 6, "status": "pending", "summary": "添加技能特效和动画" }
+  ]
+}
