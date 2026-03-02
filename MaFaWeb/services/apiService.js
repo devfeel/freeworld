@@ -11,9 +11,9 @@ const { request: mockRequest } = require('../mock/mockData')
 // 配置API基础信息
 const API_CONFIG = {
   // 开发环境使用本地服务器，生产环境使用线上
-  BASE_URL: process.env.API_BASE_URL || 'http://localhost:8080', // 实际API地址
+  BASE_URL: process.env.API_BASE_URL || 'https://cyan-moons-cry_loca_lt', // 实际API地址
   TIMEOUT: 10000,
-  ENABLE_MOCK: false, // 控制是否启用mock数据 (false=使用真实API)
+  ENABLE_MOCK: true, // 控制是否启用mock数据 (false=使用真实API)
   MOCK_DELAY: 200 // mock数据延迟（毫秒）
 }
 

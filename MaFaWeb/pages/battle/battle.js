@@ -782,6 +782,17 @@ Page({
     })
   },
 
+  // 英雄普通攻击
+  heroAttack() {
+    if (!this.battleSystem || !this.data.battle) return
+    if (this.data.battle.turn !== 'hero') return
+
+    // 攻击动画
+    this.animateHeroAttack(() => {
+      this.battleSystem.heroAttack()
+    })
+  },
+
   // 使用技能
   useSkill(e) {
     const skillId = e.currentTarget.dataset.skillid
