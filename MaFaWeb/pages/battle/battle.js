@@ -92,20 +92,45 @@ Page({
     this.initCanvas().then(() => {
       // 开始战斗
       this.startBattle(monster, isBoss)
+    }).catch((err) => {
+      console.error('[Battle] Canvas初始化失败:', err)
+      wx.showToast({
+        title: '战斗初始化失败',
+        icon: 'none'
+      })
     })
   },
 
   onUnload() {
+    // 清理战斗系统
     if (this.battleSystem) {
       this.battleSystem.isBattling = false
       this.isAutoBattle = false
     }
-    // 清理动画
+    // 清理动画定时器
     if (this.animationId) {
       clearTimeout(this.animationId)
+      this.animationId = null
     }
     // 清理特效循环
     this.stopEffectLoop()
+    // 清理状态计时器
+    if (this.statusTimer) {
+      clearInterval(this.statusTimer)
+      this.statusTimer = null
+    }
+    // 清理自动战斗计时器
+    if (this.autoBattleTimer) {
+      clearInterval(this.autoBattleTimer)
+      this.autoBattleTimer = null
+    }
+    // 清理Canvas上下文
+    if (this.ctx) {
+      this.ctx = null
+    }
+    if (this.canvas) {
+      this.canvas = null
+    }
   },
 
   // 检查是否有药水

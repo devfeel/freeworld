@@ -231,6 +231,36 @@ function getExpForLevel(level) {
   }
 }
 
+/**
+ * 计算角色战力
+ * @param {object} stats 角色属性 {attack, defense, hp, magicAttack, etc.}
+ * @returns {number} 战力值
+ */
+function calculatePower(stats) {
+  const attack = stats.attack || 0
+  const defense = stats.defense || 0
+  const hp = stats.hp || 0
+  const magicAttack = stats.magicAttack || 0
+
+  return Math.floor(attack * 2 + defense * 1.5 + hp / 10 + magicAttack * 1.8)
+}
+
+/**
+ * 获取战力对应的称号
+ * @param {number} level 等级
+ * @param {number} power 战力值
+ * @returns {string} 称号
+ */
+function getTitleByPower(level, power) {
+  if (power >= 10000) return '传说英雄'
+  if (power >= 5000) return '史诗勇士'
+  if (power >= 2000) return '精英战士'
+  if (level >= 30) return '大冒险家'
+  if (level >= 20) return '资深冒险者'
+  if (level >= 10) return '见习勇士'
+  return '新手冒险者'
+}
+
 module.exports = {
   random,
   chance,
@@ -246,5 +276,7 @@ module.exports = {
   showModal,
   throttle,
   debounce,
-  getExpForLevel
+  getExpForLevel,
+  calculatePower,
+  getTitleByPower
 }

@@ -1,5 +1,6 @@
 // pages/main/main.js
 const app = getApp()
+const { calculatePower, getTitleByPower } = require('../../utils/game-utils')
 
 Page({
   /**
@@ -77,6 +78,7 @@ Page({
   onUnload() {
     if (this.timer) {
       clearInterval(this.timer)
+      this.timer = null
     }
   },
 
@@ -121,6 +123,9 @@ Page({
     const title = this.getHeroTitle(hero.level || 1, totalStats)
     hero.title = title
 
+    // 计算战力
+    const power = calculatePower(totalStats)
+
     this.setData({
       hero,
       totalStats,
@@ -130,7 +135,8 @@ Page({
       maxHp,
       maxMp,
       rankList,
-      classEmoji
+      classEmoji,
+      power
     })
   },
 
@@ -151,14 +157,8 @@ Page({
 
   // 获取英雄称号
   getHeroTitle(level, stats) {
-    const power = (stats.attack || 0) * 2 + (stats.defense || 0) * 1.5
-    if (power >= 10000) return '传说英雄'
-    if (power >= 5000) return '史诗勇士'
-    if (power >= 2000) return '精英战士'
-    if (level >= 30) return '大冒险家'
-    if (level >= 20) return '资深冒险者'
-    if (level >= 10) return '见习勇士'
-    return '新手冒险者'
+    const power = calculatePower(stats)
+    return getTitleByPower(level, power)
   },
 
   /**
