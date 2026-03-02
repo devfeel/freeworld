@@ -3,6 +3,8 @@
   class="equipment-slot {{size}} {{equipment ? 'filled' : 'empty'}} {{isNew ? 'new-item' : ''}}"
   bindtap="onTap"
   bindlongpress="onLongPress"
+  role="button"
+  aria-label="{{equipment ? equipment.name : slotLabel}}"
 >
   <!-- 装备图标 -->
   <block wx:if="{{equipment}}">
@@ -11,6 +13,7 @@
       src="{{equipment.icon}}"
       mode="aspectFit"
       wx:if="{{equipment.icon}}"
+      lazy-load="{{true}}"
     />
     <text class="equipment-emoji" wx:else>{{equipment.emoji || defaultEmoji}}</text>
 

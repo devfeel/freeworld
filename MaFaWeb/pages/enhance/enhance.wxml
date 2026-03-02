@@ -14,7 +14,7 @@
   <view class="item-card" wx:if="{{item}}">
     <view class="item-icon {{item.enhance.level > 0 ? 'enhanced' : ''}}"
           style="border-color: {{item.enhance.color || '#888'}}">
-      <image wx:if="{{item.icon}}" src="{{item.icon}}" mode="aspectFit"/>
+      <image wx:if="{{item.icon}}" src="{{item.icon}}" mode="aspectFit" lazy-load="{{true}}"/>
       <text wx:else class="item-emoji">{{item.subType === 'dao' ? '🔪' : item.subType === 'jian' ? '🗡️' : item.subType === 'axe' ? '🪓' : item.subType === 'staff' ? '🪄' : item.subType === 'bow' ? '🏹' : '⚔️'}}</text>
       <view wx:if="{{item.enhance.level > 0}}" class="enhance-badge" style="background: {{item.enhance.color}}">
         +{{item.enhance.level}}
