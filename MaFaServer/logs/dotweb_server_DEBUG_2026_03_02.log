@@ -1,0 +1,273 @@
+2026-03-02 20:22:53.5632 [DEBUG] [group.go:28] DotWeb:Group NewGroup [/api]
+2026-03-02 20:22:53.5634 [DEBUG] [group.go:28] DotWeb:Group NewGroup [/api/auth]
+2026-03-02 20:22:53.5635 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/auth/register] [main.RegisterHandler]
+2026-03-02 20:22:53.5635 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/auth/register] [main.RegisterHandler]
+2026-03-02 20:22:53.5635 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/auth/register] [main.RegisterHandler]
+2026-03-02 20:22:53.5635 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/auth/login] [main.LoginHandler]
+2026-03-02 20:22:53.5636 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/auth/login] [main.LoginHandler]
+2026-03-02 20:22:53.5637 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/auth/login] [main.LoginHandler]
+2026-03-02 20:22:53.5637 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/auth/logout] [main.LogoutHandler]
+2026-03-02 20:22:53.5637 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/auth/logout] [main.LogoutHandler]
+2026-03-02 20:22:53.5638 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/auth/logout] [main.LogoutHandler]
+2026-03-02 20:22:53.5638 [DEBUG] [group.go:28] DotWeb:Group NewGroup [/api]
+2026-03-02 20:22:53.5638 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/player/info] [main.GetPlayerInfoHandler]
+2026-03-02 20:22:53.5638 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/player/info] [main.GetPlayerInfoHandler]
+2026-03-02 20:22:53.5638 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/player/info] [main.GetPlayerInfoHandler]
+2026-03-02 20:22:53.5639 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/player/update] [main.UpdatePlayerHandler]
+2026-03-02 20:22:53.5639 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/player/update] [main.UpdatePlayerHandler]
+2026-03-02 20:22:53.5639 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/player/update] [main.UpdatePlayerHandler]
+2026-03-02 20:22:53.5639 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/player/heartbeat] [main.PlayerHeartbeatHandler]
+2026-03-02 20:22:53.5639 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/player/heartbeat] [main.PlayerHeartbeatHandler]
+2026-03-02 20:22:53.564 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/player/heartbeat] [main.PlayerHeartbeatHandler]
+2026-03-02 20:22:53.564 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/hero/info] [main.GetHeroInfoHandler]
+2026-03-02 20:22:53.564 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/hero/info] [main.GetHeroInfoHandler]
+2026-03-02 20:22:53.564 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/hero/info] [main.GetHeroInfoHandler]
+2026-03-02 20:22:53.5641 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/hero/equip] [main.EquipHandler]
+2026-03-02 20:22:53.5641 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/hero/equip] [main.EquipHandler]
+2026-03-02 20:22:53.5641 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/hero/equip] [main.EquipHandler]
+2026-03-02 20:22:53.5641 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/hero/unequip] [main.UnequipHandler]
+2026-03-02 20:22:53.5645 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/hero/unequip] [main.UnequipHandler]
+2026-03-02 20:22:53.5645 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/hero/unequip] [main.UnequipHandler]
+2026-03-02 20:22:53.5646 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/bag/list] [main.GetBagListHandler]
+2026-03-02 20:22:53.5646 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/bag/list] [main.GetBagListHandler]
+2026-03-02 20:22:53.5647 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/bag/list] [main.GetBagListHandler]
+2026-03-02 20:22:53.5647 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/bag/use] [main.UseItemHandler]
+2026-03-02 20:22:53.5647 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/bag/use] [main.UseItemHandler]
+2026-03-02 20:22:53.5647 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/bag/use] [main.UseItemHandler]
+2026-03-02 20:22:53.5648 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/bag/delete] [main.DeleteItemHandler]
+2026-03-02 20:22:53.5648 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/bag/delete] [main.DeleteItemHandler]
+2026-03-02 20:22:53.5648 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/bag/delete] [main.DeleteItemHandler]
+2026-03-02 20:22:53.5648 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/shop/list] [main.GetShopListHandler]
+2026-03-02 20:22:53.5648 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/shop/list] [main.GetShopListHandler]
+2026-03-02 20:22:53.5649 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/shop/list] [main.GetShopListHandler]
+2026-03-02 20:22:53.5649 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/shop/buy] [main.BuyItemHandler]
+2026-03-02 20:22:53.5649 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/shop/buy] [main.BuyItemHandler]
+2026-03-02 20:22:53.5649 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/shop/buy] [main.BuyItemHandler]
+2026-03-02 20:22:53.565 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/rank/list] [main.GetRankListHandler]
+2026-03-02 20:22:53.565 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/rank/list] [main.GetRankListHandler]
+2026-03-02 20:22:53.565 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/rank/list] [main.GetRankListHandler]
+2026-03-02 20:22:53.565 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/dungeon/list] [main.GetDungeonListHandler]
+2026-03-02 20:22:53.5651 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/dungeon/list] [main.GetDungeonListHandler]
+2026-03-02 20:22:53.5651 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/dungeon/list] [main.GetDungeonListHandler]
+2026-03-02 20:22:53.5651 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/dungeon/detail] [main.GetDungeonDetailHandler]
+2026-03-02 20:22:53.5651 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/dungeon/detail] [main.GetDungeonDetailHandler]
+2026-03-02 20:22:53.5652 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/dungeon/detail] [main.GetDungeonDetailHandler]
+2026-03-02 20:22:53.5652 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/dungeon/enter] [main.EnterDungeonHandler]
+2026-03-02 20:22:53.5652 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/dungeon/enter] [main.EnterDungeonHandler]
+2026-03-02 20:22:53.5652 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/dungeon/enter] [main.EnterDungeonHandler]
+2026-03-02 20:22:53.5653 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/dungeon/explore] [main.ExploreDungeonHandler]
+2026-03-02 20:22:53.5653 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/dungeon/explore] [main.ExploreDungeonHandler]
+2026-03-02 20:22:53.5653 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/dungeon/explore] [main.ExploreDungeonHandler]
+2026-03-02 20:22:53.5653 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/battle/start] [main.StartBattleHandler]
+2026-03-02 20:22:53.5654 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/battle/start] [main.StartBattleHandler]
+2026-03-02 20:22:53.5654 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/battle/start] [main.StartBattleHandler]
+2026-03-02 20:22:53.5654 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/battle/attack] [main.AttackHandler]
+2026-03-02 20:22:53.5654 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/battle/attack] [main.AttackHandler]
+2026-03-02 20:22:53.5654 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/battle/attack] [main.AttackHandler]
+2026-03-02 20:22:53.5655 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/battle/skill] [main.UseSkillHandler]
+2026-03-02 20:22:53.5655 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/battle/skill] [main.UseSkillHandler]
+2026-03-02 20:22:53.5655 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/battle/skill] [main.UseSkillHandler]
+2026-03-02 20:22:53.5655 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/battle/defend] [main.DefendHandler]
+2026-03-02 20:22:53.5656 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/battle/defend] [main.DefendHandler]
+2026-03-02 20:22:53.5656 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/battle/defend] [main.DefendHandler]
+2026-03-02 20:22:53.5656 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/battle/run] [main.RunAwayHandler]
+2026-03-02 20:22:53.5657 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/battle/run] [main.RunAwayHandler]
+2026-03-02 20:22:53.5657 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/battle/run] [main.RunAwayHandler]
+2026-03-02 20:22:53.5657 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [POST] [/api/battle/result] [main.BattleResultHandler]
+2026-03-02 20:22:53.5657 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/battle/result] [main.BattleResultHandler]
+2026-03-02 20:22:53.5658 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/battle/result] [main.BattleResultHandler]
+2026-03-02 20:22:53.5658 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/exp/info] [main.GetExpInfoHandler]
+2026-03-02 20:22:53.5658 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/exp/info] [main.GetExpInfoHandler]
+2026-03-02 20:22:53.5659 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/exp/info] [main.GetExpInfoHandler]
+2026-03-02 20:22:53.5659 [DEBUG] [router.go:457] DotWeb:Router:RegisterRoute success [GET] [/api/exp/remaining] [main.GetExpRemainingHandler]
+2026-03-02 20:22:53.5659 [DEBUG] [router.go:469] DotWeb:Router:RegisterRoute AutoHead success [HEAD] [/api/exp/remaining] [main.GetExpRemainingHandler]
+2026-03-02 20:22:53.5659 [DEBUG] [router.go:483] DotWeb:Router:RegisterRoute AutoOPTIONS success [OPTIONS] [/api/exp/remaining] [main.GetExpRemainingHandler]
+2026-03-02 20:22:53.5661 [DEBUG] [server.go:365] DotWeb:HttpServer SetRenderer
+2026-03-02 20:22:53.5661 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/player/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5661 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/player/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5661 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/hero/equip *dotweb.xMiddleware match
+2026-03-02 20:22:53.5662 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/hero/equip *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5662 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/bag/use *dotweb.xMiddleware match
+2026-03-02 20:22:53.5662 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/bag/use *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5662 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/auth/register *dotweb.xMiddleware match
+2026-03-02 20:22:53.5662 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/auth/register *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5662 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/player/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.567 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/player/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5671 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/defend *dotweb.xMiddleware match
+2026-03-02 20:22:53.5671 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/defend *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5671 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/hero/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5672 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/hero/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5672 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/hero/equip *dotweb.xMiddleware match
+2026-03-02 20:22:53.5672 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/hero/equip *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5673 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/run *dotweb.xMiddleware match
+2026-03-02 20:22:53.5673 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/run *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5673 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/player/heartbeat *dotweb.xMiddleware match
+2026-03-02 20:22:53.5673 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/player/heartbeat *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5673 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/shop/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5674 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/shop/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5674 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/hero/unequip *dotweb.xMiddleware match
+2026-03-02 20:22:53.5674 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/hero/unequip *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5674 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5674 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5675 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/auth/logout *dotweb.xMiddleware match
+2026-03-02 20:22:53.5675 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/auth/logout *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5675 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/player/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5675 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/player/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5676 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/player/update *dotweb.xMiddleware match
+2026-03-02 20:22:53.5676 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/player/update *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5676 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/bag/use *dotweb.xMiddleware match
+2026-03-02 20:22:53.5677 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/bag/use *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5677 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/bag/delete *dotweb.xMiddleware match
+2026-03-02 20:22:53.5677 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/bag/delete *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5677 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/shop/buy *dotweb.xMiddleware match
+2026-03-02 20:22:53.5677 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/shop/buy *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5678 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/auth/register *dotweb.xMiddleware match
+2026-03-02 20:22:53.5678 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/auth/register *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5678 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/auth/login *dotweb.xMiddleware match
+2026-03-02 20:22:53.5678 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/auth/login *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5679 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/explore *dotweb.xMiddleware match
+2026-03-02 20:22:53.5679 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/explore *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5679 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/player/update *dotweb.xMiddleware match
+2026-03-02 20:22:53.5679 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/player/update *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.568 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/attack *dotweb.xMiddleware match
+2026-03-02 20:22:53.568 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/attack *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.568 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/defend *dotweb.xMiddleware match
+2026-03-02 20:22:53.568 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/defend *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5681 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/result *dotweb.xMiddleware match
+2026-03-02 20:22:53.5681 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/result *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5681 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/exp/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5681 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/exp/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5682 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/auth/login *dotweb.xMiddleware match
+2026-03-02 20:22:53.5682 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/auth/login *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5682 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/auth/login *dotweb.xMiddleware match
+2026-03-02 20:22:53.5682 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/auth/login *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5682 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/bag/use *dotweb.xMiddleware match
+2026-03-02 20:22:53.5683 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/bag/use *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5683 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/bag/delete *dotweb.xMiddleware match
+2026-03-02 20:22:53.5683 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/bag/delete *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5683 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/shop/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5684 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/shop/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5685 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/rank/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5685 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/rank/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5685 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/attack *dotweb.xMiddleware match
+2026-03-02 20:22:53.5686 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/attack *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5686 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/attack *dotweb.xMiddleware match
+2026-03-02 20:22:53.5686 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/attack *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5687 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/auth/register *dotweb.xMiddleware match
+2026-03-02 20:22:53.5687 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/auth/register *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5687 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/auth/logout *dotweb.xMiddleware match
+2026-03-02 20:22:53.5687 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/auth/logout *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5688 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/defend *dotweb.xMiddleware match
+2026-03-02 20:22:53.5688 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/defend *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5688 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/result *dotweb.xMiddleware match
+2026-03-02 20:22:53.5688 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/result *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5689 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/bag/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5689 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/bag/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5689 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/explore *dotweb.xMiddleware match
+2026-03-02 20:22:53.5689 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/explore *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5689 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/run *dotweb.xMiddleware match
+2026-03-02 20:22:53.569 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/run *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.569 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/player/heartbeat *dotweb.xMiddleware match
+2026-03-02 20:22:53.569 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/player/heartbeat *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5691 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/hero/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5691 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/hero/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5691 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/hero/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5691 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/hero/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5691 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/rank/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5692 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/rank/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5692 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/dungeon/explore *dotweb.xMiddleware match
+2026-03-02 20:22:53.5692 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/dungeon/explore *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5692 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/auth/logout *dotweb.xMiddleware match
+2026-03-02 20:22:53.5692 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/auth/logout *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5693 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/player/update *dotweb.xMiddleware match
+2026-03-02 20:22:53.5693 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/player/update *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5693 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/dungeon/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5693 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/dungeon/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5693 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/start *dotweb.xMiddleware match
+2026-03-02 20:22:53.5694 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/start *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5694 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/exp/remaining *dotweb.xMiddleware match
+2026-03-02 20:22:53.5694 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/exp/remaining *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5694 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/hero/unequip *dotweb.xMiddleware match
+2026-03-02 20:22:53.5695 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/hero/unequip *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5695 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/bag/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5695 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/bag/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5695 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/bag/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5696 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/bag/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5696 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/rank/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5697 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/rank/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5697 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5697 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5697 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/start *dotweb.xMiddleware match
+2026-03-02 20:22:53.5698 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/start *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5698 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/skill *dotweb.xMiddleware match
+2026-03-02 20:22:53.5698 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/skill *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5698 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/exp/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5699 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/exp/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5699 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/player/heartbeat *dotweb.xMiddleware match
+2026-03-02 20:22:53.5699 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/player/heartbeat *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5699 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/hero/unequip *dotweb.xMiddleware match
+2026-03-02 20:22:53.5699 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/hero/unequip *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.57 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/exp/remaining *dotweb.xMiddleware match
+2026-03-02 20:22:53.57 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/exp/remaining *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.57 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/detail *dotweb.xMiddleware match
+2026-03-02 20:22:53.57 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/detail *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5701 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/enter *dotweb.xMiddleware match
+2026-03-02 20:22:53.5701 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/dungeon/enter *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5701 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/result *dotweb.xMiddleware match
+2026-03-02 20:22:53.5701 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/result *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5701 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/exp/remaining *dotweb.xMiddleware match
+2026-03-02 20:22:53.5702 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/exp/remaining *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5702 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/hero/equip *dotweb.xMiddleware match
+2026-03-02 20:22:53.5703 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/hero/equip *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5703 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/shop/buy *dotweb.xMiddleware match
+2026-03-02 20:22:53.5703 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/shop/buy *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5704 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/run *dotweb.xMiddleware match
+2026-03-02 20:22:53.5704 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/run *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5704 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/exp/info *dotweb.xMiddleware match
+2026-03-02 20:22:53.5704 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/exp/info *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5705 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/bag/delete *dotweb.xMiddleware match
+2026-03-02 20:22:53.5706 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/bag/delete *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5706 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/detail *dotweb.xMiddleware match
+2026-03-02 20:22:53.5706 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/detail *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5707 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/enter *dotweb.xMiddleware match
+2026-03-02 20:22:53.5707 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/dungeon/enter *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5707 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/skill *dotweb.xMiddleware match
+2026-03-02 20:22:53.5707 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] OPTIONS^$^/api/battle/skill *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5707 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/dungeon/detail *dotweb.xMiddleware match
+2026-03-02 20:22:53.5708 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] GET^$^/api/dungeon/detail *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5708 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/dungeon/enter *dotweb.xMiddleware match
+2026-03-02 20:22:53.5708 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/dungeon/enter *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5708 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/start *dotweb.xMiddleware match
+2026-03-02 20:22:53.5709 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/battle/start *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5709 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/skill *dotweb.xMiddleware match
+2026-03-02 20:22:53.5709 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] POST^$^/api/battle/skill *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.5709 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/shop/list *dotweb.xMiddleware match
+2026-03-02 20:22:53.5709 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/shop/list *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.571 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/shop/buy *dotweb.xMiddleware match
+2026-03-02 20:22:53.571 [DEBUG] [dotweb.go:541] DotWeb initBindMiddleware [app] HEAD^$^/api/shop/buy *dotweb.RequestLogMiddleware match
+2026-03-02 20:22:53.571 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/bag/delete *main.JWTMiddleware match
+2026-03-02 20:22:53.571 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/shop/list *main.JWTMiddleware match
+2026-03-02 20:22:53.5711 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/shop/buy *main.JWTMiddleware match
+2026-03-02 20:22:53.5711 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/dungeon/detail *main.JWTMiddleware match
+2026-03-02 20:22:53.5711 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/dungeon/enter *main.JWTMiddleware match
+2026-03-02 20:22:53.5711 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/battle/attack *main.JWTMiddleware match
+2026-03-02 20:22:53.5712 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/battle/skill *main.JWTMiddleware match
+2026-03-02 20:22:53.5712 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/player/info *main.JWTMiddleware match
+2026-03-02 20:22:53.5712 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/exp/remaining *main.JWTMiddleware match
+2026-03-02 20:22:53.5712 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/bag/list *main.JWTMiddleware match
+2026-03-02 20:22:53.5713 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/battle/start *main.JWTMiddleware match
+2026-03-02 20:22:53.5713 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/battle/run *main.JWTMiddleware match
+2026-03-02 20:22:53.5713 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/exp/info *main.JWTMiddleware match
+2026-03-02 20:22:53.5713 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/player/heartbeat *main.JWTMiddleware match
+2026-03-02 20:22:53.5714 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/hero/equip *main.JWTMiddleware match
+2026-03-02 20:22:53.5714 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/hero/unequip *main.JWTMiddleware match
+2026-03-02 20:22:53.5714 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/dungeon/list *main.JWTMiddleware match
+2026-03-02 20:22:53.5714 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/battle/result *main.JWTMiddleware match
+2026-03-02 20:22:53.5715 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/hero/info *main.JWTMiddleware match
+2026-03-02 20:22:53.5715 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/bag/use *main.JWTMiddleware match
+2026-03-02 20:22:53.5715 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] GET^$^/api/rank/list *main.JWTMiddleware match
+2026-03-02 20:22:53.5715 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/dungeon/explore *main.JWTMiddleware match
+2026-03-02 20:22:53.5715 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/battle/defend *main.JWTMiddleware match
+2026-03-02 20:22:53.5716 [DEBUG] [dotweb.go:572] DotWeb initBindMiddleware [group] POST^$^/api/player/update *main.JWTMiddleware match
+2026-03-02 20:22:53.5716 [DEBUG] [dotweb.go:394] DotWeb RunMode is development
+2026-03-02 20:22:53.5716 [DEBUG] [server.go:104] DotWeb:HttpServer ListenAndServe [:8080]
