@@ -1,0 +1,11 @@
+<!-- button.wxml - 通用按钮模板 -->
+<button 
+  class="btn btn-{{type}} btn-{{size}} {{outline ? 'btn-outline' : ''}} {{disabled || loading ? 'btn-disabled' : ''}}"
+  hover-class="btn-hover"
+  bindtap="handleTap"
+  disabled="{{disabled || loading}}"
+  aria-label="{{text}}"
+>
+  <text wx:if="{{loading}}" class="btn-loading"></text>
+  <text class="btn-text">{{text}}</text>
+</button>

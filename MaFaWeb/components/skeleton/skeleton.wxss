@@ -1,0 +1,104 @@
+/* skeleton.wxss - 骨架屏样式 */
+
+.skeleton-container {
+  width: 100%;
+}
+
+/* 骨架屏动画 */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-card,
+.skeleton-list,
+.skeleton-detail {
+  background: var(--panel-bg, #2d1f15);
+  border-radius: var(--radius-md, 12rpx);
+  padding: var(--space-md, 24rpx);
+}
+
+.skeleton-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-md, 24rpx);
+}
+
+.skeleton-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #3a2a1a 25%, #4a3a2a 50%, #3a2a1a 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-avatar-small {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 8rpx;
+  background: linear-gradient(90deg, #3a2a1a 25%, #4a3a2a 50%, #3a2a1a 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  flex-shrink: 0;
+}
+
+.skeleton-info {
+  flex: 1;
+  margin-left: var(--space-sm, 16rpx);
+}
+
+.skeleton-line {
+  height: 24rpx;
+  border-radius: 4rpx;
+  background: linear-gradient(90deg, #3a2a1a 25%, #4a3a2a 50%, #3a2a1a 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  margin-bottom: var(--space-xs, 8rpx);
+}
+
+.skeleton-title {
+  width: 60%;
+}
+
+.skeleton-title-lg {
+  width: 80%;
+  height: 40rpx;
+}
+
+.skeleton-subtitle {
+  width: 40%;
+}
+
+.skeleton-body {
+  margin-top: var(--space-sm, 16rpx);
+}
+
+.skeleton-banner {
+  width: 100%;
+  height: 300rpx;
+  border-radius: var(--radius-md, 12rpx);
+  background: linear-gradient(90deg, #3a2a1a 25%, #4a3a2a 50%, #3a2a1a 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  margin-bottom: var(--space-md, 24rpx);
+}
+
+.skeleton-content {
+  padding: var(--space-sm, 16rpx);
+}
+
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm, 16rpx) 0;
+}
+
+.skeleton-item-info {
+  flex: 1;
+  margin-left: var(--space-sm, 16rpx);
+}
