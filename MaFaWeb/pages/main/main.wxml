@@ -39,7 +39,7 @@
           </view>
           <view class="hero-power">
             <text class="power-label">战力</text>
-            <text class="power-value">{{totalStats.attack * 2 + totalStats.defense * 1.5 + totalStats.hp / 10 | 0}}</text>
+            <text class="power-value">{{power}}</text>
           </view>
         </view>
         <!-- 签到按钮 -->
