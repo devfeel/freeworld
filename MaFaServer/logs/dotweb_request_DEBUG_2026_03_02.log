@@ -1,0 +1,4 @@
+2026-03-02 20:22:55.5694 [DEBUG] [middleware.go:154] /api/shop/list GET ::1 HTTP/1.1 200 0 33 0
+2026-03-02 20:23:23.4772 [DEBUG] [middleware.go:154] /api/auth/register POST ::1 HTTP/1.1 200 74 67 76
+2026-03-02 20:23:31.931 [DEBUG] [middleware.go:154] /api/auth/login POST ::1 HTTP/1.1 200 39 223 77
+2026-03-02 20:23:31.9412 [DEBUG] [middleware.go:154] /api/shop/list GET ::1 HTTP/1.1 200 0 812 0

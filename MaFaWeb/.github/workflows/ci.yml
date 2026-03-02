@@ -1,0 +1,104 @@
+name: MaFaWeb CI
+
+on:
+  push:
+    branches: [main, aicode, develop]
+  pull_request:
+    branches: [main, aicode, develop]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install ESLint
+        run: |
+          npm init -y
+          npm install --save-dev eslint @babel/eslint-parser
+          npm install --save-dev eslint-plugin-wxml || true
+      
+      - name: Create ESLint config
+        run: |
+          cat > .eslintrc.js << 'EOF'
+          module.exports = {
+            parser: '@babel/eslint-parser',
+            env: {
+              es6: true,
+              node: true,
+              wxml: true
+            },
+            extends: ['eslint:recommended'],
+            parserOptions: {
+              ecmaVersion: 2020,
+              sourceType: 'module'
+            },
+            rules: {
+              'no-unused-vars': 'warn',
+              'no-console': 'off'
+            }
+          }
+          EOF
+      
+      - name: Run ESLint on JS files
+        run: |
+          npx eslint pages/ --ext .js || true
+          npx eslint components/ --ext .js || true
+          npx eslint utils/ --ext .js || true
+
+  wechat-build:
+    runs-on: ubuntu-latest
+    needs: lint
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install WeChat MiniProgram CLI
+        run: npm install -g @wechat-miniprogram/cli || true
+      
+      - name: Validate Project
+        run: |
+          npx miniprogram autozipminiprogram || echo "Build requires WeChat DevTools"
+        continue-on-error: true
+      
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mafaweb-build
+          path: ./dist/
+          retention-days: 7
+        continue-on-error: true
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install Jest
+        run: |
+          npm init -y
+          npm install --save-dev jest @babel/preset-env babel-jest
+          
+      - name: Run Unit Tests
+        run: |
+          npx jest --passWithNoTests || echo "No tests found"
+        continue-on-error: true

@@ -1,0 +1,169 @@
+请根据以下规范，使用 Go + dotweb 框架生成一个完整的游戏后端项目代码。
+
+## 项目结构要求
+```
+MaFaServer/
+├── main.go
+├── config/
+│   └── config.go
+├── handlers/
+│   ├── auth.go
+│   ├── player.go
+│   ├── hero.go
+│   ├── bag.go
+│   ├── shop.go
+│   ├── dungeon.go
+│   ├── battle.go
+│   └── rank.go
+├── models/
+│   ├── user.go
+│   ├── player.go
+│   ├── hero.go
+│   ├── item.go
+│   └── response.go
+├── middleware/
+│   └── auth.go
+└── go.mod
+```
+
+## 功能要求
+
+### 1. 认证模块
+- POST /api/auth/register - 用户注册 (username, password)
+- POST /api/auth/login - 用户登录 (username, password) 返回 JWT token
+- POST /api/auth/logout - 用户登出
+
+### 2. 玩家模块
+- GET /api/player/info - 获取玩家信息 (需要认证)
+- POST /api/player/update - 更新玩家信息
+- POST /api/player/heartbeat - 心跳
+
+### 3. 角色模块
+- GET /api/hero/info - 获取角色信息
+- POST /api/hero/equip - 穿戴装备
+- POST /api/hero/unequip - 卸下装备
+
+### 4. 背包模块
+- GET /api/bag/list - 物品列表
+- POST /api/bag/use - 使用物品
+
+### 5. 商店模块
+- GET /api/shop/list - 商品列表
+- POST /api/shop/buy - 购买商品
+
+### 6. 排行榜模块
+- GET /api/rank/list - 排行榜
+
+### 7. 副本模块
+- GET /api/dungeon/list - 副本列表
+- POST /api/dungeon/enter - 进入副本
+- POST /api/dungeon/explore - 探索
+
+### 8. 战斗模块
+- POST /api/battle/start - 开始战斗
+- POST /api/battle/attack - 攻击
+- POST /api/battle/skill - 使用技能
+
+## 数据模型
+
+```go
+// User 用户
+type User struct {
+    ID       int64
+    Username string
+    Password string // bcrypt hash
+    CreatedAt time.Time
+}
+
+// Player 玩家
+type Player struct {
+    ID        int64
+    UserID    int64
+    Name      string
+    Gold      int64
+    Yuanbao   int64
+    Level     int
+    Exp       int64
+    CreatedAt time.Time
+    UpdatedAt time.Time
+}
+
+// Hero 角色
+type Hero struct {
+    ID          int64
+    PlayerID    int64
+    Name        string
+    Class       string // 战士/法师/道士
+    Level       int
+    HP          int
+    MaxHP       int
+    MP          int
+    MaxMP       int
+    Attack      int
+    Defense     int
+    MagicAttack int
+    Speed       int
+    Crit        int
+    Dodge       int
+    Skills      []int64
+}
+
+// Item 物品
+type Item struct {
+    ID       int64
+    Name     string
+    Type     string // weapon/armor/potion/material
+    SubType  string
+    Level    int
+    Rarity   int // 1-8
+    Price    int64
+    Attack   int
+    Defense  int
+    HPBonus  int
+    Stats    map[string]int
+}
+
+// BagItem 背包物品
+type BagItem struct {
+    ID     int64
+    ItemID int64
+    Count  int
+}
+
+// Dungeon 副本
+type Dungeon struct {
+    ID          int64
+    Name        string
+    Description string
+    Difficulty  int
+    Levels      int
+    Monsters    []int64
+}
+
+// Battle 战斗
+type Battle struct {
+    ID        int64
+    PlayerID  int64
+    DungeonID int64
+    EnemyID   int64
+    Status    string // fighting/won/lost
+    StartTime time.Time
+}
+```
+
+## 响应格式
+```go
+type Response struct {
+    Code int         `json:"code"`
+    Msg  string      `json:"msg"`
+    Data interface{} `json:"data,omitempty"`
+}
+```
+
+## 其他要求
+1. 使用 JWT 进行认证
+2. 使用内存存储 (演示用，可后续替换为数据库)
+3. 返回标准化的 JSON 响应
+4. 处理 CORS
+
+请生成完整的代码文件。
