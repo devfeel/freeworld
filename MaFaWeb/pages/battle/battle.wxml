@@ -6,12 +6,20 @@
       <text class="enemy-tag" wx:if="{{enemy.isBoss}}">BOSS</text>
       <text class="enemy-name {{enemy.isBoss ? 'text-danger' : 'text-primary'}}">{{enemy.name}}</text>
     </view>
-    <progress-bar
-      type="hp"
-      percent="{{enemyHpPercent}}"
-      text="{{battle.enemy.currentHp}}/{{enemy.hp}}"
-      className="enemy-hp-bar"
-    />
+    <view class="enemy-hp-bar-wrapper">
+      <progress-bar
+        type="hp"
+        percent="{{enemyHpPercent}}"
+        text="{{battle.enemy.currentHp}}/{{enemy.hp}}"
+      />
+    </view>
+    <!-- 敌人状态效果 -->
+    <view class="status-effects enemy-status" wx:if="{{enemyStatusEffects.length > 0}}">
+      <view class="status-icon {{item.type}}" wx:for="{{enemyStatusEffects}}" wx:key="index" title="{{item.name}}">
+        <text>{{item.icon}}</text>
+        <view class="status-duration" wx:if="{{item.duration > 0}}">{{item.duration}}</view>
+      </view>
+    </view>
   </view>
 
   <!-- 战斗画面 -->
@@ -30,34 +38,53 @@
       <view class="hero-level">Lv.{{hero.level || 1}}</view>
     </view>
     <view class="hero-bars">
-      <view class="bar-row">
-        <text class="bar-icon text-danger">❤️</text>
-        <progress-bar
-          type="hp"
-          percent="{{heroHpPercent}}"
-          text="{{battle.hero.hp}}/{{battle.hero.maxHp}}"
-          customStyle="flex: 1;"
-        />
+      <view class="bar-row combined">
+        <view class="hp-bar-col">
+          <text class="bar-icon text-danger">❤️</text>
+          <progress-bar
+            type="hp"
+            percent="{{heroHpPercent}}"
+            text="{{battle.hero.hp}}/{{battle.hero.maxHp}}"
+            customStyle="flex: 1;"
+          />
+        </view>
+        <view class="mp-bar-col">
+          <text class="bar-icon text-info">💧</text>
+          <progress-bar
+            type="mp"
+            percent="{{heroMpPercent}}"
+            text="{{battle.hero.mp}}/{{battle.hero.maxMp}}"
+            customStyle="flex: 1;"
+          />
+        </view>
       </view>
-      <view class="bar-row">
-        <text class="bar-icon text-info">💧</text>
-        <progress-bar
-          type="mp"
-          percent="{{heroMpPercent}}"
-          text="{{battle.hero.mp}}/{{battle.hero.maxMp}}"
-          customStyle="flex: 1;"
-        />
+    </view>
+    <!-- 英雄状态效果 -->
+    <view class="status-effects hero-status" wx:if="{{heroStatusEffects.length > 0}}">
+      <view class="status-icon {{item.type}}" wx:for="{{heroStatusEffects}}" wx:key="index" title="{{item.name}}">
+        <text>{{item.icon}}</text>
+        <view class="status-duration" wx:if="{{item.duration > 0}}">{{item.duration}}</view>
       </view>
     </view>
   </view>
 
   <!-- 战斗日志 -->
   <view class="panel battle-logs animate-slide-up" wx:if="{{battle && battle.logs.length > 0}}" style="animation-delay: 0.3s">
-    <view class="panel-title">📜 战斗日志</view>
-    <scroll-view scroll-y class="logs-container" scroll-top="{{logsScrollTop}}">
-      <view class="log-item {{item.type}}" wx:for="{{battle.logs}}" wx:key="time">
-        <text class="log-time">{{item.time}}</text>
-        <text class="log-message">{{item.message}}</text>
+    <view class="panel-title">
+      <text>📜 战斗日志</text>
+      <text class="turn-counter" wx:if="{{battle.round > 0}}">回合 {{battle.round}}</text>
+    </view>
+    <scroll-view scroll-y class="logs-container" scroll-top="{{logsScrollTop}}" scroll-with-animation>
+      <view class="log-item {{item.style}} {{item.isNew ? 'new-entry' : ''}}" wx:for="{{battle.logs}}" wx:key="index">
+        <view class="log-icon">{{item.icon}}</view>
+        <view class="log-content">
+          <text class="log-actor {{item.actor}}">{{item.actorText}}</text>
+          <text class="log-message">{{item.message}}</text>
+          <view class="log-badges" wx:if="{{item.badges.length > 0}}">
+            <text class="badge {{badge.type}}" wx:for="{{item.badges}}" wx:for-item="badge" wx:key="type">{{badge.text}}</text>
+          </view>
+        </view>
+        <text class="log-time">{{item.timeText}}</text>
       </view>
     </scroll-view>
   </view>

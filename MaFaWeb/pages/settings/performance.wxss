@@ -1,0 +1,151 @@
+/* 性能设置页面样式 */
+.performance-page {
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+}
+
+.page-title {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: #d4af37;
+  margin-bottom: 8px;
+}
+
+.page-desc {
+  font-size: 14px;
+  color: #888;
+}
+
+/* 模式列表 */
+.mode-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mode-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.mode-item.active {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: #d4af37;
+}
+
+.mode-info {
+  flex: 1;
+}
+
+.mode-name {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.mode-desc {
+  font-size: 12px;
+  color: #888;
+}
+
+.mode-indicator {
+  width: 24px;
+  height: 24px;
+  background: #d4af37;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a2e;
+  font-weight: bold;
+}
+
+/* 配置列表 */
+.config-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.config-item:last-child {
+  border-bottom: none;
+}
+
+.config-label {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.config-value {
+  font-size: 14px;
+  color: #d4af37;
+  font-weight: bold;
+}
+
+/* 设备信息 */
+.device-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #888;
+}
+
+.info-value {
+  font-size: 13px;
+  color: #ccc;
+}
+
+.info-value.recommended {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+/* 操作按钮 */
+.actions {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actions .btn {
+  width: 100%;
+}

@@ -4,6 +4,9 @@ const { getMonster } = require('../../data/monsters')
 const BattleSystem = require('../../utils/battle-system')
 const BlockDrawer = require('../../utils/canvas-draw')
 const { SkillEffectDrawer } = require('../../utils/skill-effects')
+const ParticleSystem = require('../../utils/particle-system')
+const ScreenShake = require('../../utils/screen-shake')
+const PerformanceConfig = require('../../utils/performance-config')
 
 Page({
   data: {
@@ -15,15 +18,20 @@ Page({
     potions: [],
     heroHpPercent: 100,
     enemyHpPercent: 100,
+    heroMpPercent: 100,
     isAutoBattle: false,
     logsScrollTop: 0,
     isLastMonster: false,
-    equippedSkills: [] // 装备的技能
+    equippedSkills: [], // 装备的技能
+    heroStatusEffects: [], // 英雄状态效果
+    enemyStatusEffects: [] // 敌人状态效果
   },
 
   battleSystem: null,
   drawer: null,
   effectDrawer: null, // 技能特效绘制器
+  particleSystem: null, // 粒子系统
+  screenShake: null, // 屏幕震动
   canvas: null,
   ctx: null,
   dungeonId: 0,
@@ -38,8 +46,8 @@ Page({
   enemyShake: 0,
   attackPhase: null, // prepare, strike, recover
   enemyAttackPhase: null, // prepare, strike, recover
-  damageNumbers: [], // 存储伤害数字
-  attackEffects: [], // 存储攻击特效
+  damageNumbers: [], // 存储伤害数字 (兼容旧代码)
+  attackEffects: [], // 存储攻击特效 (兼容旧代码)
   currentSkillEffect: null, // 当前播放的技能特效
 
   onLoad(options) {
@@ -124,6 +132,17 @@ Page({
       clearInterval(this.autoBattleTimer)
       this.autoBattleTimer = null
     }
+    // 清理粒子系统
+    if (this.particleSystem) {
+      this.particleSystem.destroy()
+      this.particleSystem = null
+    }
+
+    // 清理屏幕震动
+    if (this.screenShake) {
+      this.screenShake = null
+    }
+
     // 清理Canvas上下文
     if (this.ctx) {
       this.ctx = null
@@ -171,6 +190,13 @@ Page({
           this.drawer = new BlockDrawer(this.canvas, this.ctx)
           this.battleSystem = new BattleSystem(app, this.canvas, this.ctx)
           this.effectDrawer = new SkillEffectDrawer(this.ctx, this.canvas)
+
+          // 初始化粒子系统和屏幕震动
+          this.particleSystem = new ParticleSystem(this.canvas, this.ctx, 50)
+          this.screenShake = new ScreenShake()
+
+          // 应用性能配置
+          PerformanceConfig.apply(this.particleSystem, this.screenShake, null)
 
           resolve()
         })
@@ -333,6 +359,31 @@ Page({
 
     // 绘制攻击特效
     this.drawAttackEffects(cssWidth, cssHeight)
+
+    // 绘制粒子效果
+    if (this.particleSystem) {
+      this.particleSystem.render()
+    }
+
+    // 更新屏幕震动
+    if (this.screenShake) {
+      const shake = this.screenShake.update()
+      if (shake.active) {
+        if (shake.target === 'hero') {
+          this.heroShake = shake.x
+        } else if (shake.target === 'enemy') {
+          this.enemyShake = shake.x
+        } else {
+          // 全屏震动
+          this.heroShake = shake.x * 0.5
+          this.enemyShake = -shake.x * 0.5
+        }
+      } else {
+        // 重置震动
+        if (this.heroShake !== 0) this.heroShake = 0
+        if (this.enemyShake !== 0) this.enemyShake = 0
+      }
+    }
   },
 
   // 绘制背景装饰元素
@@ -522,11 +573,13 @@ Page({
 
     // 计算生命百分比
     const heroHpPercent = status.hero ? Math.floor(status.hero.hp / status.hero.maxHp * 100) : 100
+    const heroMpPercent = status.hero ? Math.floor(status.hero.mp / status.hero.maxMp * 100) : 100
     const enemyHpPercent = status.enemy ? Math.floor(status.enemy.currentHp / status.enemy.hp * 100) : 100
 
     this.setData({
       battle: status,
       heroHpPercent,
+      heroMpPercent,
       enemyHpPercent
     })
 
@@ -609,6 +662,7 @@ Page({
     this.updateBattleStatus()
 
     const target = data.target
+    const isCritical = data.isCritical
 
     // 计算伤害数字显示位置
     const deviceInfo = wx.getDeviceInfo()
@@ -620,18 +674,50 @@ Page({
     const size = 60
 
     if (target === 'enemy') {
-      // 敌人受伤，在敌人上方显示伤害数字
-      const enemyX = 30
+      // 敌人受伤
+      const enemyX = 80 + size / 2
       const enemyY = (cssHeight - size) / 2
-      this.addDamageNumber(enemyX + size / 2, enemyY - 20, data.damage, data.isCritical)
+
+      // 使用旧的 damage number 系统（兼容）
+      this.addDamageNumber(enemyX, enemyY - 20, data.damage, isCritical)
+
+      // 添加粒子效果
+      if (this.particleSystem) {
+        if (isCritical) {
+          this.particleSystem.emitCritical(enemyX, enemyY)
+        } else {
+          this.particleSystem.emitDamage(enemyX, enemyY, data.damage, isCritical)
+        }
+      }
+
+      // 触发屏幕震动（英雄攻击敌人）
+      if (this.screenShake) {
+        this.screenShake.onEnemyAttack()
+      }
 
       // 开始受伤抖动动画
       this.animateDamage('enemy')
     } else {
-      // 英雄受伤，在英雄上方显示伤害数字
-      const heroX = cssWidth - size - 30
+      // 英雄受伤
+      const heroX = cssWidth - size - 80 + size / 2
       const heroY = (cssHeight - size) / 2
-      this.addDamageNumber(heroX + size / 2, heroY - 20, data.damage, data.isCritical)
+
+      // 使用旧的 damage number 系统（兼容）
+      this.addDamageNumber(heroX, heroY - 20, data.damage, isCritical)
+
+      // 添加粒子效果
+      if (this.particleSystem) {
+        this.particleSystem.emitDamage(heroX, heroY, data.damage, isCritical)
+      }
+
+      // 触发屏幕震动（英雄受伤）
+      if (this.screenShake) {
+        if (isCritical) {
+          this.screenShake.onCriticalHit()
+        } else {
+          this.screenShake.onDamage()
+        }
+      }
 
       // 开始受伤抖动动画
       this.animateDamage('hero')
@@ -716,6 +802,21 @@ Page({
   showHealEffect(data) {
     this.setData({ hasPotion: this.checkPotion() })
     this.updateBattleStatus()
+
+    // 添加治疗粒子效果
+    if (this.particleSystem) {
+      const deviceInfo = wx.getDeviceInfo()
+      const windowInfo = wx.getWindowInfo()
+      const dpr = deviceInfo.pixelRatio || windowInfo.pixelRatio || 2
+      const cssWidth = this.canvas.width / dpr
+      const cssHeight = this.canvas.height / dpr
+
+      const size = 60
+      const heroX = cssWidth - size - 80 + size / 2
+      const heroY = (cssHeight - size) / 2
+
+      this.particleSystem.emitHeal(heroX, heroY, data.amount)
+    }
   },
 
   // 显示闪避效果
@@ -1250,5 +1351,103 @@ Page({
     }
 
     wx.navigateBack()
+  },
+
+  // ========== 状态效果管理 ==========
+
+  /**
+   * 添加状态效果
+   * @param {string} target - 'hero' 或 'enemy'
+   * @param {object} effect - 效果对象 {id, name, icon, type, duration}
+   */
+  addStatusEffect(target, effect) {
+    const key = target === 'hero' ? 'heroStatusEffects' : 'enemyStatusEffects'
+    const currentEffects = this.data[key]
+
+    // 检查是否已存在相同效果，如果存在则刷新持续时间
+    const existingIndex = currentEffects.findIndex(e => e.id === effect.id)
+    if (existingIndex >= 0) {
+      currentEffects[existingIndex].duration = effect.duration
+      this.setData({ [key]: [...currentEffects] })
+    } else {
+      // 限制最多6个状态效果
+      if (currentEffects.length >= 6) {
+        currentEffects.shift() // 移除最旧的效果
+      }
+      this.setData({ [key]: [...currentEffects, effect] })
+    }
+  },
+
+  /**
+   * 移除状态效果
+   * @param {string} target - 'hero' 或 'enemy'
+   * @param {string} effectId - 效果ID
+   */
+  removeStatusEffect(target, effectId) {
+    const key = target === 'hero' ? 'heroStatusEffects' : 'enemyStatusEffects'
+    const currentEffects = this.data[key]
+    const newEffects = currentEffects.filter(e => e.id !== effectId)
+    this.setData({ [key]: newEffects })
+  },
+
+  /**
+   * 更新状态效果持续时间（在回合结束时调用）
+   * @param {string} target - 'hero' 或 'enemy'
+   */
+  updateStatusEffectsDuration(target) {
+    const key = target === 'hero' ? 'heroStatusEffects' : 'enemyStatusEffects'
+    const currentEffects = this.data[key]
+
+    const updatedEffects = currentEffects
+      .map(effect => ({
+        ...effect,
+        duration: effect.duration - 1
+      }))
+      .filter(effect => effect.duration > 0)
+
+    this.setData({ [key]: updatedEffects })
+  },
+
+  /**
+   * 清除所有状态效果
+   */
+  clearAllStatusEffects() {
+    this.setData({
+      heroStatusEffects: [],
+      enemyStatusEffects: []
+    })
+  },
+
+  /**
+   * 获取状态效果图标
+   * @param {string} effectType - 效果类型
+   * @returns {string} 图标字符
+   */
+  getStatusEffectIcon(effectType) {
+    const iconMap = {
+      // Buffs
+      attackUp: '⚔️',
+      defenseUp: '🛡️',
+      speedUp: '💨',
+      regen: '💚',
+      shield: '🔰',
+      focus: '🎯',
+
+      // Debuffs
+      poison: '☠️',
+      burn: '🔥',
+      freeze: '❄️',
+      stun: '💫',
+      attackDown: '💔',
+      defenseDown: '📉',
+      slow: '🐌',
+
+      // 中性
+      reflect: '🔮',
+      invisible: '👻',
+      berserk: '😤'
+    }
+
+    return iconMap[effectType] || '✨'
   }
 })

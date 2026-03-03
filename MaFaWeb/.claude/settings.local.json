@@ -26,7 +26,15 @@
       "Bash(npm install:*)",
       "Bash(npm test:*)",
       "Bash(npm run:*)",
-      "mcp__filesystem__read_multiple_files"
+      "mcp__filesystem__read_multiple_files",
+      "mcp__github__list_pull_requests",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(openspec new:*)",
+      "Bash(openspec status:*)",
+      "Bash(openspec instructions:*)",
+      "Bash(openspec list:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

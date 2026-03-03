@@ -1,0 +1,88 @@
+<!-- 性能设置页面 -->
+<view class="container performance-page">
+  <view class="page-header">
+    <text class="page-title">⚙️ 性能设置</text>
+    <text class="page-desc">调整战斗视觉效果和性能</text>
+  </view>
+
+  <view class="panel">
+    <view class="panel-title">🎮 性能模式</view>
+    <view class="mode-list">
+      <view
+        class="mode-item {{selectedMode === item.key ? 'active' : ''}}"
+        wx:for="{{modes}}"
+        wx:key="key"
+        bindtap="selectMode"
+        data-mode="{{item.key}}"
+      >
+        <view class="mode-info">
+          <text class="mode-name">{{item.name}}</text>
+          <text class="mode-desc">{{item.desc}}</text>
+        </view>
+        <view class="mode-indicator" wx:if="{{selectedMode === item.key}}">
+          <text>✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="panel-title">📊 当前配置</view>
+    <view class="config-list">
+      <view class="config-item">
+        <text class="config-label">粒子数量上限</text>
+        <text class="config-value">{{config.particleLimit}}</text>
+      </view>
+      <view class="config-item">
+        <text class="config-label">屏幕震动</text>
+        <text class="config-value">{{config.enableShake ? '开启' : '关闭'}}</text>
+      </view>
+      <view class="config-item">
+        <text class="config-label">发光效果</text>
+        <text class="config-value">{{config.enableGlow ? '开启' : '关闭'}}</text>
+      </view>
+      <view class="config-item">
+        <text class="config-label">状态动画</text>
+        <text class="config-value">{{config.enableStatusAnimation ? '开启' : '关闭'}}</text>
+      </view>
+      <view class="config-item">
+        <text class="config-label">背景细节</text>
+        <text class="config-value">{{config.backgroundDetail}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="panel-title">📱 设备信息</view>
+    <view class="device-info">
+      <view class="info-item">
+        <text class="info-label">品牌</text>
+        <text class="info-value">{{deviceInfo.brand}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">型号</text>
+        <text class="info-value">{{deviceInfo.model}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">系统</text>
+        <text class="info-value">{{deviceInfo.system}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">推荐模式</text>
+        <text class="info-value recommended">{{recommendedMode}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="actions">
+    <button class="btn btn-primary" bindtap="applySettings">
+      <text>💾 应用设置</text>
+    </button>
+    <button class="btn btn-secondary" bindtap="autoConfigure">
+      <text>🤖 自动检测</text>
+    </button>
+    <button class="btn" bindtap="goBack">
+      <text>🔙 返回</text>
+    </button>
+  </view>
+</view>

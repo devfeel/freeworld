@@ -33,13 +33,15 @@
           </view>
         </view>
         <view class="hero-basic-info">
-          <text class="hero-name">{{hero.name || '勇士'}}</text>
-          <view class="hero-title-badge" wx:if="{{hero.title}}">
-            <text class="hero-title-text">{{hero.title}}</text>
-          </view>
-          <view class="hero-power">
-            <text class="power-label">战力</text>
-            <text class="power-value">{{power}}</text>
+          <view class="hero-name-row">
+            <text class="hero-name">{{hero.name || '勇士'}}</text>
+            <view class="hero-title-badge" wx:if="{{hero.title}}">
+              <text class="hero-title-text">{{hero.title}}</text>
+            </view>
+            <view class="hero-power">
+              <text class="power-label">战力</text>
+              <text class="power-value">{{power}}</text>
+            </view>
           </view>
         </view>
         <!-- 签到按钮 -->

@@ -20,7 +20,7 @@
 /* 战斗画面 */
 .battle-canvas {
   width: 100%;
-  height: 300rpx;
+  height: 400rpx;
   margin: 10px 0;
   border: 2px solid var(--border-color);
   border-radius: 4px;
@@ -54,19 +54,188 @@
 
 /* 战斗日志 */
 .battle-logs {
-  max-height: 200rpx;
+  max-height: 240rpx;
   margin-top: 10px;
   position: relative;
   z-index: 1;
 }
 
+.battle-logs .panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.turn-counter {
+  font-size: 12px;
+  color: #888;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
 .logs-container {
-  height: 150rpx;
+  height: 180rpx;
 }
 
 .log-item {
-  padding: 3px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: flex-start;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+  line-height: 1.4;
+  animation: logEnter 0.3s ease;
+}
+
+.log-item.new-entry {
+  animation: logHighlight 1s ease;
+}
+
+@keyframes logEnter {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes logHighlight {
+  0%, 100% {
+    background: transparent;
+  }
+  30%, 70% {
+    background: rgba(212, 175, 55, 0.1);
+  }
+}
+
+.log-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.log-content {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.log-actor {
+  font-weight: bold;
+  margin-right: 4px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+.log-actor.hero {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.15);
+}
+
+.log-actor.enemy {
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.15);
+}
+
+.log-actor.system {
+  color: #9e9e9e;
+  background: rgba(158, 158, 158, 0.15);
+}
+
+.log-message {
+  color: #e0e0e0;
+  flex: 1;
+}
+
+.log-badges {
+  display: flex;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.badge {
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.badge.critical {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: #fff;
+  animation: badgePulse 1s ease infinite;
+}
+
+.badge.dodge {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+  color: #fff;
+}
+
+.badge.heal {
+  background: linear-gradient(135deg, #55efc4, #00b894);
+  color: #fff;
+}
+
+.badge.buff {
+  background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+  color: #fff;
+}
+
+.badge.debuff {
+  background: linear-gradient(135deg, #fd79a8, #e84393);
+  color: #fff;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.log-time {
+  font-size: 10px;
+  color: #666;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+/* 日志类型样式 */
+.log-item.damage {
+  border-left: 2px solid #ff6b6b;
+}
+
+.log-item.heal {
+  border-left: 2px solid #55efc4;
+}
+
+.log-item.buff {
+  border-left: 2px solid #a29bfe;
+}
+
+.log-item.debuff {
+  border-left: 2px solid #fd79a8;
+}
+
+.log-item.dodge {
+  border-left: 2px solid #74b9ff;
+}
+
+.log-item.system {
+  border-left: 2px solid #9e9e9e;
 }
 
 /* 控制面板 */
@@ -290,5 +459,138 @@
   width: 100%;
   font-size: 16px;
   padding: 12px;
+}
+
+/* 状态效果显示 */
+.status-effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+  justify-content: center;
+}
+
+.status-effects.enemy-status {
+  justify-content: center;
+}
+
+.status-effects.hero-status {
+  justify-content: flex-start;
+  margin-top: 10px;
+  padding-left: 5px;
+}
+
+.status-icon {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(45, 35, 25, 0.9) 0%, rgba(30, 20, 15, 0.95) 100%);
+  border-radius: 6px;
+  font-size: 16px;
+  border: 2px solid;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Buff 类型 - 绿色边框 */
+.status-icon.buff {
+  border-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+/* Debuff 类型 - 红色边框 */
+.status-icon.debuff {
+  border-color: #f44336;
+  box-shadow: 0 0 8px rgba(244, 67, 54, 0.4);
+}
+
+/* 中性效果 - 蓝色边框 */
+.status-icon.neutral {
+  border-color: #2196f3;
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.4);
+}
+
+.status-duration {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  min-width: 14px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 7px;
+  font-size: 9px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  font-weight: bold;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+/* 状态效果进入动画 */
+.status-icon {
+  animation: statusEnter 0.3s ease, statusPulse 2s ease-in-out infinite 0.3s;
+}
+
+@keyframes statusEnter {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* 敌人血条包装器 */
+.enemy-hp-bar-wrapper {
+  width: 70%;
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+/* 英雄血条和魔法条在一行显示 */
+.hero-bars {
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.bar-row.combined {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hp-bar-col,
+.mp-bar-col {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+
+.bar-icon {
+  font-size: 14px;
+  flex-shrink: 0;
 }
 
