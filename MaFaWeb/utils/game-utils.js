@@ -19,25 +19,51 @@ function chance(percent) {
  * @param {number} attack 攻击力
  * @param {number} defense 防御力
  * @param {number} multiplier 伤害倍率
+ * @param {number} crit 暴击率 (0-100)
+ * @param {number} critDamage 暴击伤害倍率 (默认150%)
  * @returns {object} {damage, isCritical}
  */
-function calculateDamage(attack, defense, multiplier = 1.0) {
+function calculateDamage(attack, defense, multiplier = 1.0, crit = 10, critDamage = 150) {
+  // ========== 防御递减机制 ==========
+  // 防御越高，效果越差，使用对数递减
+  // defenseFactor = 0.5 * (1 - log(1 + defense) / log(1 + maxDefense))
+  // 假设最大有效防御为500，超过后收益明显递减
+  const maxEffectiveDefense = 500
+  const defenseFactor = 0.5 * (1 - Math.log(1 + defense) / Math.log(1 + maxEffectiveDefense))
+  const effectiveDefense = defense * Math.max(0.1, defenseFactor)
+
   // 基础伤害
-  let damage = Math.max(1, (attack * multiplier) - (defense * 0.5))
+  let damage = Math.max(1, (attack * multiplier) - effectiveDefense)
 
   // 随机波动 +/- 10%
   damage = damage * random(90, 110) / 100
 
-  // 暴击判断 (10% 暴击率)
-  const isCritical = chance(10)
+  // 暴击判断 (默认10%基础暴击率)
+  const isCritical = chance(crit)
   if (isCritical) {
-    damage *= 1.5
+    damage *= (critDamage / 100)
   }
 
   return {
     damage: Math.floor(damage),
     isCritical
   }
+}
+
+/**
+ * 判断命中
+ * @param {number} attackerAccuracy 攻击方精准
+ * @param {number} defenderDodge 防御方闪避率 (0-100)
+ * @returns {boolean} 是否命中
+ */
+function checkHit(attackerAccuracy, defenderDodge) {
+  // 基础命中率 90%，精准可以增加命中率
+  let hitChance = 90 + attackerAccuracy
+  // 减去对方的闪避率
+  hitChance -= defenderDodge
+  // 命中率范围 10% - 100%
+  hitChance = Math.max(10, Math.min(100, hitChance))
+  return chance(hitChance)
 }
 
 /**
@@ -236,6 +262,7 @@ module.exports = {
   chance,
   calculateDamage,
   checkDodge,
+  checkHit,
   processDrops,
   formatNumber,
   deepClone,

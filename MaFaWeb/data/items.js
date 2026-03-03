@@ -140,44 +140,60 @@ const ATTRIBUTE_CONFIG = {
     color: '#aaaaaa'
   },
 
-  // ========== 未来可扩展的属性 ==========
-  // 要添加新属性，只需在此配置中添加即可
-  // 例如：吸血、精准、生命恢复等
+  // ========== 扩展战斗属性 ==========
 
-  // lifeSteal: {
-  //   name: '吸血',
-  //   key: 'lifeSteal',
-  //   baseKey: 'lifeSteal',
-  //   display: '吸血',
-  //   icon: '🩸',
-  //   color: '#aa0000',
-  //   isPercent: true
-  // },
-  // accuracy: {
-  //   name: '精准',
-  //   key: 'accuracy',
-  //   baseKey: 'accuracy',
-  //   display: '精准',
-  //   icon: '◎',
-  //   color: '#00aa00',
-  //   isPercent: true
-  // },
-  // hpRegen: {
-  //   name: '生命恢复',
-  //   key: 'hpRegen',
-  //   baseKey: 'hpRegen',
-  //   display: '回血',
-  //   icon: '💚',
-  //   color: '#00ff00'
-  // },
-  // mpRegen: {
-  //   name: '魔法恢复',
-  //   key: 'mpRegen',
-  //   baseKey: 'mpRegen',
-  //   display: '回蓝',
-  //   icon: '💙',
-  //   color: '#0000ff'
-  // }
+  lifeSteal: {
+    name: '吸血',
+    key: 'lifeSteal',
+    baseKey: 'lifeSteal',
+    display: '吸血',
+    icon: '🩸',
+    color: '#aa0000',
+    isPercent: true
+  },
+  accuracy: {
+    name: '精准',
+    key: 'accuracy',
+    baseKey: 'accuracy',
+    display: '精准',
+    icon: '◎',
+    color: '#00aa00',
+    isPercent: true
+  },
+  hpRegen: {
+    name: '生命恢复',
+    key: 'hpRegen',
+    baseKey: 'hpRegen',
+    display: '回血',
+    icon: '💚',
+    color: '#00ff00'
+  },
+  mpRegen: {
+    name: '魔法恢复',
+    key: 'mpRegen',
+    baseKey: 'mpRegen',
+    display: '回蓝',
+    icon: '💙',
+    color: '#0000ff'
+  },
+  reflectDamage: {
+    name: '伤害反射',
+    key: 'reflectDamage',
+    baseKey: 'reflectDamage',
+    display: '反射',
+    icon: '🛡️',
+    color: '#aa00aa',
+    isPercent: true
+  },
+  critDamage: {
+    name: '暴击伤害',
+    key: 'critDamage',
+    baseKey: 'critDamage',
+    display: '暴伤',
+    icon: '💥',
+    color: '#ff6600',
+    isPercent: true
+  }
 }
 
 // 获取所有属性配置

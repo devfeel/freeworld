@@ -1,5 +1,5 @@
 // 战斗系统
-const { calculateDamage, checkDodge, processDrops, delay } = require('./game-utils')
+const { calculateDamage, checkDodge, checkHit, processDrops, delay } = require('./game-utils')
 const { getSkill, getSkillEffect, SKILL_TYPES } = require('../data/skills')
 
 class BattleSystem {
@@ -46,23 +46,24 @@ class BattleSystem {
         crit: totalStats.crit || 0,
         dodge: totalStats.dodge || 0,
         block: totalStats.block || 0,
-        // ========== 未来可扩展属性 ==========
-        // 要添加新属性，只需在此初始化即可
-        // 例如：
-        // lifeSteal: totalStats.lifeSteal || 0,      // 吸血率
-        // accuracy: totalStats.accuracy || 0,        // 精准
-        // hpRegen: totalStats.hpRegen || 0,         // 生命恢复/回合
-        // mpRegen: totalStats.mpRegen || 0,         // 魔法恢复/回合
-        // reflectDamage: totalStats.reflectDamage || 0, // 伤害反射
+        // ========== 扩展战斗属性 ==========
+        lifeSteal: totalStats.lifeSteal || 0,        // 吸血率 (%)
+        accuracy: totalStats.accuracy || 0,          // 精准 (增加命中)
+        hpRegen: totalStats.hpRegen || 0,           // 生命恢复/回合
+        mpRegen: totalStats.mpRegen || 0,           // 魔法恢复/回合
+        reflectDamage: totalStats.reflectDamage || 0, // 伤害反射 (%)
+        critDamage: totalStats.critDamage || 150,    // 暴击伤害倍率 (默认150%)
         skills: hero.skills || []
       },
       enemy: {
         ...monster,
         currentHp: monster.hp,
-        // 敌人也可能有扩展属性（未来可添加）
+        // 敌人扩展属性
         magicAttack: monster.magicAttack || 0,
         crit: monster.crit || 0,
-        dodge: monster.dodge || 0
+        dodge: monster.dodge || 0,
+        accuracy: monster.accuracy || 0,
+        reflectDamage: monster.reflectDamage || 0
       },
       turn: this.getFasterCharacter(totalStats, monster) ? 'hero' : 'enemy',
       round: 0,
@@ -174,8 +175,7 @@ class BattleSystem {
     const finalDamage = finalIsCritical ? Math.floor(damage * 1.5) : damage
 
     // 判断闪避（使用闪避率，考虑敌人精准）
-    // 未来可添加 accuracy 属性降低敌人闪避概率
-    const canDodge = enemy.dodge > 0 && Math.random() * 100 < enemy.dodge
+    const canDodge = checkHit(hero.accuracy || 0, enemy.dodge || 0) === false
 
     if (canDodge) {
       this.addBattleLog(`${enemy.name} 闪避了攻击！`)
@@ -196,14 +196,21 @@ class BattleSystem {
         damageType: isMagicAttack ? 'magic' : 'physical'
       })
 
-      // ========== 未来可扩展：吸血等效果 ==========
-      // 例如：
-      // if (hero.lifeSteal > 0 && damage > 0) {
-      //   const healAmount = Math.floor(damage * hero.lifeSteal / 100)
-      //   hero.hp = Math.min(hero.maxHp, hero.hp + healAmount)
-      //   this.addBattleLog(`吸血回复了 ${healAmount} 点生命！`)
-      //   this.emitEvent('heal', { amount: healAmount })
-      // }
+      // ========== 吸血效果 ==========
+      if (hero.lifeSteal > 0 && finalDamage > 0) {
+        const healAmount = Math.floor(finalDamage * hero.lifeSteal / 100)
+        hero.hp = Math.min(hero.maxHp, hero.hp + healAmount)
+        this.addBattleLog(`吸血回复了 ${healAmount} 点生命！`)
+        this.emitEvent('heal', { amount: healAmount, target: 'hero' })
+      }
+
+      // ========== 伤害反射 ==========
+      if (enemy.reflectDamage > 0 && finalDamage > 0) {
+        const reflectAmount = Math.floor(finalDamage * enemy.reflectDamage / 100)
+        hero.hp = Math.max(0, hero.hp - reflectAmount)
+        this.addBattleLog(`${enemy.name} 反射了 ${reflectAmount} 点伤害！`)
+        this.emitEvent('reflect', { amount: reflectAmount, target: 'hero' })
+      }
     }
 
     // 检查战斗结束
@@ -347,8 +354,8 @@ class BattleSystem {
     // 计算最终伤害（暴击1.5倍）
     let finalDamage = finalIsCritical ? Math.floor(damage * 1.5) : damage
 
-    // 判断闪避（使用英雄的闪避率）
-    const canDodge = hero.dodge > 0 && Math.random() * 100 < hero.dodge
+    // 判断闪避（使用英雄的闪避率和精准）
+    const canDodge = checkHit(enemy.accuracy || 0, hero.dodge || 0) === false
 
     if (canDodge) {
       this.addBattleLog(`你闪避了 ${enemy.name} 的 ${skill.name}！`)
@@ -395,8 +402,18 @@ class BattleSystem {
       }
     })
 
-    // 回复少量MP
-    hero.mp = Math.min(hero.maxMp, hero.mp + 5)
+    // ========== HP/MP 回复效果 ==========
+    if (hero.hpRegen > 0) {
+      const hpRegenAmount = hero.hpRegen
+      hero.hp = Math.min(hero.maxHp, hero.hp + hpRegenAmount)
+      this.addBattleLog(`生命回复了 ${hpRegenAmount} 点！`)
+      this.emitEvent('heal', { amount: hpRegenAmount, target: 'hero' })
+    }
+    if (hero.mpRegen > 0) {
+      const mpRegenAmount = hero.mpRegen
+      hero.mp = Math.min(hero.maxMp, hero.mp + mpRegenAmount)
+      this.addBattleLog(`魔法回复了 ${mpRegenAmount} 点！`)
+    }
 
     this.emitEvent('turnChange', { turn: 'hero' })
   }
